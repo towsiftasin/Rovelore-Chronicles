@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — Start the Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --gold: #FFC928;
+  --white: #FFFFFF;
+  --navy-deep: #060a1a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  overflow-x: hidden;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: url("../images/1st.jpg");
+   background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ---------- HEADER ---------- */
+/* 
+   SHARED NAVBAR — link this file on EVERY page
+   so the logo and nav links land in the exact
+   same place everywhere. Do not duplicate these
+   rules in each page's own stylesheet.
+    */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px 0;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.mainnav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+}
+
+.nav-link.active {
+  color: #FFC928;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 2px;
+  background: #FFC928;
+}
+
+.nav-link:hover:not(.active) {
+  color: #FFC928;
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px 0;
+  }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+}
+ 
+
+/* ---------- HERO ---------- */
+.hero {
+  position: absolute;
+  left: 8.5vw;
+  top: 19vh;
+  z-index: 10;
+  max-width: 60vw;
+}
+
+.hero-arc {
+  position: absolute;
+  left: -6.5vw;
+  top: -2vh;
+}
+
+.hero-swoop {
+  position: absolute;
+  right: 6vw;
+  top: -6vh;
+}
+
+.hero-title {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.08;
+  font-size: clamp(2rem, 4.6vw, 4.6rem);
+}
+
+.line-1 {
+  position: relative;
+  display: inline-block;
+  color: var(--white);
+}
+
+.hero-star-1 {
+  position: absolute;
+  right: -34px;
+  top: 4px;
+}
+
+.line-2 {
+  display: block;
+  color: var(--gold);
+}
+
+.btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3.5vh;
+}
+
+.btn-start {
+  background: var(--gold);
+  color: #0A1230;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 1.8vw, 1.9rem);
+  padding: clamp(16px, 2.2vh, 26px) clamp(28px, 3vw, 48px);
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 0 35px rgba(255,201,40,0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-start:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 40px rgba(255,201,40,0.55);
+}
+
+.ray { flex-shrink: 0; }
+
+/* ---------- TAGLINE ---------- */
+.tagline-wrap {
+  position: absolute;
+  right: 3vw;
+  bottom: 4vh;
+  z-index: 10;
+  text-align: right;
+}
+
+.tagline {
+  font-family: 'Patrick Hand', cursive;
+  font-size: clamp(0.85rem, 1.2vw, 1.3rem);
+  color: var(--white);
+  line-height: 1.4;
+  transform: rotate(-4deg);
+  margin: 0;
+}
+
+.tagline-underline {
+  display: block;
+  margin: 4px 0 0 auto;
+  transform: rotate(-3deg);
+}
+
+.tagline-star { position: absolute; }
+.tagline-star-1 { bottom: -12px; left: -20px; }
+.tagline-star-2 { top: -14px; right: -18px; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1000px) {
+  .hero { max-width: 80vw; top: 16vh; }
+}
+
+@media (max-width: 640px) {
+  .topbar { padding: 16px 20px 0; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .mainnav { gap: 12px; }
+  .hero { left: 6vw; top: 20vh; max-width: 88vw; }
+  .hero-arc, .hero-swoop { display: none; }
+  .hero-star-1 { right: -20px; width: 18px; height: 18px; }
+  .tagline-wrap { right: 4vw; bottom: 2vh; }
+  .btn-start { font-size: 1rem; padding: 14px 24px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- HEADER -->
+  <header class="topbar">
+  <div class="brand">
+    <span class="brand-logo" aria-hidden="true">
+      <svg viewBox="0 0 48 40" width="36" height="30">
+        <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+          <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+          <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+          <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+          <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+      </svg>
+    </span>
+    <span class="brand-name">Rovelore Chronicles</span>
+  </div>
+  <nav class="mainnav" aria-label="Main navigation">
+    <button class="nav-link active" data-nav="home">Home</button>
+    <button class="nav-link" data-nav="start">Start the Journey</button>
+    <button class="nav-link" data-nav="stories">Stories</button>
+    <button class="nav-link" data-nav="explore">Explore</button>
+    <button class="nav-link" data-nav="about">About</button>
+  </nav>
+</header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <svg class="hero-arc" viewBox="0 0 90 110" width="80" height="96" aria-hidden="true">
+      <path d="M70 4 C 20 10, 6 45, 14 78" fill="none" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+      <path d="M4 66 L14 78 L26 68" fill="none" stroke="#FFC928" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <svg class="hero-swoop" viewBox="0 0 80 24" width="70" height="20" aria-hidden="true">
+      <path d="M2 20 C 24 2, 56 2, 78 14" fill="none" stroke="#FFC928" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>
+
+    <h1 class="hero-title">
+      <span class="line-1">A journey through
+        <svg class="hero-star hero-star-1" viewBox="0 0 40 40" width="26" height="26" aria-hidden="true">
+          <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+        </svg>
+      </span>
+      <span class="line-2">the stories left behind</span>
+    </h1>
+
+    <div class="btn-wrap">
+      <svg class="ray ray-left" viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+        <line x1="6" y1="30" x2="20" y2="30" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+        <line x1="10" y1="12" x2="20" y2="20" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+        <line x1="10" y1="48" x2="20" y2="40" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+
+      <button class="btn-start" data-nav="start">Start the Journey</button>
+
+      <svg class="ray ray-right" viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">
+        <line x1="54" y1="30" x2="40" y2="30" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+        <line x1="50" y1="12" x2="40" y2="20" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+        <line x1="50" y1="48" x2="40" y2="40" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- BOTTOM RIGHT TAGLINE -->
+  <div class="tagline-wrap">
+    <p class="tagline">Every machine left behind<br>has a story to tell.</p>
+    <svg class="tagline-underline" viewBox="0 0 220 20" width="200" height="18" aria-hidden="true">
+      <path d="M2 10 C 50 2, 100 16, 150 8 C 170 4, 195 10, 218 6" fill="none" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <svg class="tagline-star tagline-star-1" viewBox="0 0 40 40" width="14" height="14" aria-hidden="true">
+      <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+    </svg>
+    <svg class="tagline-star tagline-star-2" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true">
+      <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+    </svg>
+  </div>
+
+</div>
+<!-- *****script starts here *****-->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const routes = {
+    home: 'index.html',
+    start: 'index3.html',
+    stories: 'stories.html',
+    explore: 'explore.html',
+    about: 'about.html'
+  };
+
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const key = el.getAttribute('data-nav');
+      const dest = routes[key];
+      if (dest) {
+        window.location.href = dest;
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Journey to the Moon | Rovelore Chronicles</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;           /* no scrolling */
+      background: #05030f;        /* shown for a split second before the image loads */
+    }
+
+    .journey {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;             /* correct height on mobile browsers */
+      background-image: url("../images/moon-intro.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.03); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ---- Tagline text ---- */
+    .tagline {
+      position: fixed;
+      right: 6vw;
+      bottom: 20vh;
+      z-index: 5;
+      width: min(38vw, 520px);
+      text-align: center;
+      font-family: "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", "Segoe UI", sans-serif;
+      font-style: italic;
+      pointer-events: none;
+      opacity: 0;
+      transform: rotate(-4deg) translateY(10px);
+      animation: taglineIn 0.6s ease-out 0.35s forwards;
+    }
+
+    @keyframes taglineIn {
+      from { opacity: 0; transform: rotate(-4deg) translateY(10px); }
+      to   { opacity: 1; transform: rotate(-4deg) translateY(0); }
+    }
+
+    .tagline-title {
+      display: block;
+      font-size: clamp(1.7rem, 4vw, 3.3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #ffd76a;
+      text-shadow: 0 0 14px rgba(255, 190, 80, 0.55),
+                   0 2px 4px rgba(5, 5, 40, 0.9);
+    }
+
+    .tagline-line {
+      display: block;
+      height: 2px;
+      margin: 10px auto 12px;
+      width: 90%;
+      background: linear-gradient(90deg, transparent, #ffb84d, transparent);
+      border-radius: 2px;
+    }
+
+    .tagline-sub {
+      display: block;
+      font-size: clamp(1rem, 2.3vw, 1.8rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: #f4f8ff;
+      text-shadow: 0 0 12px rgba(120, 180, 255, 0.7),
+                   0 2px 4px rgba(5, 5, 40, 0.9);
+    }
+
+    .tagline-line.blue {
+      margin: 12px auto 0;
+      background: linear-gradient(90deg, transparent, #5aa8ff, transparent);
+    }
+
+    /* Skip button – same design as the NEXT / CONTINUE button */
+    .skip-btn {
+      position: fixed;
+      right: calc(24px + env(safe-area-inset-right, 0px));
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      z-index: 10;
+      padding: 9px 26px;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #fff;
+      background: rgba(40, 30, 110, 0.82);
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
+      transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+    }
+    .skip-btn:hover {
+      transform: scale(1.07);
+      background: rgba(90, 70, 210, 0.95);
+      box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
+    }
+    .skip-btn:active { transform: scale(0.95); }
+    .skip-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
+
+    @media (max-width: 700px) {
+      .tagline {
+        left: 6vw;
+        right: 6vw;
+        bottom: 15vh;
+        width: auto;
+      }
+      .skip-btn {
+        right: calc(16px + env(safe-area-inset-right, 0px));
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        font-size: 12px;
+        padding: 7px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="journey" role="img"
+       aria-label="A spacecraft travels from Earth toward the Moon"></div>
+
+  <div class="tagline">
+    <span class="tagline-title">The Moon awaits.</span>
+    <span class="tagline-line"></span>
+    <span class="tagline-sub">Its hidden stories are waiting to be discovered.</span>
+    <span class="tagline-line blue"></span>
+  </div>
+
+  <button class="skip-btn" id="skipBtn" type="button">SKIP</button>
+
+  <script>
+    (function () {
+      var TARGET = "moon.html";   // your existing Moon page – change if the filename is different
+      var DELAY  = 2000;          // exactly 2 seconds
+      var navigated = false;
+
+      function goToMoon() {
+        if (navigated) return;    // prevents double navigation
+        navigated = true;
+        clearTimeout(timer);
+        // replace() keeps this page out of history, so Back from the
+        // Moon page returns to the destination page, not this transition.
+        window.location.replace(TARGET);
+      }
+
+      var timer = setTimeout(goToMoon, DELAY);
+
+      document.getElementById("skipBtn").addEventListener("click", goToMoon);
+    })();
+  </script>
+</body>
+</html>

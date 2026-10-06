@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your World – Rovelore Chronicles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   destination.css – Moon / Mars selection page.
+   The base styles (background, navbar, hero, cards) are copied from the
+   home page so both pages look identical. Only Lena's styles are new.
+===================================================================== */
+
+:root {
+  --gold: #FFC928;
+  --cyan: #21C8FF;
+  --orange: #FF8A24;
+  --white: #FFFFFF;
+  --navy-deep: #060912;
+  --navy-card: #0B1C2C;
+  --mars-card: #2A0E08;
+
+  /* Lena's height (she is fixed to the screen, so she never moves the layout) */
+  --lena-h: 72vh;   /* was 62vh */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  /* ===== BACKGROUND IMAGE SLOT =====
+     Put your background picture in the images folder and write its
+     file name here. (Same idea as images/2nd.png on the home page.) */
+  background-image: url("../images/2nd.png");
+  background-color: var(--navy-deep);   /* shows until the picture is added */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--white);
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  gap: 1.5vh;
+}
+
+/* ---------- HEADER (same as home page) ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px 0;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.mainnav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+}
+
+.nav-link.active {
+  color: #FFC928;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 2px;
+  background: #FFC928;
+}
+
+.nav-link:hover:not(.active) {
+  color: #FFC928;
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px 0;
+  }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+}
+
+/* ---------- HERO (same as home page) ---------- */
+.hero {
+  text-align: center;
+  padding: 0 24px;
+  flex: 0 0 auto;
+}
+
+.hero-heading-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-arc { flex-shrink: 0; margin-top: 10px; width: clamp(50px, 6vh, 100px); height: auto; }
+.hero-star { flex-shrink: 0; align-self: flex-start; margin-top: 8px; width: clamp(20px, 3vh, 34px); height: auto; }
+
+.hero-title {
+  font-size: clamp(1.8rem, 5.2vh, 3.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.c-white { color: var(--white); }
+.c-gold { color: var(--gold); }
+
+.hero-sub {
+  font-size: clamp(1.1rem, 2.6vh, 1.8rem);
+  font-weight: 600;
+  color: var(--white);
+  margin: 1vh 0 0;
+}
+
+/* ---------- CARDS (same as home page) ---------- */
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2.5vw;
+  padding: 1vh 48px;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  transition: transform 1.1s cubic-bezier(.3, .8, .3, 1);   /* new: smooth glide when Lena leaves */
+}
+
+.card {
+  width: min(400px, 40vw);
+  max-width: 100%;
+  min-height: 26vh;
+  border-radius: 28px;
+  padding: 1.8vh 1.8vw;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 24px;
+  border-width: 5px;
+  border-style: solid;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+.card-art {
+  flex: 0 0 40%;
+  border-radius: 18px;
+}
+
+.card-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.card-mars {
+  background-color: var(--mars-card);   /* backup colour if the picture is missing */
+  background-image: url("../images/mars.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-moon {
+  background-color: var(--navy-card);   /* backup colour if the picture is missing */
+  background-image: url("../images/moon.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-title {
+  font-size: clamp(1.4rem, 3vh, 2.2rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--white);
+  margin: 0 0 1.2vh;
+  letter-spacing: 1px;
+}
+
+.card-desc {
+  font-size: clamp(0.8rem, 1.6vh, 1rem);
+  line-height: 1.5;
+  color: var(--white);
+  margin: 0 0 1.8vh;
+  font-weight: 500;
+}
+
+.card-btn {
+  align-self: flex-start;
+  background: var(--gold);
+  color: #0A1230;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.6vh, 1rem);
+  padding: 1.2vh 1.8vw;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(255,201,40,0.4);
+}
+
+/* ---------- RESPONSIVE (same as home page) ---------- */
+@media (max-width: 1024px) {
+  .card { width: min(460px, 42vw); padding: 1.6vh 1.4vw; }
+  .topbar { padding: 1.8vh 28px 0; }
+  .mainnav { gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  body { height: auto; min-height: 100vh; overflow: auto; }
+  main { justify-content: flex-start; }
+  .cards { flex-direction: column; align-items: center; padding: 2vh 24px; }
+  .card { width: 100%; max-width: 480px; min-height: unset; flex-direction: column; }
+  .card-art { flex-basis: 140px; }
+}
+
+@media (max-width: 600px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+  .hero-heading-wrap { flex-wrap: wrap; }
+  .hero-arc, .hero-star { display: none; }
+}
+
+/* =====================================================================
+   LENA  (new – only used on this page)
+   position: fixed  => she floats above the page and takes up no space,
+                       so she can never push or cover the cards.
+   pointer-events: none => clicks always pass through her.
+===================================================================== */
+.lena-wrap {
+  position: fixed;
+  left: 0; bottom: 20vh;
+  height: var(--lena-h);
+  z-index: 6;
+  pointer-events: none;
+}
+.lena {
+  display: block;
+  height: 100%;
+  width: auto;                        /* keeps the picture's real proportions */
+  transform: translateX(-110%);       /* hidden off the left edge */
+  opacity: 0;
+   transition: transform 0.95s cubic-bezier(.2, .9, .3, 1.1), opacity 0.6s ease;
+}
+.lena-wrap.in  .lena { transform: translateX(0); opacity: 1; }
+.lena-wrap.out .lena {
+  transform: translateX(-110%); opacity: 0;
+  transition: transform 0.9s cubic-bezier(.6, 0, .8, .4), opacity 0.7s ease 0.2s;
+}
+.lena-wrap.gone { display: none; }
+
+/* speech bubble (same look as the story bubbles) */
+.bubble {
+ position: absolute;
+  left: 83%;                 /* bigger = further right of Lena, smaller = closer to her */
+  top: 3%;                   /* bigger = lower, smaller = higher (negative = above her head) */
+  width: max-content;
+  max-width: min(320px, 56vw);
+  padding: 12px 18px;
+  background: rgba(40, 30, 110, 0.88);
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  box-shadow: 0 0 18px rgba(150, 130, 255, 0.35), 0 6px 14px rgba(0, 0, 20, 0.45);
+  opacity: 0;
+  transform: scale(0.85) translateX(-10px);
+  transform-origin: left center;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.2, .9, .3, 1.2);
+}
+
+.bubble.show { opacity: 1; transform: none; }
+
+/* POINTER
+   A full-screen, click-through layer that is cut into a triangle with
+   clip-path. The triangle's corners are calculated in the script
+   (positionBubble) so its tip always points at Lena's mouth.
+   The old .bubble::before arrow has been removed. */
+.tail {
+  position: fixed;
+  inset: 0;
+  z-index: 7;                          /* just above Lena and the bubble */
+  pointer-events: none;
+  background: rgba(40, 30, 110, 0.88); /* same colour as the bubble */
+  clip-path: polygon(0 0, 0 0, 0 0);   /* empty until the script draws it */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.tail.show { opacity: 1; }
+
+.bubble-name {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+
+.bubble-line {
+  display: block;
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Wide screens: while Lena talks, the cards sit a little to the right so
+   she and her bubble have room. They glide to the centre when she leaves. */
+@media (min-width: 1501px) {
+  body.intro-active .cards { transform: translateX(16vw); }   /* was 14vw */
+}
+
+/* Smaller screens: Lena is smaller and stands at the bottom-left. */
+/* Smaller screens: Lena is smaller and stands at the bottom-left. */
+@media (max-width: 1500px) {
+  :root { --lena-h: 65vh; }
+  .bubble {
+    left: 83%;
+    top: 3%;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root { --lena-h: 45vh; }
+  .bubble {
+    left: 60%;
+    top: 3%;
+  }
+}
+
+@media (max-width: 768px) {
+  :root { --lena-h: 34vh; }
+  .bubble {
+    left: 44%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cards, .lena, .bubble, .tail { transition: none; }
+}
+</style>
+</head>
+<body class="intro-active">
+
+<!-- ================= NAVBAR (same as the home page) ================= -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-logo" aria-hidden="true">
+      <svg viewBox="0 0 48 40" width="36" height="30">
+        <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+        <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+        <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+        <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+        <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+      </svg>
+    </span>
+    <span class="brand-name">Rovelore Chronicles</span>
+  </div>
+  <nav class="mainnav" aria-label="Main navigation">
+    <button class="nav-link" data-nav="home">Home</button>
+    <button class="nav-link active" data-nav="start">Start the Journey</button>
+    <button class="nav-link" data-nav="stories">Stories</button>
+    <button class="nav-link" data-nav="explore">Explore</button>
+    <button class="nav-link" data-nav="about">About</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-heading-wrap">
+      <svg class="hero-arc" viewBox="0 0 120 90" width="100" height="80" aria-hidden="true">
+        <path d="M100 10 C 40 10, 15 45, 20 80" fill="none" stroke="#FFC928" stroke-width="4" stroke-linecap="round"/>
+        <path d="M8 70 L20 80 L32 68" fill="none" stroke="#FFC928" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      <h1 class="hero-title">
+        <span class="c-white">Choose your</span><br>
+        <span class="c-gold">destination!</span>
+      </h1>
+
+      <svg class="hero-star" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+      </svg>
+    </div>
+
+    <p class="hero-sub">Pick a world to explore</p>
+  </section>
+
+  <section class="cards" id="cards">
+    <article class="card card-mars">
+      <div class="card-art" aria-hidden="true"></div>
+      <div class="card-content">
+        <h2 class="card-title">Mars</h2>
+        <p class="card-desc">Explore the red planet and<br>discover the machines that<br>still stand beneath its sky.</p>
+        <button class="card-btn" data-nav="mars">Explore Mars</button>
+      </div>
+    </article>
+
+    <article class="card card-moon">
+      <div class="card-art" aria-hidden="true"></div>
+      <div class="card-content">
+        <h2 class="card-title">Moon</h2>
+        <p class="card-desc">Travel across the lunar surface<br>and uncover the machines<br>left behind.</p>
+        <button class="card-btn" data-nav="moon">Explore Moon</button>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- ================= LENA (fixed on top of the page, never affects layout) ================= -->
+<div class="lena-wrap" id="lenaWrap" aria-live="polite">
+  <img class="lena" src="../images/lena.png" alt="Commander Lena, pointing toward the Moon and Mars choices">
+  <div class="bubble" id="bubble">
+    <span class="bubble-name">Commander Lena</span>
+    <span class="bubble-line" id="line1">Where do you want to explore?
+                                         Choose the Moon or Mars!</span>
+  </div>
+</div>
+
+<!-- Pointer triangle (drawn by positionBubble() in the script) -->
+<div class="tail" id="tail" aria-hidden="true"></div>
+
+<script>
+/* =====================================================================
+   destination.js – Lena's introduction + page links.
+   Nothing here touches your other pages.
+===================================================================== */
+
+// ---------- 1. WHERE EACH BUTTON GOES (edit these file names) ----------
+const ROUTES = {
+  home:    "index.html",
+  start:   "index3.html",
+  stories: "stories.html",
+  explore: "explore.html",
+  about:   "about.html",
+  moon:    "moon-intro.html",     // <- your existing Moon map page
+  mars:    "mars-intro.html"      // <- your existing Mars map page
+};
+
+// ---------- 2. LENA'S TIMELINE (in milliseconds) ----------
+const TIMING = {
+  slideIn:    200,
+  bubble:     900,
+  bubbleOff: 3900,
+  slideOut:  4000,
+  finished:  4900
+};
+
+/* =====================================================================
+   POINTER AIMED AT LENA'S MOUTH
+   x / y = where her mouth is in lena.png, measured in that image's own
+           pixels (as you'd see in any image editor), counted from the
+           top-left of the picture. Lena is NOT mirrored on this page.
+   tipDx = how far the tip stops short of the mouth sideways.
+           Positive = stops to the right of the mouth (bubble is on her right).
+   tipDy = nudge the tip up (-) or down (+).
+   baseHalf = half of the triangle's width where it joins the bubble.
+
+   !! x and y below are PLACEHOLDERS (same as the Mars/Moon pages, since it
+   is the same lena.png). If the pointer is off, open this page with
+   ?calibrate at the end of the address, click on Lena's mouth, and copy
+   the numbers printed in the console into x and y. !!
+===================================================================== */
+const SPOT = { x: 300, y: 370, tipDx: 16, tipDy: 0, baseHalf: 11, length: 0.4 };
+
+// ---------- 3. NAVBAR AND CARD BUTTONS (same as the home page) ----------
+document.querySelectorAll("[data-nav]").forEach(function (el) {
+  el.addEventListener("click", function () {
+    const dest = ROUTES[el.getAttribute("data-nav")];
+    if (dest) window.location.href = dest;
+  });
+});
+
+// ---------- 4. LENA'S INTRODUCTION ----------
+(function lenaIntro() {
+  const wrap   = document.getElementById("lenaWrap");
+  const bubble = document.getElementById("bubble");
+  const tail   = document.getElementById("tail");
+  const img    = wrap.querySelector(".lena");
+  const KEY    = "lenaSeen_start";
+
+  /* Works out the 3 corners of the triangle and cuts the .tail layer to it. */
+  function positionBubble() {
+    if (!img.naturalWidth) return;                     // picture not loaded yet
+
+    // scale: how big the picture is on screen compared with the original file
+    const s = img.offsetHeight / img.naturalHeight;
+
+    // wrap never moves (only the picture inside it slides), so it is a safe reference
+    const w = wrap.getBoundingClientRect();
+
+    // mouth in screen pixels (picture is not mirrored here)
+    const mx = w.left + SPOT.x * s;
+    const my = w.top  + SPOT.y * s;
+
+    // bubble edges in screen pixels (offset* ignores the pop-in scale animation)
+    const bLeft   = w.left + bubble.offsetLeft;
+    const bTop    = w.top  + bubble.offsetTop;
+    const bBottom = bTop + bubble.offsetHeight;
+
+    // keep the base of the triangle inside the bubble's straight edge
+    const mid = Math.min(Math.max(my, bTop + 24), bBottom - 24);
+    const y1  = mid - SPOT.baseHalf;
+    const y2  = mid + SPOT.baseHalf;
+
+    const baseX = bLeft;
+    // full-length tip position (at the mouth)
+    const fullX = mx + SPOT.tipDx;
+    const fullY = my + SPOT.tipDy;
+
+    // pull the tip back toward the bubble by the "length" factor
+    const tipX = baseX + (fullX - baseX) * SPOT.length;
+    const tipY = mid   + (fullY - mid)  * SPOT.length;
+
+    tail.style.clipPath =
+      "polygon(" + baseX + "px " + y1 + "px, " +
+                   baseX + "px " + y2 + "px, " +
+                   tipX  + "px " + tipY + "px)";
+  }
+
+  function finish() {
+    wrap.classList.add("gone");
+    tail.style.display = "none";
+    document.body.classList.remove("intro-active");   // choices settle in the centre
+  }
+
+  // keep the pointer glued to her mouth when the window changes size
+  window.addEventListener("resize", positionBubble);
+  if (img.complete) positionBubble();
+  else img.addEventListener("load", positionBubble);
+
+  /* ---------- CALIBRATION MODE (open the page with ?calibrate) ---------- */
+  if (location.search.indexOf("calibrate") !== -1) {
+    wrap.classList.add("in");
+    bubble.classList.add("show");
+    tail.classList.add("show");
+    positionBubble();
+    document.addEventListener("click", function (e) {
+      const s = img.offsetHeight / img.naturalHeight;
+      const w = wrap.getBoundingClientRect();
+      SPOT.x = Math.round((e.clientX - w.left) / s);
+      SPOT.y = Math.round((e.clientY - w.top) / s);
+      positionBubble();
+      console.log("Copy into SPOT:  x: " + SPOT.x + ", y: " + SPOT.y);
+    });
+    return;
+  }
+
+  // Already seen on a previous visit: remove her immediately.
+  let seen = false;
+  try { seen = sessionStorage.getItem(KEY) === "yes"; } catch (e) {}
+  if (seen) {
+    finish();
+    return;
+  }
+
+  // People who prefer less motion: skip the animation completely.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    finish();
+    return;
+  }
+
+  // First visit: remember it, then play the intro.
+  try { sessionStorage.setItem(KEY, "yes"); } catch (e) {}
+
+  setTimeout(function () { wrap.classList.add("in"); },            TIMING.slideIn);
+  setTimeout(function () {
+    positionBubble();                                   // re-aim right before showing
+    bubble.classList.add("show");
+    tail.classList.add("show");
+  }, TIMING.bubble);
+  setTimeout(function () {
+    bubble.classList.remove("show");
+    tail.classList.remove("show");
+  }, TIMING.bubbleOff);
+  setTimeout(function () { wrap.classList.remove("in"); wrap.classList.add("out"); }, TIMING.slideOut);
+  setTimeout(finish,                                               TIMING.finished);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — Mars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* =========================
+   MARS MAP — IMPROVED CSS
+========================= */
+
+:root {
+  --gold: #FFC928;
+  --cyan: #e19a0c;
+  --cyan-light: #d5880c;
+  --white: #FFFFFF; 
+  --navy: #0A1230; 
+  --navy-panel: #0B1C3A; 
+  --mars-light: #FF9A4D; 
+  --mars-mid: #E8672D; 
+  --mars-dark: #7A2410;
+  --mars-1: #FF9A4D;
+  --mars-2: #E8672D;
+  --mars-3: #7A2410;
+
+  /* Lena's height (she is fixed to the screen, so she never moves the layout) */
+  --lena-h: 70vh;
+}
+
+/* =========================
+   BASIC RESET
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #000;
+  color: var(--white);
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+}
+
+
+/* =========================
+   MAIN STAGE
+========================= */
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 1648px;
+  min-height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+
+  background-image: url("../images/mars2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.topbar {
+  position: relative;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 48px 0;
+
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.mainnav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+
+  color: var(--white);
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  padding: 4px 0;
+
+  position: relative;
+}
+
+.nav-link.active {
+  color: var(--gold);
+}
+
+.nav-link.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: -6px;
+
+  height: 3px;
+
+  border-radius: 2px;
+
+  background: var(--gold);
+}
+
+.nav-link:hover:not(.active) {
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+  position: relative;
+  z-index: 10;
+
+  padding: 2vh 3vw 0;
+}
+
+.back-link {
+  background: none;
+  border: none;
+
+  color: var(--white);
+
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 0 1.5vh;
+}
+
+.back-link:hover {
+  color: var(--cyan-light);
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.mars-icon {
+  display: inline-block;
+  width: clamp(40px, 4.5vw, 64px);
+  height: clamp(40px, 4.5vw, 64px);
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--mars-1) 0%,
+    var(--mars-2) 60%,
+    var(--mars-3) 100%
+  );
+
+  box-shadow: 0 0 14px rgba(217, 107, 69, 0.5);
+}
+
+.page-title {
+  margin: 0;
+
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+
+  color: var(--white);
+}
+
+.page-desc {
+  margin: 1vh 0 0;
+
+  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+  font-weight: 500;
+
+  color: var(--white);
+
+  max-width: 40ch;
+}
+
+
+
+/* =========================
+   MISSION MARKERS
+========================= */
+
+.marker {
+  position: absolute;
+
+  z-index: 6;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  font-family: inherit;
+  color: var(--white);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+
+  animation: float 4s ease-in-out infinite;
+}
+
+
+/* Marker hover */
+
+.marker:hover,
+.marker:focus-visible {
+  transform: scale(1.06);
+
+  filter:
+    brightness(1.15)
+    drop-shadow(0 0 10px rgba(41, 200, 255, 0.6));
+}
+
+
+/* Floating animation */
+
+@keyframes float {
+
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -4px;
+  }
+
+}
+
+
+/* =========================
+   MARKER POSITIONS
+========================= */
+
+ 
+.marker-1 { left: 26%; top: 35%; animation-delay: 0s; }
+.marker-2 { left: 50%; top: 33%; animation-delay: 0.6s; }
+.marker-3 { left: 24%; top: 64%; animation-delay: 1.2s; }
+.marker-4 { left: 52%; top: 66%; animation-delay: 2.4s; }
+
+
+
+/* =========================
+   MARKER ICON
+========================= */
+
+.marker-icon {
+  flex-shrink: 0;
+
+  width: clamp(46px, 5.2vw, 74px);
+  height: clamp(46px, 5.2vw, 74px);
+
+  border-radius: 50%;
+
+  background: var(--navy-panel);
+
+  border: 3px solid var(--cyan);
+
+  padding: 8px;
+
+  box-shadow:
+    0 0 16px rgba(41, 200, 255, 0.3);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.marker:hover .marker-icon {
+  box-shadow:
+    0 0 20px rgba(41, 200, 255, 0.65);
+
+  transform: scale(1.03);
+}
+
+
+/* =========================
+   MARKER LABEL
+========================= */
+
+.marker-label {
+  background: var(--navy-panel);
+
+  border: 2px solid var(--cyan);
+
+  border-radius: 14px;
+
+  padding: 8px 16px;
+
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+
+  font-weight: 700;
+
+  text-align: left;
+
+  line-height: 1.35;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 0 12px rgba(41, 200, 255, 0.15);
+}
+
+.marker-sub {
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+
+/* =========================
+   GLOWING LOCATION PIN
+========================= */
+
+.marker-pin {
+  position: absolute;
+  left: clamp(23px, 2.6vw, 37px);
+  top: calc(100% + 8px);
+  width: 20px;
+  height: 20px;
+  transform: translateX(-50%);
+  background: var(--gold);
+
+  clip-path: path('M10 0 C15.5 0 20 4.3 20 10 C20 16 10 24 10 24 C10 24 0 16 0 10 C0 4.3 4.5 0 10 0 Z');
+
+  box-shadow: 0 0 14px 4px rgba(255,201,40,0.6);
+
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+/* Pin glowing animation */
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px 3px rgba(255, 201, 40, 0.6);
+  }
+
+  50% {
+    box-shadow:
+      0 0 18px 6px rgba(255, 201, 40, 0.6);
+  }
+
+}
+
+
+/* =========================
+   COMPASS
+========================= */
+
+.compass {
+  position: absolute;
+
+  left: 2.5vw;
+  bottom: 3vh;
+
+  width: clamp(60px, 8vw, 100px);
+  height: clamp(60px, 8vw, 100px);
+
+  z-index: 8;
+}
+
+
+/* =========================
+   INSTRUCTION BOX
+========================= */
+
+.instruction {
+  position: absolute;
+
+  right: 2.5vw;
+  bottom: 3vh;
+
+  z-index: 8;
+
+  background: var(--navy-panel);
+
+  border: 2px solid var(--cyan);
+
+  border-radius: 999px;
+
+  padding: 1.4vh 2vw;
+
+  box-shadow:
+    0 0 20px rgba(255, 201, 40, 0.6);
+
+  transform: rotate(-3deg);
+}
+
+.instruction p {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+
+  font-weight: 700;
+
+  line-height: 1.35;
+
+  color: var(--white);
+}
+
+.ray {
+  position: absolute;
+}
+
+.ray-tl {
+  left: -6px;
+  top: -6px;
+}
+
+.ray-tr {
+  right: -6px;
+  top: -6px;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  z-index: 100;
+
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-card {
+  position: relative;
+
+  background: var(--navy-panel);
+
+  border: 3px solid var(--gold);
+
+  border-radius: 20px;
+
+  padding: 32px;
+
+  max-width: 420px;
+
+  width: 100%;
+
+  box-shadow:
+    0 0 40px rgba(255, 201, 40, 0.6);
+
+  animation:
+    modal-in 0.2s ease;
+}
+
+@keyframes modal-in {
+
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+.modal-close {
+  position: absolute;
+
+  top: 12px;
+  right: 16px;
+
+  background: none;
+  border: none;
+
+  color: var(--white);
+
+  font-size: 1.6rem;
+
+  cursor: pointer;
+
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--cyan-light);
+}
+
+.modal-card h2 {
+  margin: 0 0 10px;
+
+  font-size: 1.6rem;
+
+  color: var(--white);
+}
+
+.modal-location-label,
+.modal-mission-label {
+  margin: 0;
+
+  font-size: 0.85rem;
+
+  opacity: 0.75;
+}
+
+.modal-location {
+  margin: 0 0 12px;
+
+  color: var(--cyan-light);
+
+  font-weight: 700;
+}
+
+.modal-mission {
+  margin: 0 0 12px;
+
+  font-weight: 700;
+}
+
+.modal-body {
+  margin: 0;
+
+  line-height: 1.5;
+
+  font-weight: 500;
+}
+
+
+/* =========================
+   COMMANDER LENA (new)
+   position: fixed  => she floats above the page and takes up no space,
+                       so she never pushes or covers the map layout.
+   pointer-events: none => clicks always pass through her.
+========================= */
+
+.lena-wrap {
+  position: fixed;
+  right: 0;
+  bottom: 20vh;              /* higher number = Lena appears higher */
+  height: var(--lena-h);
+  z-index: 50;               /* above the map, below the modal (100) */
+  pointer-events: none;
+}
+
+.lena {
+  display: block;
+  height: 100%;
+  width: auto;                        /* keeps the picture's real proportions */
+  transform: translateX(110%) scaleX(-1);       /* hidden off the right edge */
+  opacity: 0;
+   transition: transform 0.95s cubic-bezier(.2, .9, .3, 1.1), opacity 0.6s ease;
+}
+
+.lena-wrap.in  .lena { transform: translateX(0) scaleX(-1); opacity: 1; }
+
+.lena-wrap.out .lena {
+  transform: translateX(110%) scaleX(-1);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(.6, 0, .8, .4), opacity 0.7s ease 0.2s;
+}
+
+.lena-wrap.gone { display: none; }
+
+/* speech bubble
+   It sits inside .lena-wrap, so these percentages scale with Lena's size
+   on every screen. No separate media-query positions are needed.
+   NOTE: leave a visible gap between the bubble and Lena (smaller "right" %
+   = bubble closer to her). The pointer below is drawn across that gap. */
+.bubble {
+  position: absolute;
+  right: 85%;                 /* bigger = further left of Lena, smaller = closer to her */
+  top: -7.2%;                   /* bigger = lower, smaller = higher (negative = above her head) */
+  width: max-content;
+  max-width: min(320px, 56vw);
+  padding: 12px 18px;
+  background: rgba(40, 30, 110, 0.88);
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  box-shadow: 0 0 18px rgba(150, 130, 255, 0.35), 0 6px 14px rgba(0, 0, 20, 0.45);
+  opacity: 0;
+  transform: scale(0.85) translateX(10px);
+  transform-origin: right center;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.2, .9, .3, 1.2);
+}
+
+.bubble.show { opacity: 1; transform: none; }
+
+/* POINTER
+   A full-screen, click-through layer that is cut into a triangle with
+   clip-path. The triangle's corners are calculated in the script
+   (positionBubble) so its tip always lands on Lena's mouth.
+   The old .bubble::before arrow has been removed. */
+.tail {
+  position: fixed;
+  inset: 0;
+  z-index: 51;                         /* just above Lena and the bubble */
+  pointer-events: none;
+  background: rgba(40, 30, 110, 0.88); /* same colour as the bubble */
+  clip-path: polygon(0 0, 0 0, 0 0);   /* empty until the script draws it */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.tail.show { opacity: 1; }
+
+.bubble-name {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+
+.bubble-line {
+  display: block;
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Smaller screens: Lena is smaller and stands at the bottom-left. */
+@media (max-width: 1500px) {
+  :root { --lena-h: 65vh; }
+  .bubble {
+    right: 85%;
+    top: -7.2%;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root { --lena-h: 45vh; }
+  .bubble {
+    right: 60%;
+    top: -5%;
+  }
+}
+
+@media (max-width: 768px) {
+  :root { --lena-h: 34vh; }
+  .bubble {
+    right: 44%;
+    top: -3.8%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lena, .bubble, .tail { transition: none; }
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .marker-label {
+    white-space: normal;
+    max-width: 24vw;
+  }
+
+  .page-desc {
+    max-width: 32ch;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+
+  .topbar {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 16px 20px 0;
+
+    gap: 10px;
+  }
+
+  .mainnav {
+    gap: 12px;
+  }
+
+  .page-header {
+    padding: 16px 20px 0;
+  }
+
+  .marker {
+    transform: scale(0.85);
+  }
+
+  .marker-label {
+    white-space: normal;
+
+    max-width: 34vw;
+
+    font-size: 0.65rem;
+  }
+
+  .instruction {
+    transform: none;
+
+    right: 4vw;
+    bottom: 2vh;
+  }
+
+  .compass {
+    left: 4vw;
+    bottom: 2vh;
+  }
+
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- NAVBAR -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 48 40" width="36" height="30">
+          <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+          <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+          <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+          <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+          <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+        </svg>
+      </span>
+      <span class="brand-name">Rovelore Chronicles</span>
+    </div>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="nav-link" data-nav="home">Home</button>
+      <button class="nav-link active" data-nav="start">Start the Journey</button>
+      <button class="nav-link" data-nav="stories">Stories</button>
+      <button class="nav-link" data-nav="explore">Explore</button>
+      <button class="nav-link" data-nav="about">About</button>
+    </nav>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <button class="back-link" data-nav="start">
+      <span aria-hidden="true">&larr;</span> Back
+    </button>
+
+    <div class="title-row">
+      <span class="mars-icon" aria-hidden="true"></span>
+      <h1 class="page-title">Mars</h1>
+    </div>
+
+    <p class="page-desc">Explore the places where our spacecraft<br>have left their mark.</p>
+  </div>
+
+    <!-- MISSION MARKERS -->
+   <button class="marker marker-1" data-mission="sojourner"> 
+  <span class="marker-icon" aria-hidden="true"> 
+    <svg viewBox="0 0 60 44" width="100%" height="100%"> 
+      <ellipse cx="30" cy="14" rx="12" ry="7" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/> 
+      <line x1="12" y1="14" x2="0" y2="8" stroke="#3a5a8a" stroke-width="3"/> 
+      <line x1="12" y1="14" x2="0" y2="22" stroke="#3a5a8a" stroke-width="3"/> 
+      <line x1="48" y1="14" x2="60" y2="8" stroke="#3a5a8a" stroke-width="3"/> 
+      <line x1="48" y1="14" x2="60" y2="22" stroke="#3a5a8a" stroke-width="3"/> 
+      <line x1="30" y1="20" x2="30" y2="34" stroke="#8a8578" stroke-width="2.5"/> 
+      <rect x="18" y="34" width="24" height="6" rx="2" fill="#c9c4b6"/> 
+    </svg> 
+  </span> 
+
+  <span class="marker-label">
+    Sojourner Rover<br>
+    <span class="marker-sub">(Ares Vallis)</span>
+  </span> 
+
+  <span class="marker-pin" aria-hidden="true"></span> 
+</button>
+
+
+<button class="marker marker-2" data-mission="perseverance"> 
+  <span class="marker-icon" aria-hidden="true"> 
+    <svg viewBox="0 0 60 44" width="100%" height="100%"> 
+      <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/> 
+      <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/> 
+      <circle cx="25" cy="4" r="2" fill="#1a1a1a"/> 
+      <circle cx="35" cy="4" r="2" fill="#1a1a1a"/> 
+      <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/> 
+      <circle cx="14" cy="34" r="7" fill="#181818"/> 
+      <circle cx="30" cy="36" r="7.5" fill="#181818"/> 
+      <circle cx="46" cy="34" r="7" fill="#181818"/> 
+    </svg> 
+  </span> 
+
+  <span class="marker-label">
+    Perseverance Rover<br>
+    <span class="marker-sub">(Jezero Crater)</span>
+  </span> 
+
+  <span class="marker-pin" aria-hidden="true"></span> 
+</button>
+
+    <button class="marker marker-3" data-mission="curiosity">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 44" width="100%" height="100%">
+          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+          <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
+          <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
+          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+          <circle cx="14" cy="34" r="7" fill="#181818"/>
+          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+          <circle cx="46" cy="34" r="7" fill="#181818"/>
+        </svg>
+      </span>
+      <span class="marker-label">Curiosity Rover<br><span class="marker-sub">(Gale Crater)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <button class="marker marker-4" data-mission="opportunity">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 44" width="100%" height="100%">
+          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+          <rect x="6" y="12" width="16" height="9" rx="2" fill="#2b5faa"/>
+          <rect x="38" y="12" width="16" height="9" rx="2" fill="#2b5faa"/>
+          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+          <circle cx="14" cy="34" r="7" fill="#181818"/>
+          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+          <circle cx="46" cy="34" r="7" fill="#181818"/>
+        </svg>
+      </span>
+      <span class="marker-label">Opportunity Rover<br><span class="marker-sub">(Endeavour Crater)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+  <!-- COMPASS -->
+  <div class="compass" aria-hidden="true">
+    <svg viewBox="0 0 90 90" width="100%" height="100%">
+      <circle cx="45" cy="45" r="40" fill="rgba(10,18,40,0.55)" stroke="#21C8FF" stroke-width="2"/>
+      <text x="45" y="18" text-anchor="middle" fill="#21C8FF" font-size="12" font-family="Baloo 2, sans-serif" font-weight="700">N</text>
+      <polygon points="45,26 51,58 45,50 39,58" fill="#21C8FF"/>
+    </svg>
+  </div>
+
+  <!-- INSTRUCTION BUTTON -->
+  <div class="instruction">
+    <svg class="ray ray-tl" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="2" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="ray ray-tr" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="18" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+    <p>Click on a location<br>to learn more!</p>
+  </div>
+
+</div>
+
+<!-- ================= COMMANDER LENA (fixed on top of the page, never affects layout) ================= -->
+<div class="lena-wrap" id="lenaWrap" aria-live="polite">
+  <img class="lena" src="../images/lena.png" alt="Commander Lena, welcoming you to Mars">
+  <div class="bubble" id="bubble">
+    <span class="bubble-name">Commander Lena</span>
+    <span class="bubble-line" id="line1">Welcome to Mars, explorer!
+         <br>Choose a spacecraft on the map, and let&rsquo;s uncover its amazing story together!</span>
+  </div>
+</div>
+
+<!-- Pointer triangle (drawn by positionBubble() in the script) -->
+<div class="tail" id="tail" aria-hidden="true"></div>
+
+<!-- MISSION MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <h2 id="modalTitle">Mission Title</h2>
+    <p class="modal-location" id="modalLocation">Location</p>
+    <p class="modal-mission-label">Mission:</p>
+    <p class="modal-mission" id="modalMission">Mission name</p>
+    <p class="modal-body" id="modalBody">Description goes here.</p>
+  </div>
+</div>
+
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+  /* ---------- PAGE NAVIGATION ---------- */
+  const routes = {
+    home: 'index.html',
+    start: 'index3.html',
+    stories: 'stories.html',
+    explore: 'explore.html',
+    about: 'about.html'
+  };
+
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const dest = routes[el.getAttribute('data-nav')];
+      if (dest) window.location.href = dest;
+    });
+  });
+
+  /* ---------- MISSION MODAL ---------- */
+  const missions = {
+    sojourner: {
+    title: 'Sojourner Rover',
+    location: 'Ares Vallis',
+    mission: 'Mars Pathfinder (1997)',
+    body: 'Explore the story of Sojourner, the first successful Mars rover, which explored the surface of Ares Vallis and studied Martian rocks and soil.'
+},
+    perseverance: {
+      title: 'Perseverance Rover',
+      location: 'Jezero Crater',
+      mission: 'Mars 2020',
+      body: 'Explore the story of the rover searching for signs of ancient microbial life and collecting samples for future return to Earth.'
+    },
+    curiosity: {
+      title: 'Curiosity Rover',
+      location: 'Gale Crater',
+      mission: 'Mars Science Laboratory (2012)',
+      body: 'Explore the story of the rover that has been studying Mars\' climate and geology for over a decade.'
+    },
+    opportunity: {
+      title: 'Opportunity Rover',
+      location: 'Endeavour Crater',
+      mission: 'Mars Exploration Rover (2004)',
+      body: 'Explore the story of the rover that outlasted its planned 90-day mission by nearly 15 years.'
+    }
+  };
+
+  const overlay = document.getElementById('modalOverlay');
+  const closeBtn = document.getElementById('modalClose');
+  const titleEl = document.getElementById('modalTitle');
+  const locationEl = document.getElementById('modalLocation');
+  const missionEl = document.getElementById('modalMission');
+  const bodyEl = document.getElementById('modalBody');
+
+  function openModal(key) {
+    const data = missions[key];
+    if (!data) return;
+    titleEl.textContent = data.title;
+    locationEl.textContent = data.location;
+    missionEl.textContent = data.mission;
+    bodyEl.textContent = data.body;
+    overlay.classList.add('open');
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+  }
+document.querySelectorAll('.marker').forEach((marker) => {
+
+  marker.addEventListener('click', () => {
+
+    const mission = marker.dataset.mission;
+
+    if (mission === 'sojourner') {
+      window.location.href = '../sojourner/scene1.html';
+    } 
+    else if (mission === 'perseverance') {
+      window.location.href = '../perseverance/scene1.html';
+    } 
+    else if (mission === 'curiosity') {
+      window.location.href = '../curiosity/scene1.html';
+    } 
+    else if (mission === 'opportunity') {
+      window.location.href = '../Opportunity Rover/scene1.html';
+    }
+    else {
+      openModal(mission);
+    }
+
+  });
+
+});
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+});
+
+/* =====================================================================
+   COMMANDER LENA'S INTRODUCTION
+   Edit the times below (milliseconds) to change how long she stays.
+===================================================================== */
+const TIMING = {
+  slideIn:    200,
+  bubble:     900,
+  bubbleOff: 3900,
+  slideOut:  4000,
+  finished:  4900
+};
+
+/* =====================================================================
+   POINTER AIMED AT LENA'S MOUTH
+   x / y = where her mouth is in the ORIGINAL lena.png, measured in that
+           image's own pixels (as you'd see in any image editor), counted
+           from the top-left of the UNFLIPPED picture.
+   tipDx = how far the tip stops short of the mouth sideways.
+           Negative = stops to the left of the mouth (bubble is on her left).
+   tipDy = nudge the tip up (-) or down (+).
+   baseHalf = half of the triangle's width where it joins the bubble.
+
+   !! x and y below are PLACEHOLDERS. Open the page with ?calibrate at the
+   end of the address (e.g. mars.html?calibrate), click on Lena's mouth,
+   and copy the numbers printed in the console into x and y. !!
+===================================================================== */
+const SPOT = { x: 300, y: 370, tipDx: -16, tipDy: 0, baseHalf: 11, length: 0.4 };
+
+(function lenaIntro() {
+  const wrap   = document.getElementById("lenaWrap");
+  const bubble = document.getElementById("bubble");
+  const tail   = document.getElementById("tail");
+  const img    = wrap.querySelector(".lena");
+  const KEY    = "lenaSeen_mars";
+
+  /* Works out the 3 corners of the triangle and cuts the .tail layer to it. */
+  function positionBubble() {
+    if (!img.naturalWidth) return;                     // picture not loaded yet
+
+    // scale: how big the picture is on screen compared with the original file
+    const s = img.offsetHeight / img.naturalHeight;
+
+    // wrap never moves (only the picture inside it slides), so it is a safe reference
+    const w = wrap.getBoundingClientRect();
+
+    // mouth in screen pixels (the picture is mirrored, so x is measured from the right)
+    const mx = w.left + (img.naturalWidth - SPOT.x) * s;
+    const my = w.top  + SPOT.y * s;
+
+    // bubble edges in screen pixels (offset* ignores the pop-in scale animation)
+    const bRight  = w.left + bubble.offsetLeft + bubble.offsetWidth;
+    const bTop    = w.top  + bubble.offsetTop;
+    const bBottom = bTop + bubble.offsetHeight;
+
+    // keep the base of the triangle inside the bubble's straight edge
+    const mid = Math.min(Math.max(my, bTop + 24), bBottom - 24);
+    const y1  = mid - SPOT.baseHalf;
+    const y2  = mid + SPOT.baseHalf;
+
+    const baseX = bRight;
+    // full-length tip position (at the mouth)
+    const fullX = mx + SPOT.tipDx;
+    const fullY = my + SPOT.tipDy;
+
+    // pull the tip back toward the bubble by the "length" factor
+    const tipX = baseX + (fullX - baseX) * SPOT.length;
+    const tipY = mid   + (fullY - mid)  * SPOT.length;
+
+    tail.style.clipPath =
+      "polygon(" + baseX + "px " + y1 + "px, " +
+                   baseX + "px " + y2 + "px, " +
+                   tipX  + "px " + tipY + "px)";
+  }
+
+  function finish() {
+    wrap.classList.add("gone");
+    tail.style.display = "none";
+  }
+
+  // keep the pointer glued to her mouth when the window changes size
+  window.addEventListener("resize", positionBubble);
+  if (img.complete) positionBubble();
+  else img.addEventListener("load", positionBubble);
+
+  /* ---------- CALIBRATION MODE (open the page with ?calibrate) ---------- */
+  if (location.search.indexOf("calibrate") !== -1) {
+    wrap.classList.add("in");
+    bubble.classList.add("show");
+    tail.classList.add("show");
+    positionBubble();
+    document.addEventListener("click", function (e) {
+      const s = img.offsetHeight / img.naturalHeight;
+      const w = wrap.getBoundingClientRect();
+      SPOT.x = Math.round(img.naturalWidth - (e.clientX - w.left) / s);
+      SPOT.y = Math.round((e.clientY - w.top) / s);
+      positionBubble();
+      console.log("Copy into SPOT:  x: " + SPOT.x + ", y: " + SPOT.y);
+    });
+    return;
+  }
+
+  // Already seen on a previous visit: remove her immediately.
+  let seen = false;
+  try { seen = sessionStorage.getItem(KEY) === "yes"; } catch (e) {}
+  if (seen) {
+    finish();
+    return;
+  }
+
+  // People who prefer less motion: skip the animation completely.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    finish();
+    return;
+  }
+
+  // First visit: remember it, then play the intro.
+  try { sessionStorage.setItem(KEY, "yes"); } catch (e) {}
+
+  setTimeout(function () { wrap.classList.add("in"); },        TIMING.slideIn);
+  setTimeout(function () {
+    positionBubble();                                   // re-aim right before showing
+    bubble.classList.add("show");
+    tail.classList.add("show");
+  }, TIMING.bubble);
+  setTimeout(function () {
+    bubble.classList.remove("show");
+    tail.classList.remove("show");
+  }, TIMING.bubbleOff);
+  setTimeout(function () { wrap.classList.remove("in"); wrap.classList.add("out"); }, TIMING.slideOut);
+  setTimeout(finish,                                           TIMING.finished);
+})();
+</script>
+</body>
+</html>

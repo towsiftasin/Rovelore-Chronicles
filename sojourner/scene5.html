@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene 5 – Sojourner Prepares to Leave</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #0b0b2a;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+
+  /* ===== BACKGROUND =====
+     Layer 1 (.backdrop): the same picture, blurred, filling the whole screen,
+                          so there are never empty black bars.
+     Layer 2 (.scene)   : the picture itself. The script sets how it fits
+                          (see FIT at the top of the script).             */
+  .backdrop {
+    position: fixed;
+    inset: -30px;
+    background-image: url("../images/sojourner/scene5.jpeg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(24px) brightness(0.8);
+  }
+  .scene {
+    position: fixed;
+    inset: 0;
+    background-image: url("../images/sojourner/scene5.jpeg");
+    background-size: contain;          /* the script changes this to match FIT */
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .speech {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.9) translateY(8px);
+    transition: opacity 550ms ease, transform 550ms cubic-bezier(.2, .9, .3, 1.2);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 20, 0.45));
+  }
+  .speech.show { opacity: 1; transform: scale(1) translateY(0); }
+
+  .bubble {
+    position: absolute;
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 220px;
+    padding: 12px 16px;
+    background: rgba(40, 30, 110, 0.72);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(5, 5, 40, 0.8);
+    font-family: "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", "Segoe UI", sans-serif;
+    box-shadow: 0 0 16px rgba(150, 130, 255, 0.25);
+  }
+
+  .speaker-name {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #ffd76a;
+    text-shadow: 0 1px 2px rgba(5, 5, 40, 0.9);
+    margin-bottom: 4px;
+  }
+
+  .bubble-text {
+    display: block;
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 600;
+    white-space: pre-line;
+  }
+
+  .tail { position: absolute; background: rgba(78, 62, 185, 0.92); }
+
+  .next-btn {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10;
+    padding: 9px 22px;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #fff;
+    background: rgba(40, 30, 110, 0.82);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 400ms ease, transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  }
+  .next-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .next-btn.show:hover {
+    transform: scale(1.07);
+    background: rgba(90, 70, 210, 0.95);
+    box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
+  }
+  .next-btn.show:active { transform: scale(0.95); }
+  .next-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
+
+  /* BACK button – bottom-left corner, same look as NEXT */
+  .back-btn {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 10;
+    padding: 9px 22px;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #fff;
+    background: rgba(40, 30, 110, 0.82);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  }
+  .back-btn:hover {
+    transform: scale(1.07);
+    background: rgba(90, 70, 210, 0.95);
+    box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
+  }
+  .back-btn:active { transform: scale(0.95); }
+  .back-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
+
+  @media (max-width: 700px) {
+    .bubble { max-width: 190px; padding: 10px 13px; border-radius: 15px; }
+    .bubble-text { font-size: 15px; }
+    .next-btn { right: 16px; bottom: 16px; font-size: 12px; padding: 7px 16px; }
+    .back-btn { left: 16px; bottom: 16px; font-size: 12px; padding: 7px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true"></div>
+<div class="scene" id="scene">
+  <div class="speech" id="speech">
+    <div class="bubble" id="bubble">
+      <span class="speaker-name" id="speakerName"></span>
+      <span class="bubble-text" id="bubbleText"></span>
+    </div>
+    <div class="tail" id="tail"></div>
+  </div>
+</div>
+<button class="back-btn" id="backBtn" type="button">BACK</button>
+<button class="next-btn" id="nextBtn" type="button">NEXT</button>
+
+<script>
+  // Set these two file names
+  const BACK_PAGE = "scene4.html";   // where the BACK button goes (the previous scene)
+  const NEXT_PAGE = "scene6.html";   // where CONTINUE goes
+
+  const dialogues = [
+    { name: "Maya", text: "Did it work?", position: "maya", type: "short" },
+    { name: "Commander Lena", text: "Yes.\nOn July 4, 1997, Mars Pathfinder landed at Ares Vallis on Mars.", position: "lena", type: "medium" },
+    { name: "Maya", text: "Sojourner was still inside?", position: "maya", type: "short" },
+    { name: "Commander Lena", text: "Yes.", position: "lena", type: "short" },
+    { name: "Maya", text: "Come on, little rover.", position: "maya", type: "short" },
+    { name: "Commander Lena", text: "On the Martian surface, Pathfinder unfolded its landing structure.\nThen Sojourner prepared to leave the lander.", position: "lena", type: "medium" },
+    { name: "Maya", text: "Was she controlled from Earth?", position: "maya", type: "short" },
+    { name: "Commander Lena", text: "Yes, engineers at NASA's Jet Propulsion Laboratory controlled her movements.\nBut remember—", position: "lena", type: "medium" },
+    { name: "Maya", text: "There's a huge distance between Earth and Mars.", position: "maya", type: "medium" },
+    { name: "Commander Lena", text: "Exactly.\nCommands couldn't simply be sent and responded to instantly.", position: "lena", type: "medium" },
+    { name: "Commander Lena", text: "So the rover had to operate within carefully planned instructions and constraints.", position: "lena", type: "medium" }
+  ];
+
+  /* ---- Artwork geometry (pixels of the original 1679 x 937 image) -------
+     x / y   : the speaker's mouth in the image
+     side    : which side of the mouth the bubble sits on
+     gap     : distance from the mouth to the bubble's near edge
+     tipDx   : where the pointer tip ends, relative to the mouth
+               (stops at the cheek so the mouth itself stays visible)
+     bottomDy: bubble bottom relative to mouth height (negative = higher)
+     tailAt  : optional - "bottom" puts the pointer on the bubble's bottom edge
+     Lena's bubbles float in the sky to the right of her, above her pointing
+     hand. Maya's sit on the desert to the right of her. The rover and the
+     big rock stay fully visible.                                            */
+  const IMG_W = 1679, IMG_H = 937;
+
+  /* ===== HOW THE PICTURE FITS THE SCREEN =====
+     "contain" = the WHOLE picture is always visible, nothing is cut off
+                 (a blurred copy fills any leftover space on the sides).
+     "cover"   = the picture fills the screen, but the edges get cropped
+                 (a square picture loses its top and bottom on a wide screen).
+     Tip: a 16:9 picture (for example 1920 x 1080) fits a wide screen
+     perfectly with either setting.                                       */
+  const FIT = "cover";
+  const FOCUS_Y = 0.5;   // only used with "cover": 0 = keep the top, 1 = keep the bottom
+  const SPOTS = {
+    lena: { x: 248, y: 487, side: "right", gap: 132, tipDx: 8, bottomDy: -67 },
+    maya: { x: 282, y: 668, side: "right", gap: 118, tipDx: 8, bottomDy: 2 }
+  };
+  const WIDTHS = { short: 220, medium: 260, long: 340 };
+
+  const speech      = document.getElementById("speech");
+  const bubble      = document.getElementById("bubble");
+  const tail        = document.getElementById("tail");
+  const speakerName = document.getElementById("speakerName");
+  const bubbleText  = document.getElementById("bubbleText");
+  const btn         = document.getElementById("nextBtn");
+
+  let currentDialogue = 0;
+  let current = null;
+  let currentWidth = WIDTHS.short;
+  let busy = false;
+
+  function positionBubble() {
+    if (!current) return;
+    const spot = SPOTS[current];
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const s = (FIT === "contain") ? Math.min(vw / IMG_W, vh / IMG_H) : Math.max(vw / IMG_W, vh / IMG_H);
+    const iw = IMG_W * s, ih = IMG_H * s;
+    const ox = (vw - iw) / 2;
+    const oy = (FIT === "contain") ? (vh - ih) / 2 : (vh - ih) * FOCUS_Y;
+
+    const mx = ox + spot.x * s;
+    const my = oy + spot.y * s;
+    const margin = 10;
+
+    const nearEdge = spot.side === "right" ? mx + spot.gap * s : mx - spot.gap * s;
+    const avail = spot.side === "right" ? vw - nearEdge - margin : nearEdge - margin;
+    let maxW = vw <= 700 ? Math.min(190, avail) : Math.min(currentWidth, vw * 0.32, avail);
+    maxW = Math.max(maxW, 130);
+    bubble.style.maxWidth = maxW + "px";
+
+    const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
+    let bx = spot.side === "right" ? nearEdge : nearEdge - bw;
+    bx = Math.max(margin, Math.min(bx, vw - margin - bw));
+    let by = spot.anchor === "top" ? my + spot.dy * s : my + spot.bottomDy * s - bh;
+    by = Math.max(margin, Math.min(by, vh - margin - bh));
+    const bottom = by + bh;
+
+    bubble.style.left = bx + "px";
+    bubble.style.top = by + "px";
+
+    // Pointer: a small triangle whose base sits on the bubble edge and whose
+    // tip stops part-way to the mouth (TAIL_LENGTH: 1 = reaches the mouth).
+    const TAIL_LENGTH = 0.55;
+    const fullX = mx + spot.tipDx * s, fullY = my;
+    let p1, p2;
+    if (spot.tailAt === "bottom") {          // base on the bubble's bottom edge
+      const ex = spot.side === "left" ? bx + bw - 26 : bx + 56;
+      p1 = [ex - 30, bottom - 1]; p2 = [ex, bottom - 1];
+    } else {                                  // base on the side facing the mouth
+      const ex = spot.side === "right" ? bx + 2 : bx + bw - 2;
+      const t = spot.anchor === "top" ? by + 10 : Math.max(by + 10, bottom - 32);
+      const u = spot.anchor === "top" ? by + 32 : Math.max(by + 20, bottom - 10);
+      p1 = [ex, t]; p2 = [ex, u];
+    }
+    const sx = (p1[0] + p2[0]) / 2, sy = (p1[1] + p2[1]) / 2;
+    const tip = [sx + (fullX - sx) * TAIL_LENGTH, sy + (fullY - sy) * TAIL_LENGTH];
+    const xs = [p1[0], p2[0], tip[0]], ys = [p1[1], p2[1], tip[1]];
+    const minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+    const minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+    tail.style.left = minX + "px";
+    tail.style.top = minY + "px";
+    tail.style.width = (maxX - minX) + "px";
+    tail.style.height = (maxY - minY) + "px";
+    tail.style.clipPath = "polygon(" +
+      [p1, p2, tip].map(function (q) { return (q[0] - minX) + "px " + (q[1] - minY) + "px"; }).join(", ") + ")";
+
+    speech.style.transformOrigin = mx + "px " + my + "px";
+  }
+
+  function showDialogue(i) {
+    const d = dialogues[i];
+    const reveal = function () {
+      speakerName.textContent = d.name;
+      bubbleText.textContent = d.text;
+      current = d.position;
+      currentWidth = WIDTHS[d.type] || WIDTHS.short;
+      positionBubble();
+      void speech.offsetWidth;
+      speech.classList.add("show");
+      btn.textContent = i === dialogues.length - 1 ? "CONTINUE" : "NEXT";
+      btn.classList.add("show");
+      busy = false;
+    };
+
+    if (speech.classList.contains("show")) {
+      busy = true;
+      speech.classList.remove("show");
+      setTimeout(reveal, 380);
+    } else {
+      reveal();
+    }
+  }
+
+  function nextDialogue() {
+    if (busy) return;
+    if (currentDialogue >= dialogues.length - 1) {
+      goToNextScene();
+      return;
+    }
+    currentDialogue++;
+    showDialogue(currentDialogue);
+  }
+
+  function goToNextScene() {
+    if (NEXT_PAGE) window.location.href = NEXT_PAGE;
+  }
+
+  // Make the picture fit the way FIT says
+  document.getElementById("scene").style.backgroundSize = FIT;
+  document.getElementById("scene").style.backgroundPosition = (FIT === "cover") ? "center " + (FOCUS_Y * 100) + "%" : "center";
+
+  const backBtn = document.getElementById("backBtn");
+  backBtn.addEventListener("click", function () {
+    window.location.href = BACK_PAGE;
+  });
+
+  btn.addEventListener("click", nextDialogue);
+  document.addEventListener("click", function (e) {
+    if (e.target !== btn && e.target !== backBtn) nextDialogue();   // click anywhere else = next
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") {
+      if (document.activeElement !== btn && document.activeElement !== backBtn) { e.preventDefault(); nextDialogue(); }
+    }
+  });
+  window.addEventListener("resize", positionBubble);
+
+  window.addEventListener("load", function () {
+    currentDialogue = 0;
+    setTimeout(function () { showDialogue(0); }, 500);
+  });
+</script>
+</body>
+</html>

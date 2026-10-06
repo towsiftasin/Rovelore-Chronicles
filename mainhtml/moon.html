@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — Moon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --gold: #FFC928;
+  --cyan: #29C8FF;
+  --cyan-light: #4ED9FF;
+  --white: #FFFFFF;
+  --moon-1: #dfe5f2;
+  --moon-2: #AABFE4;
+  --moon-3: #7188B8;
+  --moon-4: #526A9A;
+  --ui-1: #07194A;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  
+}
+
+body {
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  color: var(--white);
+  background-image: url("../images/moon2.png");
+   background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.moon-page {
+  max-width: 1648px;
+  margin: 0 auto;
+  padding: 0 0 4vh;
+}
+
+/* ---------- NAVBAR (sits on plain black) ---------- */
+/* ============================================
+   SHARED NAVBAR — link this file on EVERY page
+   so the logo and nav links land in the exact
+   same place everywhere. Do not duplicate these
+   rules in each page's own stylesheet.
+============================================ */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px 0;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.mainnav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+}
+
+.nav-link.active {
+  color: #FFC928;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 2px;
+  background: #FFC928;
+}
+
+.nav-link:hover:not(.active) {
+  color: #FFC928;
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px 0;
+  }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+}
+
+/* ---------- MOON HEADER (sits on plain black) ---------- */
+.moon-header {
+  padding: 2vh 3vw 0;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 1.5vh;
+}
+.back-link:hover { color: var(--cyan-light); }
+
+.title-row { display: flex; align-items: center; gap: 14px; }
+
+.moon-icon {
+  display: inline-block;
+  width: clamp(40px, 4.5vw, 64px);
+  height: clamp(40px, 4.5vw, 64px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--moon-1) 0%, var(--moon-3) 60%, var(--moon-4) 100%);
+  box-shadow: 0 0 14px rgba(113,136,184,0.5);
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+  color: var(--white);
+}
+
+.page-desc {
+  margin: 1vh 0 0;
+  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+  font-weight: 500;
+  color: var(--white);
+  max-width: 40ch;
+}
+
+
+/* ---------- MARKERS ---------- */
+.marker {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  color: var(--white);
+  transition: transform 0.2s ease, filter 0.2s ease;
+  animation: float 4s ease-in-out infinite;
+}
+.marker:hover, .marker:focus-visible {
+  transform: scale(1.06);
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(41,200,255,0.6));
+}
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+
+.marker-1 { left: 26%; top: 40%; animation-delay: 0s; }
+.marker-2 { left: 50%; top: 36%; animation-delay: 0.6s; }
+.marker-3 { left: 20%; top: 65%; animation-delay: 1.2s; }
+.marker-4 { left: 68%; top: 52%; animation-delay: 1.8s; }
+.marker-5 { left: 44%; top: 69%; animation-delay: 2.4s; }
+
+.marker-icon {
+  flex-shrink: 0;
+  width: clamp(46px, 5.2vw, 74px);
+  height: clamp(46px, 5.2vw, 74px);
+  border-radius: 50%;
+  background: var(--ui-1);
+  border: 3px solid var(--cyan);
+  padding: 8px;
+  box-shadow: 0 0 16px rgba(41,200,255,0.3);
+}
+
+.marker-label {
+  background: var(--ui-1);
+  border: 2px solid var(--cyan);
+  border-radius: 14px;
+  padding: 8px 16px;
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+  font-weight: 700;
+  text-align: left;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.marker-sub { font-weight: 500; font-size: 0.9em; }
+
+.marker-pin {
+  position: absolute;
+  left: clamp(23px, 2.6vw, 37px);
+  top: calc(100% + 8px);
+  width: 20px;
+  height: 20px;
+  transform: translateX(-50%);
+  background: var(--cyan);
+  clip-path: path('M10 0 C15.5 0 20 4.3 20 10 C20 16 10 24 10 24 C10 24 0 16 0 10 C0 4.3 4.5 0 10 0 Z');
+  box-shadow: 0 0 14px 4px rgba(41,200,255,0.6);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px 3px rgba(41,200,255,0.5); }
+  50% { box-shadow: 0 0 18px 6px rgba(41,200,255,0.8); }
+}
+
+/* ---------- COMPASS ---------- */
+.compass {
+  position: absolute;
+  left: 2.5vw;
+  bottom: 3vh;
+  width: clamp(60px, 8vw, 100px);
+  height: clamp(60px, 8vw, 100px);
+  z-index: 8;
+}
+
+/* ---------- INSTRUCTION BUTTON ---------- */
+.instruction {
+  position: absolute;
+  right: 2.5vw;
+  bottom: 3vh;
+  z-index: 8;
+  background: var(--ui-1);
+  border: 2px solid var(--cyan);
+  border-radius: 999px;
+  padding: 1.4vh 2vw;
+  box-shadow: 0 0 20px rgba(41,200,255,0.25);
+  transform: rotate(-3deg);
+}
+.instruction p {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--white);
+}
+.ray { position: absolute; }
+.ray-tl { left: -6px; top: -6px; }
+.ray-tr { right: -6px; top: -6px; }
+
+/* ---------- MODAL ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  position: relative;
+  background: var(--ui-1);
+  border: 3px solid var(--cyan);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 0 40px rgba(41,200,255,0.25);
+  animation: modal-in 0.2s ease;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--cyan-light); }
+
+.modal-card h2 { margin: 0 0 10px; font-size: 1.6rem; color: var(--white); }
+.modal-location-label,
+.modal-mission-label { margin: 0; font-size: 0.85rem; opacity: 0.75; }
+.modal-location { margin: 0 0 12px; color: var(--cyan-light); font-weight: 700; }
+.modal-mission { margin: 0 0 12px; font-weight: 700; }
+.modal-body { margin: 0; line-height: 1.5; font-weight: 500; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .marker-label { white-space: normal; max-width: 24vw; }
+  .page-desc { max-width: 32ch; }
+}
+
+@media (max-width: 640px) {
+  .topbar { flex-direction: column; align-items: flex-start; padding: 16px 20px 0; gap: 10px; }
+  .mainnav { gap: 12px; }
+  .moon-header { padding: 16px 20px 0; }
+  .marker { transform: scale(0.85); }
+  .marker-label { white-space: normal; max-width: 34vw; font-size: 0.65rem; }
+  .instruction { transform: none; right: 4vw; bottom: 2vh; }
+  .compass { left: 4vw; bottom: 2vh; }
+  .earth-deco { width: 16%; right: 4%; top: 4%; }
+}
+
+/* =========================
+   COMMANDER LENA
+========================= */
+:root { --lena-h: 70vh; }
+
+.lena-wrap {
+  position: fixed;
+  right: 0;
+  bottom: 20vh;
+  height: var(--lena-h);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.lena {
+  display: block;
+  height: 100%;
+  width: auto;
+  transform: translateX(110%) scaleX(-1);
+  opacity: 0;
+  transition: transform 0.95s cubic-bezier(.2, .9, .3, 1.1), opacity 0.6s ease;
+}
+
+.lena-wrap.in .lena { transform: translateX(0) scaleX(-1); opacity: 1; }
+
+.lena-wrap.out .lena {
+  transform: translateX(110%) scaleX(-1);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(.6, 0, .8, .4), opacity 0.7s ease 0.2s;
+}
+
+.lena-wrap.gone { display: none; }
+
+.bubble {
+  position: absolute;
+  right: 85%;
+  top: -7%;
+  width: max-content;
+  max-width: min(320px, 56vw);
+  padding: 12px 18px;
+  background: rgba(40, 30, 110, 0.88);
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  box-shadow: 0 0 18px rgba(150, 130, 255, 0.35), 0 6px 14px rgba(0, 0, 20, 0.45);
+  opacity: 0;
+  transform: scale(0.85) translateX(10px);
+  transform-origin: right center;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.2, .9, .3, 1.2);
+}
+
+.bubble.show { opacity: 1; transform: none; }
+
+/* Pointer triangle, cut with clip-path by positionBubble() in the script */
+.tail {
+  position: fixed;
+  inset: 0;
+  z-index: 51;
+  pointer-events: none;
+  background: rgba(40, 30, 110, 0.88);
+  clip-path: polygon(0 0, 0 0, 0 0);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.tail.show { opacity: 1; }
+
+.bubble-name {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+
+.bubble-line {
+  display: block;
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@media (max-width: 1500px) {
+  :root { --lena-h: 65vh; }
+  .bubble { right: 85%; top: -7%; }
+}
+@media (max-width: 1024px) {
+  :root { --lena-h: 45vh; }
+  .bubble { right: 60%; top: -5%; }
+}
+@media (max-width: 768px) {
+  :root { --lena-h: 34vh; }
+  .bubble { right: 44%; top: -3.8%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lena, .bubble, .tail { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<main class="moon-page">
+
+  <!-- NAVBAR -->
+ <header class="topbar">
+  <div class="brand">
+    <span class="brand-logo" aria-hidden="true">
+      <svg viewBox="0 0 48 40" width="36" height="30">
+          <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+          <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+          <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+          <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+          <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+      </svg>
+    </span>
+    <span class="brand-name">Rovelore Chronicles</span>
+  </div>
+  <nav class="mainnav" aria-label="Main navigation">
+    <button class="nav-link" data-nav="home">Home</button>
+    <button class="nav-link active" data-nav="start">Start the Journey</button>
+    <button class="nav-link" data-nav="stories">Stories</button>
+    <button class="nav-link" data-nav="explore">Explore</button>
+    <button class="nav-link" data-nav="about">About</button>
+  </nav>
+</header>
+
+  <!-- MOON HEADER -->
+  <section class="moon-header">
+    <button class="back-link" data-nav="start">
+      <span aria-hidden="true">&larr;</span> Back
+    </button>
+
+    <div class="title-row">
+      <span class="moon-icon" aria-hidden="true"></span>
+      <h1 class="page-title">Moon</h1>
+    </div>
+
+    <p class="page-desc">Explore the places where our spacecraft<br>have left their mark.</p>
+  </section>
+
+
+    <!-- MISSION MARKERS -->
+    <button class="marker marker-1" data-mission="apollo17">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 44" width="100%" height="100%">
+          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+          <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
+          <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
+          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+          <circle cx="14" cy="34" r="7" fill="#181818"/>
+          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+          <circle cx="46" cy="34" r="7" fill="#181818"/>
+        </svg>
+      </span>
+      <span class="marker-label">Apollo 17<br><span class="marker-sub">(Lunar Rover)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <button class="marker marker-2" data-mission="lunarmodule">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 50" width="100%" height="100%">
+          <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
+          <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
+          <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <rect x="27" y="1" width="6" height="6" fill="#2b5faa"/>
+        </svg>
+      </span>
+      <span class="marker-label">Lunar Module<br><span class="marker-sub">(Chang'e 5)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <button class="marker marker-3" data-mission="apollo15">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 44" width="100%" height="100%">
+          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+          <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
+          <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
+          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+          <circle cx="14" cy="34" r="7" fill="#181818"/>
+          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+          <circle cx="46" cy="34" r="7" fill="#181818"/>
+        </svg>
+      </span>
+      <span class="marker-label">Apollo 15<br><span class="marker-sub">(Lunar Rover)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <button class="marker marker-4" data-mission="lro">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 60" width="100%" height="100%">
+          <circle cx="30" cy="30" r="8" fill="#c9c4b6"/>
+          <rect x="0" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(-30 10 16)"/>
+          <rect x="40" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(30 50 16)"/>
+          <rect x="0" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(30 10 44)"/>
+          <rect x="40" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(-30 50 44)"/>
+        </svg>
+      </span>
+      <span class="marker-label">LRO<br><span class="marker-sub">(Orbiter)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <button class="marker marker-5" data-mission="chandrayaan3">
+      <span class="marker-icon" aria-hidden="true">
+        <svg viewBox="0 0 60 50" width="100%" height="100%">
+          <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
+          <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
+          <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+          <rect x="27" y="1" width="6" height="6" fill="#FF9933"/>
+        </svg>
+      </span>
+      <span class="marker-label">Chandrayaan-3<br><span class="marker-sub">(Lander)</span></span>
+      <span class="marker-pin" aria-hidden="true"></span>
+    </button>
+
+    <!-- COMPASS -->
+    <div class="compass" aria-hidden="true">
+      <svg viewBox="0 0 90 90" width="100%" height="100%">
+        <circle cx="45" cy="45" r="40" fill="rgba(10,18,40,0.55)" stroke="#29C8FF" stroke-width="2"/>
+        <text x="45" y="18" text-anchor="middle" fill="#29C8FF" font-size="12" font-family="Baloo 2, sans-serif" font-weight="700">N</text>
+        <polygon points="45,26 51,58 45,50 39,58" fill="#29C8FF"/>
+      </svg>
+    </div>
+
+    <!-- INSTRUCTION BUTTON -->
+    <div class="instruction">
+      <svg class="ray ray-tl" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="2" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+      <svg class="ray ray-tr" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="18" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+      <p>Click on a location<br>to learn more!</p>
+    </div>
+
+</main>
+
+<!-- COMMANDER LENA -->
+<div class="lena-wrap" id="lenaWrap" aria-live="polite">
+  <img class="lena" src="../images/lena.png" alt="Commander Lena, welcoming you to the Moon">
+  <div class="bubble" id="bubble">
+    <span class="bubble-name">Commander Lena</span>
+    <span class="bubble-line" id="line1">Welcome to the Moon, explorer!
+      <br>Choose a spacecraft on the map, and let&rsquo;s uncover its amazing story together!</span>
+  </div>
+</div>
+
+<!-- Pointer triangle (drawn by positionBubble() in the script) -->
+<div class="tail" id="tail" aria-hidden="true"></div>
+
+<!-- MISSION MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <h2 id="modalTitle">Mission Title</h2>
+    <p class="modal-location-label">Location:</p>
+    <p class="modal-location" id="modalLocation">Location</p>
+    <p class="modal-mission-label">Mission:</p>
+    <p class="modal-mission" id="modalMission">Mission name</p>
+    <p class="modal-body" id="modalBody">Description goes here.</p>
+  </div>
+</div>
+
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+  /* ---------- PAGE NAVIGATION ---------- */
+  const routes = {
+    home: 'index.html',
+    start: 'index3.html',
+    stories: 'stories.html',
+    explore: 'explore.html',
+    about: 'about.html'
+  };
+
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const dest = routes[el.getAttribute('data-nav')];
+      if (dest) window.location.href = dest;
+    });
+  });
+
+  /* ---------- MISSION MODAL ---------- */
+  const missions = {
+    apollo17: {
+      title: 'Apollo 17',
+      location: 'Taurus–Littrow Valley',
+      mission: 'Apollo 17',
+      body: 'Explore the story of the last crewed mission to the Moon and the lunar rover left behind on the surface.'
+    },
+    lunarmodule: {
+      title: "Lunar Module",
+      location: 'Oceanus Procellarum',
+      mission: "Chang'e 5",
+      body: 'Explore the story of the lander and ascent vehicle that helped return lunar samples to Earth.'
+    },
+    apollo15: {
+      title: 'Apollo 15',
+      location: 'Hadley–Apennine',
+      mission: 'Apollo 15',
+      body: 'Explore the story of the first mission to use a lunar roving vehicle to explore the surface.'
+    },
+    lro: {
+      title: 'LRO',
+      location: 'Lunar Orbit',
+      mission: 'Lunar Reconnaissance Orbiter',
+      body: 'Explore the story of the orbiter that has been mapping the Moon\'s surface in detail since 2009.'
+    },
+    chandrayaan3: {
+      title: 'Chandrayaan-3',
+      location: 'Lunar South Pole',
+      mission: 'Chandrayaan-3',
+      body: 'Explore the story of the lander that made the first successful soft landing near the Moon\'s south pole.'
+    }
+  };
+
+  const overlay = document.getElementById('modalOverlay');
+  const closeBtn = document.getElementById('modalClose');
+  const titleEl = document.getElementById('modalTitle');
+  const locationEl = document.getElementById('modalLocation');
+  const missionEl = document.getElementById('modalMission');
+  const bodyEl = document.getElementById('modalBody');
+
+  function openModal(key) {
+    const data = missions[key];
+    if (!data) return;
+    titleEl.textContent = data.title;
+    locationEl.textContent = data.location;
+    missionEl.textContent = data.mission;
+    bodyEl.textContent = data.body;
+    overlay.classList.add('open');
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.marker').forEach((marker) => {
+    marker.addEventListener('click', () => openModal(marker.dataset.mission));
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+});
+
+/* COMMANDER LENA'S INTRODUCTION */
+const TIMING = {
+  slideIn:    200,
+  bubble:     900,
+  bubbleOff: 3900,
+  slideOut:  4000,
+  finished:  4900
+};
+
+/* Mouth position in lena.png's own pixels. Same image as Mars, so same values.
+   If the pointer is off, open moon.html?calibrate, click her mouth,
+   and copy the x / y printed in the console. */
+const SPOT = { x: 300, y: 370, tipDx: -16, tipDy: 0, baseHalf: 11, length: 0.4 };
+
+(function lenaIntro() {
+  const wrap   = document.getElementById("lenaWrap");
+  const bubble = document.getElementById("bubble");
+  const tail   = document.getElementById("tail");
+  const img    = wrap.querySelector(".lena");
+  const KEY    = "lenaSeen_moon";
+
+  function positionBubble() {
+    if (!img.naturalWidth) return;
+
+    const s = img.offsetHeight / img.naturalHeight;
+    const w = wrap.getBoundingClientRect();
+
+    const mx = w.left + (img.naturalWidth - SPOT.x) * s;
+    const my = w.top  + SPOT.y * s;
+
+    const bRight  = w.left + bubble.offsetLeft + bubble.offsetWidth;
+    const bTop    = w.top  + bubble.offsetTop;
+    const bBottom = bTop + bubble.offsetHeight;
+
+    const mid = Math.min(Math.max(my, bTop + 24), bBottom - 24);
+    const y1  = mid - SPOT.baseHalf;
+    const y2  = mid + SPOT.baseHalf;
+
+    const baseX = bRight;
+    const fullX = mx + SPOT.tipDx;
+    const fullY = my + SPOT.tipDy;
+
+    const tipX = baseX + (fullX - baseX) * SPOT.length;
+    const tipY = mid   + (fullY - mid)  * SPOT.length;
+
+    tail.style.clipPath =
+      "polygon(" + baseX + "px " + y1 + "px, " +
+                   baseX + "px " + y2 + "px, " +
+                   tipX  + "px " + tipY + "px)";
+  }
+
+  function finish() {
+    wrap.classList.add("gone");
+    tail.style.display = "none";
+  }
+
+  window.addEventListener("resize", positionBubble);
+  if (img.complete) positionBubble();
+  else img.addEventListener("load", positionBubble);
+
+  /* CALIBRATION MODE (open the page with ?calibrate) */
+  if (location.search.indexOf("calibrate") !== -1) {
+    wrap.classList.add("in");
+    bubble.classList.add("show");
+    tail.classList.add("show");
+    positionBubble();
+    document.addEventListener("click", function (e) {
+      const s = img.offsetHeight / img.naturalHeight;
+      const w = wrap.getBoundingClientRect();
+      SPOT.x = Math.round(img.naturalWidth - (e.clientX - w.left) / s);
+      SPOT.y = Math.round((e.clientY - w.top) / s);
+      positionBubble();
+      console.log("Copy into SPOT:  x: " + SPOT.x + ", y: " + SPOT.y);
+    });
+    return;
+  }
+
+  let seen = false;
+  try { seen = sessionStorage.getItem(KEY) === "yes"; } catch (e) {}
+  if (seen) { finish(); return; }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    finish();
+    return;
+  }
+
+  try { sessionStorage.setItem(KEY, "yes"); } catch (e) {}
+
+  setTimeout(function () { wrap.classList.add("in"); }, TIMING.slideIn);
+  setTimeout(function () {
+    positionBubble();
+    bubble.classList.add("show");
+    tail.classList.add("show");
+  }, TIMING.bubble);
+  setTimeout(function () {
+    bubble.classList.remove("show");
+    tail.classList.remove("show");
+  }, TIMING.bubbleOff);
+  setTimeout(function () { wrap.classList.remove("in"); wrap.classList.add("out"); }, TIMING.slideOut);
+  setTimeout(finish, TIMING.finished);
+})();
+</script>
+</body>
+</html>
