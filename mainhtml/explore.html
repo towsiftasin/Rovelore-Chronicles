@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — Explore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Explore page – same theme as the Stories page
+   (Baloo 2 + Patrick Hand, golden yellow details, rounded shapes)
+   ========================================================= */
+:root {
+  --bg: #070B1A; --bg-soft: #0E1530;
+  --yellow: #FFC928; --text: #F3EFE6; --text-soft: #B9C2DA;
+  --mars: #E47B61; --moon: #9FB8D8;
+  --line: rgba(255,255,255,.16);
+  --heading: "Baloo 2", "Trebuchet MS", sans-serif;
+  --hand: "Patrick Hand", "Comic Sans MS", cursive;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---- Background: CSS only (no images): navy base, indigo/purple/coral glows, tiny stars ---- */
+body { font-family: var(--heading); color: var(--text); line-height: 1.5; min-height: 100vh; overflow-x: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%,  rgba(30,85,190,.35), transparent 50%),
+    radial-gradient(ellipse at 15% 35%, rgba(55,40,180,.22), transparent 42%),
+    radial-gradient(ellipse at 85% 40%, rgba(91,35,125,.22), transparent 42%),
+    radial-gradient(ellipse at 50% 100%, rgba(228,123,97,.20), transparent 50%),
+    linear-gradient(180deg, #030817 0%, #071B52 40%, #1a1450 75%, #351B45 100%) fixed; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background-image: url("../images/2nd.png"); background-size: cover; background-position: center; background-repeat: no-repeat;
+ }
+
+/* ---- Header: copied from your home page so the logo and links sit in the same place ---- */
+.topbar { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px 14px; flex-wrap: wrap; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #FFFFFF; }
+.mainnav { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.nav-link { background: none; border: none; color: #FFFFFF; font-family: inherit; font-size: 1rem; font-weight: 600;
+  cursor: pointer; padding: 4px 0; position: relative; }
+.nav-link.active { color: #FFC928; }
+.nav-link.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+  border-radius: 2px; background: #FFC928; }                       /* active page = gold underline */
+.nav-link:hover:not(.active) { color: #FFC928; opacity: 0.85; }
+
+main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
+
+/* ---- Hero (compact) ---- */
+.hero { text-align: center; padding: 4px 0 26px; }
+.hero h1 { font-size: clamp(40px, 7vw, 64px); font-weight: 800; line-height: 1.1; display: inline-flex; gap: 8px; align-items: flex-start; }
+.hero h1 svg { margin-top: 6px; }
+.swoop { display: block; margin: 0 auto; }
+.subtitle { font-family: var(--hand); font-size: clamp(22px, 3vw, 30px); color: var(--text); margin-top: 4px; }
+.intro { font-family: var(--hand); font-size: 19px; color: var(--text-soft); max-width: 640px; margin: 8px auto 0; }
+
+/* ---- Layout: filters left, results right ---- */
+.layout { display: grid; grid-template-columns: 250px 1fr; gap: 26px; align-items: start; }
+.filters { position: sticky; top: 16px; padding: 22px 18px; border-radius: 22px;
+  background: rgba(10,16,48,.7); border: 2px solid var(--line); }
+.filters h2 { font-size: 22px; padding-bottom: 8px; margin-bottom: 6px; border-bottom: 2px solid rgba(255,201,40,.5); }
+.fgroup { margin-top: 16px; }
+.fgroup h3 { font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); margin-bottom: 6px; }
+.fbtn { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 8px 12px; margin: 2px 0;
+  font: 500 16px var(--heading); color: var(--text-soft); background: none; border: 2px solid transparent;
+  border-radius: 12px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.fbtn:hover { background: rgba(255,255,255,.07); color: #fff; }
+.fbtn.on { background: rgba(255,201,40,.14); border-color: var(--yellow); color: #fff; }
+.reset { margin-top: 18px; width: 100%; padding: 9px; font: 600 15px var(--heading); color: var(--text-soft);
+  background: none; border: 2px dashed var(--line); border-radius: 12px; cursor: pointer; }
+.reset:hover { color: #fff; border-color: var(--yellow); }
+.filter-toggle { display: none; }
+
+.toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.search { flex: 1; min-width: 220px; padding: 13px 20px; font: 500 17px var(--hand); color: var(--text);
+  background: rgba(10,16,48,.7); border: 2px solid var(--line); border-radius: 999px; outline: none; transition: border-color .2s; }
+.search::placeholder { color: var(--text-soft); }
+.search:focus { border-color: var(--yellow); }
+.count { font-family: var(--hand); font-size: 19px; color: var(--text-soft); }
+
+/* ---- Mission cards ---- */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.card { display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
+  background: rgba(14,21,56,.78); border: 2px solid var(--line);
+  transition: transform .25s, border-color .25s, box-shadow .25s; animation: rise .5s ease both; }
+.card.Mars { --accent: var(--mars); } .card.Moon { --accent: var(--moon); }
+.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 14px 30px rgba(0,0,0,.4); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Image area: shows the real image if "image" is set, otherwise a clear placeholder */
+.thumb { position: relative; aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; overflow: hidden;
+  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 45%, #0E1530), #0E1530 75%); }
+.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.thumb .ph { font-family: var(--hand); font-size: 16px; color: var(--text-soft); padding: 10px; }
+.card-body { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px 18px; flex: 1; }
+.card h3 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 15px; }
+.dest { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent); }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, var(--accent) 60%); }
+.type { padding: 1px 10px; border: 1.5px solid var(--line); border-radius: 999px; color: var(--text-soft); font-size: 14px; }
+.meta { font-family: var(--hand); font-size: 18px; color: var(--accent); }
+.loc { font-family: var(--hand); font-size: 17px; color: var(--text-soft); }
+.desc { font-family: var(--hand); font-size: 18px; color: var(--text-soft); flex: 1; margin-top: 4px; }
+.media { display: flex; gap: 14px; font-size: 14px; color: var(--text-soft); margin: 6px 0; }
+.media .off { opacity: .35; }
+.btn { align-self: flex-start; font: 700 15px var(--heading); color: #1a1400; background: var(--yellow); border: none;
+  border-radius: 999px; padding: 9px 20px; cursor: pointer; box-shadow: 0 4px 0 #c99500; transition: transform .2s, box-shadow .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c99500; }
+.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #c99500; }
+.empty { grid-column: 1 / -1; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--text-soft); padding: 50px 10px; }
+
+/* ---- Detail view ---- */
+.back { margin-bottom: 18px; background: none; border: 2px solid var(--line); color: var(--text); border-radius: 999px;
+  padding: 8px 18px; font: 600 16px var(--heading); cursor: pointer; }
+.back:hover { border-color: var(--yellow); }
+.detail { animation: rise .5s ease both; }
+.detail.Mars { --accent: var(--mars); } .detail.Moon { --accent: var(--moon); }
+.detail h1 { font-size: clamp(34px, 6vw, 54px); font-weight: 800; line-height: 1.1; margin: 6px 0; }
+.detail .lead { font-family: var(--hand); font-size: 22px; color: var(--text-soft); max-width: 760px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 22px 0; }
+.fact { padding: 12px 16px; border-radius: 16px; background: rgba(14,21,56,.78); border: 2px solid var(--line); }
+.fact small { display: block; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); }
+.fact span { font-family: var(--hand); font-size: 19px; }
+.panel { padding: 20px 24px; margin-bottom: 18px; border-radius: 22px; background: rgba(14,21,56,.78); border: 2px solid var(--line); }
+.panel h2 { font-size: 24px; margin-bottom: 8px; }
+.panel h2::after { content: ""; display: block; width: 50px; height: 3px; margin-top: 4px; background: var(--yellow); border-radius: 3px; }
+.panel p, .panel li { font-family: var(--hand); font-size: 19px; color: var(--text-soft); }
+.panel ul { padding-left: 22px; }
+.todo { font-style: italic; opacity: .7; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.gallery img, .gallery .ph { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 14px; }
+.gallery .ph { display: grid; place-items: center; text-align: center; padding: 8px; font-family: var(--hand); color: var(--text-soft);
+  border: 2px dashed var(--line); background: rgba(255,255,255,.03); }
+.chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip { padding: 8px 16px; font: 600 15px var(--heading); color: var(--text); background: none; border: 2px solid var(--line); border-radius: 999px; cursor: pointer; }
+.chip:hover { border-color: var(--yellow); }
+.panel a { color: var(--yellow); }
+
+/* ---- Responsive ---- */
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } .layout { grid-template-columns: 210px 1fr; } }
+@media (max-width: 760px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px 24px 12px; }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+  main { padding: 0 14px 40px; }
+  .layout { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .filter-toggle { display: block; width: 100%; margin-bottom: 14px; padding: 11px; font: 700 16px var(--heading); color: #1a1400;
+    background: var(--yellow); border: none; border-radius: 999px; cursor: pointer; }
+  .filters { display: none; position: static; margin-bottom: 16px; }
+  .filters.open { display: block; }
+}
+.nav-link:focus-visible, .btn:focus-visible, .fbtn:focus-visible, .chip:focus-visible, .back:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand" data-nav="home">
+    <svg viewBox="0 0 48 40" width="36" height="30" aria-hidden="true">
+      <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+      <circle cx="22" cy="20" r="10" fill="#3AA9E0"/><circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity=".35"/>
+      <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+    </svg>
+    <span class="brand-name">Rovelore Chronicles</span>
+  </div>
+  <nav class="mainnav" aria-label="Main navigation">
+    <button class="nav-link" data-nav="home">Home</button>
+    <button class="nav-link" data-nav="start">Start the Journey</button>
+    <button class="nav-link" data-nav="stories">Stories</button>
+    <button class="nav-link active" data-nav="explore" aria-current="page">Explore</button>
+    <button class="nav-link" data-nav="about">About</button>
+  </nav>
+</header>
+
+<main id="app">
+  <!-- LIST VIEW -->
+  <section id="listView">
+    <div class="hero">
+      <h1>Explore
+        <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/></svg>
+      </h1>
+      <svg class="swoop" viewBox="0 0 80 24" width="90" height="20" aria-hidden="true"><path d="M2 20 C 24 2, 56 2, 78 14" fill="none" stroke="#FFC928" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <p class="subtitle">Real missions. Real machines. Real stories.</p>
+      <p class="intro">Discover real spacecraft, missions, images, videos, and the people and science behind humanity's exploration of Mars and the Moon.</p>
+    </div>
+
+    <div class="layout">
+      <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false">Filters</button>
+      <aside class="filters" id="filters" aria-label="Filters">
+        <h2>Filter by</h2>
+        <div class="fgroup" data-group="destination"><h3>Destination</h3></div>
+        <div class="fgroup" data-group="type"><h3>Mission type</h3></div>
+        <div class="fgroup" data-group="media"><h3>Media</h3></div>
+        <div class="fgroup" data-group="status"><h3>Status</h3></div>
+        <button class="reset" id="reset" type="button">Reset filters</button>
+      </aside>
+
+      <div>
+        <div class="toolbar">
+          <input class="search" id="search" type="search" placeholder="Search missions, spacecraft, locations..." aria-label="Search missions">
+          <span class="count" id="count" aria-live="polite"></span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAIL VIEW (filled by script) -->
+  <section id="detailView" hidden></section>
+</main>
+
+<script>
+/* =========================================================
+   EXPLORE PAGE
+   1) Navigation   2) Mission DATA (edit/add here)   3) Filters + search   4) Cards   5) Detail view
+   ========================================================= */
+
+// ---------- 1) NAVIGATION: change file names to match your site ----------
+const NAV_PAGES = {
+  home: "../index.html",        // these pages sit in the mainhtml folder, so the home page is one level up
+  start: "index3.html",
+  stories: "stories.html",
+  explore: "explore.html",
+  about: "about.html"
+};
+document.querySelectorAll("[data-nav]").forEach(function (el) {
+  el.addEventListener("click", function () { window.location.href = NAV_PAGES[el.dataset.nav]; });
+});
+
+// ---------- 2) MISSION DATA ----------
+/* HOW TO ADD A MISSION:  missions.push({ id: "...", name: "...", destination: "Mars" or "Moon", type: "...", ... });
+   REAL MEDIA: the fields image, gallery[] and videos[] are intentionally EMPTY. Paste verified URLs from
+   NASA / NASA-JPL / NASA Image and Video Library / ESA / ISRO here. Nothing has been invented.
+     image:   "https://..."                  (card picture)
+     gallery: ["https://...", "https://..."] (detail page gallery)
+     videos:  ["https://..."]                (links to real videos)
+     sourceUrl: "https://..."                (official mission page)                                        */
+const missions = [
+  { id: "sojourner", name: "Sojourner Rover", destination: "Mars", type: "Rover", mission: "Mars Pathfinder", year: 1997,
+    location: "Ares Vallis", status: "Ended", source: "NASA", sourceUrl: "",
+    launch: "Dec 4, 1996", arrival: "Jul 4, 1997 (Pathfinder landing)",
+    description: "Explore the story of Sojourner, the first successful Mars rover, which explored the surface of Ares Vallis and studied Martian rocks and soil.",
+    spacecraft: "Six-wheeled microrover carried to the surface by the Pathfinder lander.",
+    objectives: ["Demonstrate a low-cost way to reach Mars and operate a small rover.", "Study Martian rocks and soil."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "curiosity", name: "Curiosity Rover", destination: "Mars", type: "Rover", mission: "Mars Science Laboratory", year: 2012,
+    location: "Gale Crater", status: "Active", source: "NASA", sourceUrl: "",
+    launch: "Nov 26, 2011", arrival: "Aug 2012",
+    description: "A Mars rover studying the planet's climate and geology for over a decade.",
+    spacecraft: "Car-sized rover carrying a suite of science instruments.",
+    objectives: ["Study Mars' climate and geology.", "Assess whether Mars once had conditions that could support microbial life."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "opportunity", name: "Opportunity Rover", destination: "Mars", type: "Rover", mission: "Mars Exploration Rover", year: 2004,
+    location: "Endeavour Crater", status: "Ended", source: "NASA", sourceUrl: "",
+    launch: "Jul 7, 2003", arrival: "Jan 25, 2004",
+    description: "The rover that outlasted its planned 90-day mission by nearly 15 years.",
+    spacecraft: "Solar-powered rover, twin of the Spirit rover.",
+    objectives: ["Search for evidence of past water on Mars."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "perseverance", name: "Perseverance Rover", destination: "Mars", type: "Rover", mission: "Mars 2020", year: 2020,
+    location: "Jezero Crater", status: "Active", source: "NASA", sourceUrl: "",
+    launch: "Jul 30, 2020", arrival: "Feb 18, 2021",
+    description: "The rover searching for signs of ancient microbial life and collecting samples for future return to Earth.",
+    spacecraft: "Rover with a sample-collection system; it travelled with the Ingenuity helicopter.",
+    objectives: ["Search for signs of ancient microbial life.", "Collect samples for future return to Earth."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "apollo15", name: "Apollo 15", destination: "Moon", type: "Crewed Mission", mission: "Apollo 15", year: 1971,
+    location: "Hadley\u2013Apennine", status: "Completed", source: "NASA", sourceUrl: "",
+    launch: "Jul 26, 1971", arrival: "Jul 30, 1971",
+    description: "The first mission to use a lunar roving vehicle to explore the surface.",
+    spacecraft: "Command/Service Module, Lunar Module Falcon and the first Lunar Roving Vehicle.",
+    objectives: ["Explore the Hadley\u2013Apennine region using a lunar roving vehicle."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "apollo17", name: "Apollo 17", destination: "Moon", type: "Crewed Mission", mission: "Apollo 17", year: 1972,
+    location: "Taurus\u2013Littrow Valley", status: "Completed", source: "NASA", sourceUrl: "",
+    launch: "Dec 7, 1972", arrival: "Dec 11, 1972",
+    description: "The last crewed mission to the Moon, and the lunar rover left behind on the surface.",
+    spacecraft: "Command Module America, Lunar Module Challenger and a Lunar Roving Vehicle.",
+    objectives: ["Explore the Taurus\u2013Littrow Valley."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "lunarmodule", name: "Lunar Module", destination: "Moon", type: "Lander", mission: "Chang'e 5", year: 2020,
+    location: "Oceanus Procellarum", status: "Completed", source: "CNSA", sourceUrl: "",
+    launch: "Nov 23, 2020", arrival: "Dec 1, 2020",
+    description: "The lander and ascent vehicle that helped return lunar samples to Earth.",
+    spacecraft: "Orbiter, lander, ascent vehicle and returner.",
+    objectives: ["Collect lunar samples and return them to Earth."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "lro", name: "LRO", destination: "Moon", type: "Orbiter", mission: "Lunar Reconnaissance Orbiter", year: 2009,
+    location: "Lunar Orbit", status: "Active", source: "NASA", sourceUrl: "",
+    launch: "Jun 18, 2009", arrival: "Jun 23, 2009 (lunar orbit)",
+    description: "The orbiter that has been mapping the Moon's surface in detail since 2009.",
+    spacecraft: "Orbiter carrying instruments that map the Moon.",
+    objectives: ["Map the Moon's surface in detail."],
+    discoveries: [], image: "", gallery: [], videos: [] },
+  { id: "chandrayaan3", name: "Chandrayaan-3", destination: "Moon", type: "Lander", mission: "Chandrayaan-3", year: 2023,
+    location: "Lunar South Pole", status: "Completed", source: "ISRO", sourceUrl: "",
+    launch: "Jul 14, 2023", arrival: "Aug 23, 2023",
+    description: "India's lunar mission and its historic landing near the Moon's south polar region.",
+    spacecraft: "Vikram lander and Pragyan rover.",
+    objectives: ["Demonstrate a soft landing near the lunar south polar region and operate a rover."],
+    discoveries: [], image: "", gallery: [], videos: [] }
+];
+
+// ---------- 3) FILTERS + SEARCH ----------
+const FILTER_OPTIONS = {
+  destination: ["All", "Mars", "Moon"],
+  type: ["Rover", "Lander", "Orbiter", "Crewed Mission", "Spacecraft"],
+  media: ["Images", "Videos", "Both"],
+  status: ["Active", "Completed", "Ended", "Abandoned"]
+};
+const state = { destination: "All", type: null, media: null, status: null, query: "" };
+
+const hasImages = function (m) { return !!m.image || m.gallery.length > 0; };
+const hasVideos = function (m) { return m.videos.length > 0; };
+
+function matches(m) {
+  if (state.destination !== "All" && m.destination !== state.destination) return false;
+  if (state.type && m.type !== state.type) return false;
+  if (state.status && m.status !== state.status) return false;
+  if (state.media === "Images" && !hasImages(m)) return false;
+  if (state.media === "Videos" && !hasVideos(m)) return false;
+  if (state.media === "Both" && !(hasImages(m) && hasVideos(m))) return false;
+  if (state.query) {
+    const text = [m.name, m.destination, m.type, m.mission, m.year, m.location, m.description, m.status].join(" ").toLowerCase();
+    if (text.indexOf(state.query.toLowerCase()) === -1) return false;
+  }
+  return true;
+}
+
+// Build the filter buttons from FILTER_OPTIONS
+const filterBox = document.getElementById("filters");
+Object.keys(FILTER_OPTIONS).forEach(function (group) {
+  const wrap = filterBox.querySelector('[data-group="' + group + '"]');
+  FILTER_OPTIONS[group].forEach(function (value) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "fbtn"; b.textContent = value; b.dataset.value = value;
+    b.addEventListener("click", function () {
+      // "All" (destination) always selects; the other groups toggle off when clicked again
+      state[group] = (group === "destination") ? value : (state[group] === value ? null : value);
+      syncButtons(); renderCards();
+    });
+    wrap.appendChild(b);
+  });
+});
+function syncButtons() {
+  filterBox.querySelectorAll(".fgroup").forEach(function (wrap) {
+    wrap.querySelectorAll(".fbtn").forEach(function (b) {
+      b.classList.toggle("on", state[wrap.dataset.group] === b.dataset.value);
+    });
+  });
+}
+document.getElementById("search").addEventListener("input", function (e) { state.query = e.target.value.trim(); renderCards(); });
+document.getElementById("reset").addEventListener("click", function () {
+  state.destination = "All"; state.type = state.media = state.status = null; state.query = "";
+  document.getElementById("search").value = ""; syncButtons(); renderCards();
+});
+// Mobile: the Filters button opens/closes the panel
+document.getElementById("filterToggle").addEventListener("click", function (e) {
+  const open = filterBox.classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", open);
+  e.currentTarget.textContent = open ? "Hide filters" : "Filters";
+});
+
+// ---------- 4) MISSION CARDS ----------
+function esc(s) { const d = document.createElement("div"); d.textContent = String(s); return d.innerHTML; }
+
+function imageHTML(src, name) {
+  // Real image if a URL is set; otherwise a clear placeholder
+  return src ? '<img src="' + esc(src) + '" alt="' + esc(name) + '" loading="lazy">'
+             : '<span class="ph">Real mission image goes here<br>(set <b>image</b> in the data)</span>';
+}
+
+function renderCards() {
+  const grid = document.getElementById("grid");
+  const list = missions.filter(matches);
+  document.getElementById("count").textContent = list.length + (list.length === 1 ? " mission" : " missions");
+  grid.innerHTML = "";
+  if (!list.length) {
+    grid.innerHTML = '<p class="empty">No missions match. Try clearing a filter.<br>(Media filters only match missions that have image or video URLs added.)</p>';
+    return;
+  }
+  list.forEach(function (m, i) {
+    const card = document.createElement("article");
+    card.className = "card " + m.destination;
+    card.style.animationDelay = (i * 0.05) + "s";
+    card.innerHTML =
+      '<div class="thumb">' + imageHTML(m.image, m.name) + '</div>' +
+      '<div class="card-body">' +
+        '<h3>' + esc(m.name) + '</h3>' +
+        '<div class="badges"><span class="dest"><span class="dot"></span>' + esc(m.destination) + '</span>' +
+          '<span class="type">' + esc(m.type) + '</span></div>' +
+        '<div class="meta">' + esc(m.mission) + ' \u2022 ' + esc(m.year) + '</div>' +
+        '<div class="loc">' + esc(m.location) + '</div>' +
+        '<p class="desc">' + esc(m.description) + '</p>' +
+        '<div class="media"><span class="' + (hasImages(m) ? "" : "off") + '">\uD83D\uDCF7 Images</span>' +
+          '<span class="' + (hasVideos(m) ? "" : "off") + '">\u25B6 Videos</span></div>' +
+        '<button class="btn" type="button">View Details </button>' +
+      '</div>';
+    card.querySelector(".btn").addEventListener("click", function () { location.hash = "mission=" + m.id; });
+    grid.appendChild(card);
+  });
+}
+
+// ---------- 5) DETAIL VIEW (opens with #mission=id, so the browser Back button works) ----------
+function listHTML(items, todo) {
+  return items.length ? "<ul>" + items.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>"
+                      : '<p class="todo">' + todo + "</p>";
+}
+
+function renderDetail(m) {
+  const gallery = m.gallery.length
+    ? m.gallery.map(function (u) { return '<img src="' + esc(u) + '" alt="' + esc(m.name) + ' image" loading="lazy">'; }).join("")
+    : '<div class="ph">Add verified gallery image URLs in the data</div><div class="ph">Add verified gallery image URLs in the data</div><div class="ph">Add verified gallery image URLs in the data</div>';
+  const videos = m.videos.length
+    ? "<ul>" + m.videos.map(function (u, i) { return '<li><a href="' + esc(u) + '" target="_blank" rel="noopener">Watch video ' + (i + 1) + "</a></li>"; }).join("") + "</ul>"
+    : '<p class="todo">No video linked yet. Add real video URLs to the <b>videos</b> list in the data.</p>';
+  const source = m.sourceUrl
+    ? '<a href="' + esc(m.sourceUrl) + '" target="_blank" rel="noopener">' + esc(m.source) + " mission page</a>"
+    : '<span class="todo">Source: ' + esc(m.source) + ' \u2014 add the official mission page link as <b>sourceUrl</b>.</span>';
+  const related = missions.filter(function (x) { return x.destination === m.destination && x.id !== m.id; }).slice(0, 4)
+    .map(function (x) { return '<button class="chip" type="button" data-id="' + x.id + '">' + esc(x.name) + "</button>"; }).join("");
+  const fact = function (k, v) { return '<div class="fact"><small>' + k + "</small><span>" + esc(v) + "</span></div>"; };
+
+  const view = document.getElementById("detailView");
+  view.innerHTML =
+    '<div class="detail ' + m.destination + '">' +
+    '<button class="back" type="button" id="backBtn">\u2190 Back to Explore</button>' +
+    '<div class="badges"><span class="dest"><span class="dot"></span>' + esc(m.destination) + '</span><span class="type">' + esc(m.type) + "</span></div>" +
+    "<h1>" + esc(m.name) + "</h1>" +
+    '<p class="lead">' + esc(m.description) + "</p>" +
+    '<div class="facts">' + fact("Mission", m.mission) + fact("Launch date", m.launch) + fact("Arrival date", m.arrival) +
+      fact("Location", m.location) + fact("Type", m.type) + fact("Status", m.status) + "</div>" +
+    '<div class="panel"><h2>Spacecraft information</h2><p>' + esc(m.spacecraft) + "</p></div>" +
+    '<div class="panel"><h2>Scientific objectives</h2>' + listHTML(m.objectives, "Add verified objectives.") + "</div>" +
+    '<div class="panel"><h2>Key discoveries</h2>' + listHTML(m.discoveries, "Add verified key discoveries from official mission sources.") + "</div>" +
+    '<div class="panel"><h2>Images</h2><div class="gallery">' + gallery + "</div></div>" +
+    '<div class="panel"><h2>Videos</h2>' + videos + "</div>" +
+    '<div class="panel"><h2>Source</h2><p>' + source + "</p></div>" +
+    '<div class="panel"><h2>Related missions</h2><div class="chips">' + related + "</div></div>" +
+    "</div>";
+
+  document.getElementById("backBtn").addEventListener("click", function () { location.hash = ""; });
+  view.querySelectorAll(".chip").forEach(function (c) {
+    c.addEventListener("click", function () { location.hash = "mission=" + c.dataset.id; });
+  });
+}
+
+// Show the list or a mission, depending on the URL hash
+function route() {
+  const id = location.hash.replace("#mission=", "");
+  const m = missions.find(function (x) { return x.id === id; });
+  document.getElementById("listView").hidden = !!m;
+  document.getElementById("detailView").hidden = !m;
+  if (m) { renderDetail(m); window.scrollTo(0, 0); }
+}
+window.addEventListener("hashchange", route);
+
+syncButtons(); renderCards(); route();
+</script>
+</body>
+</html>

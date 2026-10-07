@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — Stories</title>
+<!-- Same fonts as the home page -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Stories page – same look as the Rovelore Chronicles home page
+   (Baloo 2 + Patrick Hand fonts, golden yellow hand-drawn details)
+   ========================================================= */
+
+:root {
+  --bg: #0A1230;               /* deep navy (same as the logo's dark) */
+  --blue: #3AA9E0;             /* logo blue */
+  --yellow: #FFC928;           /* golden yellow used for stars, arrows, buttons */
+  --text: #ffffff;
+  --text-soft: #c9d3f0;
+  --mars: #ff8a5c;             /* Mars accent */
+  --moon: #8fc8ff;             /* Moon accent */
+  --line: rgba(255, 255, 255, 0.16);
+  --heading: "Baloo 2", "Trebuchet MS", sans-serif;
+  --hand: "Patrick Hand", "Comic Sans MS", cursive;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Background: plain navy for now. To use your image, replace with:
+   background: var(--bg) url("../images/1st.jpg") center / cover no-repeat fixed;  */
+body { font-family: var(--heading); color: var(--text); background: var(--bg); line-height: 1.5;
+  background-image: url("../images/2nd.png"); background-size: cover; background-position: center; background-repeat: no-repeat;
+  height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }  /* page doesn't scroll */
+
+/* ---- Header: copied from your home page so the logo and links sit in the same place ---- */
+.topbar { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px 0; flex-wrap: wrap; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #FFFFFF; }
+.mainnav { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.nav-link { background: none; border: none; color: #FFFFFF; font-family: inherit; font-size: 1rem; font-weight: 600;
+  cursor: pointer; padding: 4px 0; position: relative; }
+.nav-link.active { color: #FFC928; }
+.nav-link.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+  border-radius: 2px; background: #FFC928; }                       /* active page = gold underline */
+.nav-link:hover:not(.active) { color: #FFC928; opacity: 0.85; }
+
+main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px 24px;
+  flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+/* ---- Hero ---- */
+.hero { flex-shrink: 0; text-align: center; padding: 22px 0 20px; position: relative; }
+.hero-title { font-size: clamp(40px, 7vw, 68px); font-weight: 800; line-height: 1.1;
+  display: inline-flex; align-items: flex-start; gap: 8px; }
+.hero-title svg { margin-top: 6px; animation: spin 8s linear infinite; }
+@keyframes spin { 50% { transform: rotate(20deg) scale(1.15); } }
+.swoop { display: block; margin: 0 auto; }
+.subtitle { margin-top: 6px; font-family: var(--hand); font-size: clamp(20px, 3vw, 28px); color: var(--text-soft); }
+
+/* ---- Story box: the page is fixed, only this box scrolls ---- */
+.story-box { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.story-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; list-style: none;
+  padding: 22px; display: flex; flex-direction: column; gap: 20px;
+  background: rgba(6, 12, 40, 0.45); border: 2px solid rgba(8, 84, 117, 0.45); border-radius: 28px;
+  scrollbar-width: thin; scrollbar-color: var(--yellow) transparent; }
+.story-list::-webkit-scrollbar { width: 8px; }
+.story-list::-webkit-scrollbar-thumb { background: var(--yellow); border-radius: 8px; }
+
+/* ---- One story row ---- */
+.story { display: grid; grid-template-columns: 60px 1fr auto; gap: 6px 22px; align-items: center;
+  padding: 26px 30px; background: rgba(18, 30, 80, 0.7); border: 2px solid var(--line); border-radius: 24px;
+  transition: transform .25s ease, border-color .25s ease, background .25s ease;
+  opacity: 0; animation: rise .6s ease forwards; }
+.story.mars { --accent: var(--mars); }
+.story.moon { --accent: var(--moon); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.story:hover { transform: translateY(-4px); border-color: var(--accent); background: rgba(26, 42, 105, 0.85); }
+
+/* Number in a round badge, like a sticker */
+.story-num { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  font-size: 26px; font-weight: 800; color: var(--bg); background: var(--accent); }
+
+.story h2 { display: flex; align-items: center; gap: 10px; font-size: clamp(22px, 3vw, 28px); font-weight: 700; line-height: 1.2; }
+.icon { display: inline-block; width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+.mars-icon { background: radial-gradient(circle at 35% 30%, #ffc3a3, var(--mars) 60%, #a8431f); }
+.moon-icon { background: radial-gradient(circle at 35% 30%, #fff, var(--moon) 60%, #5d7fa8); }
+
+.meta { margin-top: 2px; font-family: var(--hand); font-size: 20px; color: var(--accent); }
+.story p { margin-top: 6px; font-family: var(--hand); font-size: 19px; color: var(--text-soft); max-width: 560px; }
+
+/* Yellow rounded button, like "Start the Story" on the home page */
+.read-btn { font-family: var(--heading); font-weight: 700; font-size: 16px; white-space: nowrap;
+  color: #1a1400; background: var(--yellow); border: none; border-radius: 999px; padding: 11px 24px; cursor: pointer;
+  box-shadow: 0 4px 0 #c99500; transition: transform .2s, box-shadow .2s; }
+.read-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 6px 0 #c99500; }
+.read-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #c99500; }
+.read-btn span { display: inline-block; transition: transform .2s; }
+.read-btn:hover span { transform: translateX(4px); }
+.read-btn:focus-visible, .nav-link:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px 24px 12px; }
+  .mainnav { gap: 16px; font-size: 0.95rem; }
+  main { padding: 0 12px 12px; }
+  .story-list { padding: 12px; gap: 14px; border-radius: 22px; }
+  .story { grid-template-columns: 44px 1fr; padding: 20px 16px; gap: 6px 14px; }
+  .story-num { width: 42px; height: 42px; font-size: 21px; }
+  .story .read-btn { grid-column: 2; justify-self: start; margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+
+  <!-- HEADER (same as the home page; "Stories" is the active link) -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 48 40" width="36" height="30">
+          <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+          <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+          <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+          <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+          <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+        </svg>
+      </span>
+      <span class="brand-name">Rovelore Chronicles</span>
+    </div>
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="nav-link" data-nav="home">Home</button>
+      <button class="nav-link" data-nav="start">Start the Journey</button>
+      <button class="nav-link active" data-nav="stories" aria-current="page">Stories</button>
+      <button class="nav-link" data-nav="explore">Explore</button>
+      <button class="nav-link" data-nav="about">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- TITLE -->
+    <section class="hero">
+      <h1 class="hero-title">Stories
+        <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true">
+          <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+        </svg>
+      </h1>
+      <svg class="swoop" viewBox="0 0 80 24" width="90" height="20" aria-hidden="true">
+        <path d="M2 20 C 24 2, 56 2, 78 14" fill="none" stroke="#FFC928" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <p class="subtitle">Every machine left behind has a story to tell.</p>
+    </section>
+
+    <!-- STORY LIST (rows are built by the script below) -->
+    <section class="story-box" aria-label="All stories">
+      <ol class="story-list" id="storyList"></ol>
+    </section>
+  </main>
+
+<script>
+/* =========================================================
+   Stories page – JavaScript
+   1) Header navigation  2) Build the story list  3) Open a story
+   ========================================================= */
+
+// 1) Header navigation – same procedure as the home page: a routes object + data-nav buttons.
+//    These pages sit in the mainhtml folder, so the home page is one level up ("../index.html").
+document.addEventListener('DOMContentLoaded', () => {
+  const routes = {
+    home: '../index.html',
+    start: 'index3.html',
+    stories: 'stories.html',
+    explore: 'explore.html',
+    about: 'about.html'
+  };
+
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const key = el.getAttribute('data-nav');
+      const dest = routes[key];
+      if (dest) {
+        window.location.href = dest;
+      }
+    });
+  });
+});
+
+// 2) Where a story opens. The mission key is added to the end, e.g. story.html?mission=sojourner
+const STORY_PAGE = "story.html?mission=";
+
+/* The missions object. If your site already has one, delete this copy and load yours first.
+   Each entry needs: name, world ("mars" or "moon"), location, mission.
+   "description" is optional – if missing, no description line is shown. */
+const missions = {
+  sojourner:    { name: "Sojourner Rover",    world: "mars", location: "Ares Vallis",                mission: "Mars Pathfinder (1997)" },
+  perseverance: { name: "Perseverance Rover", world: "mars", location: "Jezero Crater",              mission: "Mars 2020" },
+  curiosity:    { name: "Curiosity Rover",    world: "mars", location: "Gale Crater",                mission: "Mars Science Laboratory (2012)" },
+  opportunity:  { name: "Opportunity Rover",  world: "mars", location: "Endeavour Crater",           mission: "Mars Exploration Rover (2004)" },
+  apollo17:     { name: "Apollo 17",          world: "moon", location: "Taurus\u2013Littrow Valley", mission: "Apollo 17" },
+  lunarmodule:  { name: "Lunar Module",       world: "moon", location: "Oceanus Procellarum",        mission: "Chang'e 5" },
+  apollo15:     { name: "Apollo 15",          world: "moon", location: "Hadley\u2013Apennine",       mission: "Apollo 15" },
+  lro:          { name: "LRO",                world: "moon", location: "Lunar Orbit",                mission: "Lunar Reconnaissance Orbiter" },
+  chandrayaan3: { name: "Chandrayaan-3",      world: "moon", location: "Lunar South Pole",           mission: "Chandrayaan-3" }
+};
+
+function createRow(key, m, number, delay) {
+  const row = document.createElement("li");
+  row.className = "story " + m.world;           // "mars" or "moon" sets the accent colour
+  row.style.animationDelay = delay + "s";
+
+  row.innerHTML =
+    '<span class="story-num"></span>' +
+    "<div>" +
+      '<h2><span class="icon ' + m.world + '-icon" aria-hidden="true"></span><span class="name"></span></h2>' +
+      '<div class="meta"></div>' +
+      "<p></p>" +
+    "</div>" +
+    '<button class="read-btn" type="button">Read Story</button>';
+
+  row.querySelector(".story-num").textContent = number;
+  row.querySelector(".name").textContent = m.name;
+  row.querySelector(".meta").textContent = m.location + "  \u00b7  " + m.mission;
+
+  const desc = row.querySelector("p");
+  if (m.description) { desc.textContent = m.description; } else { desc.remove(); }
+
+  // 3) Open the matching story page
+  row.querySelector(".read-btn").addEventListener("click", function () {
+    window.location.href = STORY_PAGE + encodeURIComponent(key);
+  });
+  return row;
+}
+
+const list = document.getElementById("storyList");
+Object.keys(missions).forEach(function (key, i) {
+  list.appendChild(createRow(key, missions[key], i + 1, i * 0.08));
+});
+</script>
+</body>
+</html>
