@@ -58,9 +58,11 @@ The machines left behind on other worlds represent years of engineering, scienti
 
 Team name:Event-Horizon
 
-Team members-
+Team Leader-
 
 Al Sadaf Bi Nazim(Researcher)
+
+Team members-
 
 Towsif Muhammad Tasin(UI/UX designer and Front-end devloper)
 
