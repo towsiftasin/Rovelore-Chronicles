@@ -60,7 +60,7 @@ Team name:Event-Horizon
 
 Team Leader-
 
-Al Sadaf Bi Nazim(Researcher)
+Al Sadaf Bin Nazim(Researcher)
 
 Team members-
 
