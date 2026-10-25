@@ -25,33 +25,34 @@
 html, body {
   margin: 0;
   min-height: 100%;
-  
 }
 
 body {
   font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
   color: var(--white);
-  background-image: url("../images/moon2.png");
-   background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background: #000;
 }
 
+/* The positioned "stage" (same idea as .stage on the Mars page).
+   Markers, compass and instruction box anchor to this. */
 .moon-page {
+  position: relative;
+  width: 100%;
   max-width: 1648px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 0 0 4vh;
+  overflow: hidden;
+
+  background-image: url("../images/moon2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* ---------- NAVBAR (sits on plain black) ---------- */
-/* ============================================
-   SHARED NAVBAR — link this file on EVERY page
-   so the logo and nav links land in the exact
-   same place everywhere. Do not duplicate these
-   rules in each page's own stylesheet.
-============================================ */
-
+/* ---------- NAVBAR ---------- */
 .topbar {
+  position: relative;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -121,8 +122,10 @@ body {
   .mainnav { gap: 16px; font-size: 0.95rem; }
 }
 
-/* ---------- MOON HEADER (sits on plain black) ---------- */
+/* ---------- MOON HEADER ---------- */
 .moon-header {
+  position: relative;
+  z-index: 10;
   padding: 2vh 3vw 0;
 }
 
@@ -208,6 +211,12 @@ body {
   border: 3px solid var(--cyan);
   padding: 8px;
   box-shadow: 0 0 16px rgba(41,200,255,0.3);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.marker:hover .marker-icon {
+  box-shadow: 0 0 20px rgba(41,200,255,0.65);
+  transform: scale(1.03);
 }
 
 .marker-label {
@@ -220,6 +229,7 @@ body {
   text-align: left;
   line-height: 1.35;
   white-space: nowrap;
+  box-shadow: 0 0 12px rgba(41,200,255,0.15);
 }
 
 .marker-sub { font-weight: 500; font-size: 0.9em; }
@@ -276,7 +286,7 @@ body {
 .ray-tl { left: -6px; top: -6px; }
 .ray-tr { right: -6px; top: -6px; }
 
-/* ---------- MODAL ---------- */
+/* ---------- MODAL (fallback only) ---------- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -325,6 +335,25 @@ body {
 .modal-mission { margin: 0 0 12px; font-weight: 700; }
 .modal-body { margin: 0; line-height: 1.5; font-weight: 500; }
 
+.modal-story {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 24px;
+  background: var(--gold);
+  color: var(--ui-1);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 0 16px rgba(255,201,40,0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.modal-story:hover, .modal-story:focus-visible {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .marker-label { white-space: normal; max-width: 24vw; }
@@ -339,7 +368,6 @@ body {
   .marker-label { white-space: normal; max-width: 34vw; font-size: 0.65rem; }
   .instruction { transform: none; right: 4vw; bottom: 2vh; }
   .compass { left: 4vw; bottom: 2vh; }
-  .earth-deco { width: 16%; right: 4%; top: 4%; }
 }
 
 /* =========================
@@ -446,27 +474,27 @@ body {
 <main class="moon-page">
 
   <!-- NAVBAR -->
- <header class="topbar">
-  <div class="brand">
-    <span class="brand-logo" aria-hidden="true">
-      <svg viewBox="0 0 48 40" width="36" height="30">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 48 40" width="36" height="30">
           <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
           <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
           <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
           <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
           <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
-      </svg>
-    </span>
-    <span class="brand-name">Rovelore Chronicles</span>
-  </div>
-  <nav class="mainnav" aria-label="Main navigation">
-    <button class="nav-link" data-nav="home">Home</button>
-    <button class="nav-link active" data-nav="start">Start the Journey</button>
-    <button class="nav-link" data-nav="stories">Stories</button>
-    <button class="nav-link" data-nav="explore">Explore</button>
-    <button class="nav-link" data-nav="about">About</button>
-  </nav>
-</header>
+        </svg>
+      </span>
+      <span class="brand-name">Rovelore Chronicles</span>
+    </div>
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="nav-link" data-nav="home">Home</button>
+      <button class="nav-link active" data-nav="start">Start the Journey</button>
+      <button class="nav-link" data-nav="stories">Stories</button>
+      <button class="nav-link" data-nav="explore">Explore</button>
+      <button class="nav-link" data-nav="about">About</button>
+    </nav>
+  </header>
 
   <!-- MOON HEADER -->
   <section class="moon-header">
@@ -483,102 +511,102 @@ body {
   </section>
 
 
-    <!-- MISSION MARKERS -->
-    <button class="marker marker-1" data-mission="apollo17">
-      <span class="marker-icon" aria-hidden="true">
-        <svg viewBox="0 0 60 44" width="100%" height="100%">
-          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
-          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
-          <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
-          <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
-          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
-          <circle cx="14" cy="34" r="7" fill="#181818"/>
-          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
-          <circle cx="46" cy="34" r="7" fill="#181818"/>
-        </svg>
-      </span>
-      <span class="marker-label">Apollo 17<br><span class="marker-sub">(Lunar Rover)</span></span>
-      <span class="marker-pin" aria-hidden="true"></span>
-    </button>
-
-    <button class="marker marker-2" data-mission="lunarmodule">
-      <span class="marker-icon" aria-hidden="true">
-        <svg viewBox="0 0 60 50" width="100%" height="100%">
-          <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
-          <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
-          <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <rect x="27" y="1" width="6" height="6" fill="#2b5faa"/>
-        </svg>
-      </span>
-      <span class="marker-label">Lunar Module<br><span class="marker-sub">(Chang'e 5)</span></span>
-      <span class="marker-pin" aria-hidden="true"></span>
-    </button>
-
-    <button class="marker marker-3" data-mission="apollo15">
-      <span class="marker-icon" aria-hidden="true">
-        <svg viewBox="0 0 60 44" width="100%" height="100%">
-          <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
-          <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
-          <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
-          <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
-          <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
-          <circle cx="14" cy="34" r="7" fill="#181818"/>
-          <circle cx="30" cy="36" r="7.5" fill="#181818"/>
-          <circle cx="46" cy="34" r="7" fill="#181818"/>
-        </svg>
-      </span>
-      <span class="marker-label">Apollo 15<br><span class="marker-sub">(Lunar Rover)</span></span>
-      <span class="marker-pin" aria-hidden="true"></span>
-    </button>
-
-    <button class="marker marker-4" data-mission="lro">
-      <span class="marker-icon" aria-hidden="true">
-        <svg viewBox="0 0 60 60" width="100%" height="100%">
-          <circle cx="30" cy="30" r="8" fill="#c9c4b6"/>
-          <rect x="0" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(-30 10 16)"/>
-          <rect x="40" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(30 50 16)"/>
-          <rect x="0" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(30 10 44)"/>
-          <rect x="40" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(-30 50 44)"/>
-        </svg>
-      </span>
-      <span class="marker-label">LRO<br><span class="marker-sub">(Orbiter)</span></span>
-      <span class="marker-pin" aria-hidden="true"></span>
-    </button>
-
-    <button class="marker marker-5" data-mission="chandrayaan3">
-      <span class="marker-icon" aria-hidden="true">
-        <svg viewBox="0 0 60 50" width="100%" height="100%">
-          <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
-          <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
-          <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-          <rect x="27" y="1" width="6" height="6" fill="#FF9933"/>
-        </svg>
-      </span>
-      <span class="marker-label">Chandrayaan-3<br><span class="marker-sub">(Lander)</span></span>
-      <span class="marker-pin" aria-hidden="true"></span>
-    </button>
-
-    <!-- COMPASS -->
-    <div class="compass" aria-hidden="true">
-      <svg viewBox="0 0 90 90" width="100%" height="100%">
-        <circle cx="45" cy="45" r="40" fill="rgba(10,18,40,0.55)" stroke="#29C8FF" stroke-width="2"/>
-        <text x="45" y="18" text-anchor="middle" fill="#29C8FF" font-size="12" font-family="Baloo 2, sans-serif" font-weight="700">N</text>
-        <polygon points="45,26 51,58 45,50 39,58" fill="#29C8FF"/>
+  <!-- MISSION MARKERS -->
+  <button class="marker marker-1" data-mission="apollo17">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 44" width="100%" height="100%">
+        <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+        <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+        <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
+        <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
+        <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+        <circle cx="14" cy="34" r="7" fill="#181818"/>
+        <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+        <circle cx="46" cy="34" r="7" fill="#181818"/>
       </svg>
-    </div>
+    </span>
+    <span class="marker-label">Apollo 17<br><span class="marker-sub">(Lunar Rover)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
 
-    <!-- INSTRUCTION BUTTON -->
-    <div class="instruction">
-      <svg class="ray ray-tl" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="2" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
-      <svg class="ray ray-tr" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="18" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
-      <p>Click on a location<br>to learn more!</p>
-    </div>
+  <button class="marker marker-2" data-mission="lunarmodule">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 50" width="100%" height="100%">
+        <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
+        <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
+        <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <rect x="27" y="1" width="6" height="6" fill="#2b5faa"/>
+      </svg>
+    </span>
+    <span class="marker-label">Lunar Module<br><span class="marker-sub">(Chang'e 5)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
+
+  <button class="marker marker-3" data-mission="apollo15">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 44" width="100%" height="100%">
+        <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
+        <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
+        <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
+        <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
+        <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+        <circle cx="14" cy="34" r="7" fill="#181818"/>
+        <circle cx="30" cy="36" r="7.5" fill="#181818"/>
+        <circle cx="46" cy="34" r="7" fill="#181818"/>
+      </svg>
+    </span>
+    <span class="marker-label">Apollo 15<br><span class="marker-sub">(Lunar Rover)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
+
+  <button class="marker marker-4" data-mission="lro">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 60" width="100%" height="100%">
+        <circle cx="30" cy="30" r="8" fill="#c9c4b6"/>
+        <rect x="0" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(-30 10 16)"/>
+        <rect x="40" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(30 50 16)"/>
+        <rect x="0" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(30 10 44)"/>
+        <rect x="40" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(-30 50 44)"/>
+      </svg>
+    </span>
+    <span class="marker-label">LRO<br><span class="marker-sub">(Orbiter)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
+
+  <button class="marker marker-5" data-mission="chandrayaan3">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 50" width="100%" height="100%">
+        <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
+        <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
+        <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <rect x="27" y="1" width="6" height="6" fill="#FF9933"/>
+      </svg>
+    </span>
+    <span class="marker-label">Chandrayaan-3<br><span class="marker-sub">(Lander)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
+
+  <!-- COMPASS -->
+  <div class="compass" aria-hidden="true">
+    <svg viewBox="0 0 90 90" width="100%" height="100%">
+      <circle cx="45" cy="45" r="40" fill="rgba(10,18,40,0.55)" stroke="#29C8FF" stroke-width="2"/>
+      <text x="45" y="18" text-anchor="middle" fill="#29C8FF" font-size="12" font-family="Baloo 2, sans-serif" font-weight="700">N</text>
+      <polygon points="45,26 51,58 45,50 39,58" fill="#29C8FF"/>
+    </svg>
+  </div>
+
+  <!-- INSTRUCTION BUTTON -->
+  <div class="instruction">
+    <svg class="ray ray-tl" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="2" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="ray ray-tr" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><line x1="18" y1="18" x2="10" y2="10" stroke="#FFC928" stroke-width="3" stroke-linecap="round"/></svg>
+    <p>Click on a location<br>to learn more!</p>
+  </div>
 
 </main>
 
@@ -595,7 +623,7 @@ body {
 <!-- Pointer triangle (drawn by positionBubble() in the script) -->
 <div class="tail" id="tail" aria-hidden="true"></div>
 
-<!-- MISSION MODAL -->
+<!-- MISSION MODAL (fallback: only opens for a mission with no "story" link) -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-card" role="dialog" aria-modal="true">
     <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
@@ -605,6 +633,7 @@ body {
     <p class="modal-mission-label">Mission:</p>
     <p class="modal-mission" id="modalMission">Mission name</p>
     <p class="modal-body" id="modalBody">Description goes here.</p>
+    <a class="modal-story" id="modalStory" href="#">Start the story &rarr;</a>
   </div>
 </div>
 
@@ -626,37 +655,44 @@ body {
     });
   });
 
-  /* ---------- MISSION MODAL ---------- */
+  /* ---------- MISSIONS ----------
+     "story" = the page a marker click goes to.
+     Remove "story" (or set it to "") and the marker opens the modal instead. */
   const missions = {
     apollo17: {
       title: 'Apollo 17',
       location: 'Taurus–Littrow Valley',
       mission: 'Apollo 17',
-      body: 'Explore the story of the last crewed mission to the Moon and the lunar rover left behind on the surface.'
+      body: 'Explore the story of the last crewed mission to the Moon and the lunar rover left behind on the surface.',
+      story: '../apollo17/scene1.html'
     },
     lunarmodule: {
       title: "Lunar Module",
       location: 'Oceanus Procellarum',
       mission: "Chang'e 5",
-      body: 'Explore the story of the lander and ascent vehicle that helped return lunar samples to Earth.'
+      body: 'Explore the story of the lander and ascent vehicle that helped return lunar samples to Earth.',
+      story: '../lunarmodule/scene1.html'
     },
     apollo15: {
       title: 'Apollo 15',
       location: 'Hadley–Apennine',
       mission: 'Apollo 15',
-      body: 'Explore the story of the first mission to use a lunar roving vehicle to explore the surface.'
+      body: 'Explore the story of the first mission to use a lunar roving vehicle to explore the surface.',
+      story: '../apollo15/scene1.html'
     },
     lro: {
       title: 'LRO',
       location: 'Lunar Orbit',
       mission: 'Lunar Reconnaissance Orbiter',
-      body: 'Explore the story of the orbiter that has been mapping the Moon\'s surface in detail since 2009.'
+      body: 'Explore the story of the orbiter that has been mapping the Moon\'s surface in detail since 2009.',
+      story: '../lro/scene1.html'
     },
     chandrayaan3: {
       title: 'Chandrayaan-3',
       location: 'Lunar South Pole',
       mission: 'Chandrayaan-3',
-      body: 'Explore the story of the lander that made the first successful soft landing near the Moon\'s south pole.'
+      body: 'Explore the story of the lander that made the first successful soft landing near the Moon\'s south pole.',
+      story: '../chandrayaan3/scene1.html'
     }
   };
 
@@ -666,6 +702,7 @@ body {
   const locationEl = document.getElementById('modalLocation');
   const missionEl = document.getElementById('modalMission');
   const bodyEl = document.getElementById('modalBody');
+  const storyEl = document.getElementById('modalStory');
 
   function openModal(key) {
     const data = missions[key];
@@ -674,6 +711,13 @@ body {
     locationEl.textContent = data.location;
     missionEl.textContent = data.mission;
     bodyEl.textContent = data.body;
+    if (data.story) {
+      storyEl.href = data.story;
+      storyEl.style.display = 'inline-block';
+    } else {
+      storyEl.removeAttribute('href');
+      storyEl.style.display = 'none';
+    }
     overlay.classList.add('open');
   }
 
@@ -681,8 +725,19 @@ body {
     overlay.classList.remove('open');
   }
 
+  /* Marker click: go straight to the story (like the Mars page).
+     Falls back to the modal if the mission has no story link. */
   document.querySelectorAll('.marker').forEach((marker) => {
-    marker.addEventListener('click', () => openModal(marker.dataset.mission));
+    marker.addEventListener('click', () => {
+      const key  = marker.dataset.mission;
+      const data = missions[key];
+
+      if (data && data.story) {
+        window.location.href = data.story;
+      } else {
+        openModal(key);
+      }
+    });
   });
 
   closeBtn.addEventListener('click', closeModal);
