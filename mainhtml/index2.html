@@ -75,8 +75,8 @@
 
   .tail { position: absolute; background: rgba(78, 62, 185, 0.92); }
 
-  /* Button row: SKIP sits beside NEXT / CONTINUE */
-  .btn-row {
+  /* ===== BUTTONS (bottom-right): 🔊 (added by voice.js) · SKIP · AUTOPLAY · NEXT ===== */
+  .right-btns {
     position: fixed;
     right: 24px;
     bottom: 24px;
@@ -86,6 +86,9 @@
     gap: 10px;
   }
 
+  /* All the small pill buttons share one look */
+  .skip-btn,
+  .auto-btn,
   .next-btn {
     padding: 9px 22px;
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
@@ -98,28 +101,52 @@
     border-radius: 999px;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, color 200ms ease;
+  }
+  .auto-btn:hover {
+    transform: scale(1.07);
+    background: rgba(90, 70, 210, 0.95);
+    box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
+  }
+  .auto-btn:active { transform: scale(0.95); }
+  .skip-btn:focus-visible,
+  .auto-btn:focus-visible,
+  .next-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
+
+  /* AUTOPLAY turns gold while it is running */
+  .auto-btn.on {
+    color: #2a1f00;
+    background: #ffd76a;
+    border-color: #fff3c4;
+    box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 18px rgba(255, 215, 106, 0.8);
+  }
+  .auto-btn.on:hover { background: #ffe08a; }
+
+  /* SKIP and NEXT / CONTINUE fade in with each line */
+  .skip-btn,
+  .next-btn {
     opacity: 0;
     visibility: hidden;
     transform: translateY(6px);
     transition: opacity 400ms ease, transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
   }
+  .skip-btn { background: rgba(40, 30, 110, 0.55); }   /* a little softer so NEXT stays the main button */
+  .skip-btn.show,
   .next-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .skip-btn.show:hover,
   .next-btn.show:hover {
     transform: scale(1.07);
     background: rgba(90, 70, 210, 0.95);
     box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
   }
+  .skip-btn.show:active,
   .next-btn.show:active { transform: scale(0.95); }
-  .next-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
-
-  /* Skip is the same design, just a little softer so NEXT stays the main button */
-  .skip-btn { background: rgba(40, 30, 110, 0.55); }
 
   @media (max-width: 700px) {
     .bubble { max-width: 190px; padding: 10px 13px; border-radius: 15px; }
     .bubble-text { font-size: 15px; }
-    .btn-row { right: 16px; bottom: 16px; gap: 8px; }
-    .next-btn { font-size: 12px; padding: 7px 16px; }
+    .right-btns { right: 12px; bottom: 14px; gap: 6px; }
+    .skip-btn, .auto-btn, .next-btn { font-size: 11px; padding: 7px 12px; letter-spacing: 1px; }
   }
 </style>
 </head>
@@ -135,12 +162,27 @@
   </div>
 </div>
 
-<div class="btn-row">
-  <button class="next-btn skip-btn" id="skipBtn" type="button">SKIP</button>
+<div class="right-btns">
+  <button class="skip-btn" id="skipBtn" type="button">SKIP</button>
+  <button class="auto-btn" id="autoBtn" type="button" aria-pressed="false">&#9654; AUTOPLAY</button>
   <button class="next-btn" id="nextBtn" type="button">NEXT</button>
 </div>
 
 <script>
+  const NEXT_PAGE = "index3.html";    // where CONTINUE and SKIP go
+
+  /* ===== AUTOPLAY =====
+     When AUTOPLAY is on, every line moves on by itself after a reading
+     pause (or, with voice.js, once the voice has finished the line), and
+     the last line goes straight to the next scene, so nobody has to tap
+     NEXT or CONTINUE. The setting is remembered for the whole visit, so the
+     next scene keeps playing too (as long as that page has this same code).
+     Reading time per line = AUTO_BASE + AUTO_PER_CHAR * letters.          */
+  const AUTO_BASE = 1800;      // milliseconds every line waits at least
+  const AUTO_PER_CHAR = 55;    // extra milliseconds for each letter in the line
+  const AUTO_MIN = 3000;       // never shorter than this
+  const AUTO_KEY = "storyAutoplay";
+
   const dialogues = [
     { name: "Commander Lena", text: "Hello, explorer! I'm Commander Lena.", position: "lena", type: "medium" },
     { name: "Commander Lena", text: "I'll be your guide on our journey through space.", position: "lena", type: "medium" },
@@ -171,12 +213,15 @@
   const bubbleText  = document.getElementById("bubbleText");
   const btn         = document.getElementById("nextBtn");
   const skipBtn     = document.getElementById("skipBtn");
+  const autoBtn     = document.getElementById("autoBtn");
 
   let currentDialogue = 0;
   let current = null;
   let currentWidth = WIDTHS.short;
   let busy = false;
   let leaving = false;
+  let autoplay = false;
+  let autoTimer = null;
 
   function positionBubble() {
     if (!current) return;
@@ -235,6 +280,28 @@
     speech.style.transformOrigin = mx + "px " + my + "px";
   }
 
+  /* ---------- AUTOPLAY ---------- */
+  function readingTime(i) {
+    const len = dialogues[i].text.length;
+    return Math.max(AUTO_MIN, AUTO_BASE + AUTO_PER_CHAR * len);
+  }
+
+  function scheduleAuto() {
+    clearTimeout(autoTimer);
+    if (!autoplay) return;
+    autoTimer = setTimeout(nextDialogue, readingTime(currentDialogue));
+  }
+
+  function setAutoplay(on) {
+    autoplay = on;
+    autoBtn.classList.toggle("on", on);
+    autoBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    autoBtn.innerHTML = on ? "&#10074;&#10074; PAUSE" : "&#9654; AUTOPLAY";
+    try { sessionStorage.setItem(AUTO_KEY, on ? "on" : "off"); } catch (e) {}
+    if (on) scheduleAuto();
+    else clearTimeout(autoTimer);
+  }
+
   function showDialogue(i) {
     const d = dialogues[i];
     const reveal = function () {
@@ -249,6 +316,7 @@
       btn.classList.add("show");
       skipBtn.classList.add("show");
       busy = false;
+      scheduleAuto();            // start the reading pause for this line
     };
 
     if (speech.classList.contains("show")) {
@@ -262,6 +330,7 @@
 
   function nextDialogue() {
     if (busy || leaving) return;
+    clearTimeout(autoTimer);
     if (currentDialogue >= dialogues.length - 1) {
       goToNextScene();
       return;
@@ -273,28 +342,34 @@
   function goToNextScene() {
     if (leaving) return;
     leaving = true;
-    window.location.href = "index3.html";
+    clearTimeout(autoTimer);
+    window.location.href = NEXT_PAGE;   // autoplay (if on) carries on in the next scene
   }
 
+  autoBtn.addEventListener("click", function () {
+    setAutoplay(!autoplay);
+  });
+
   btn.addEventListener("click", nextDialogue);
-  skipBtn.addEventListener("click", goToNextScene);   // Skip → index3.html right away
+  skipBtn.addEventListener("click", goToNextScene);   // Skip → next scene right away
   document.addEventListener("click", function (e) {
-    if (e.target !== btn && e.target !== skipBtn) nextDialogue();
+    if (!e.target.closest("button")) nextDialogue();   // click anywhere else = next
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Enter" || e.key === " ") {
-      if (document.activeElement !== btn && document.activeElement !== skipBtn) {
-        e.preventDefault();
-        nextDialogue();
-      }
+      if (document.activeElement.tagName !== "BUTTON") { e.preventDefault(); nextDialogue(); }
     }
   });
   window.addEventListener("resize", positionBubble);
 
   window.addEventListener("load", function () {
     currentDialogue = 0;
+    let saved = false;
+    try { saved = sessionStorage.getItem(AUTO_KEY) === "on"; } catch (e) {}
+    setAutoplay(saved);
     setTimeout(function () { showDialogue(0); }, 500);
   });
 </script>
+<script src="../Opportunity Rover/voice.js"></script>
 </body>
 </html>
