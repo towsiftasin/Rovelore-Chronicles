@@ -87,11 +87,26 @@
 
   .tail { position: absolute; background: rgba(78, 62, 185, 0.92); }
 
-  .next-btn {
+  /* ===== BUTTON GROUPS =====
+     Left  group (bottom-left):  BACK + EXIT
+     Right group (bottom-right): AUTOPLAY + NEXT                        */
+  .left-btns,
+  .right-btns {
     position: fixed;
-    right: 24px;
     bottom: 24px;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .left-btns  { left: 24px; }
+  .right-btns { right: 24px; }
+
+  /* All the small pill buttons share one look */
+  .back-btn,
+  .exit-btn,
+  .auto-btn,
+  .next-btn {
     padding: 9px 22px;
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     font-size: 13px;
@@ -103,6 +118,34 @@
     border-radius: 999px;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, color 200ms ease;
+  }
+  .back-btn:hover,
+  .exit-btn:hover,
+  .auto-btn:hover {
+    transform: scale(1.07);
+    background: rgba(90, 70, 210, 0.95);
+    box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
+  }
+  .back-btn:active,
+  .exit-btn:active,
+  .auto-btn:active { transform: scale(0.95); }
+  .back-btn:focus-visible,
+  .exit-btn:focus-visible,
+  .auto-btn:focus-visible,
+  .next-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
+
+  /* AUTOPLAY turns gold while it is running */
+  .auto-btn.on {
+    color: #2a1f00;
+    background: #ffd76a;
+    border-color: #fff3c4;
+    box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 18px rgba(255, 215, 106, 0.8);
+  }
+  .auto-btn.on:hover { background: #ffe08a; }
+
+  /* NEXT / CONTINUE fades in with each line */
+  .next-btn {
     opacity: 0;
     visibility: hidden;
     transform: translateY(6px);
@@ -115,40 +158,13 @@
     box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
   }
   .next-btn.show:active { transform: scale(0.95); }
-  .next-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
-
-  /* BACK button – bottom-left corner, same look as NEXT */
-  .back-btn {
-    position: fixed;
-    left: 24px;
-    bottom: 24px;
-    z-index: 10;
-    padding: 9px 22px;
-    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: #fff;
-    background: rgba(40, 30, 110, 0.82);
-    border: 1.5px solid rgba(255, 255, 255, 0.7);
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0, 0, 20, 0.4), 0 0 12px rgba(150, 130, 255, 0.35);
-    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
-  }
-  .back-btn:hover {
-    transform: scale(1.07);
-    background: rgba(90, 70, 210, 0.95);
-    box-shadow: 0 4px 14px rgba(0, 0, 20, 0.45), 0 0 20px rgba(170, 150, 255, 0.75);
-  }
-  .back-btn:active { transform: scale(0.95); }
-  .back-btn:focus-visible { outline: 3px solid #ffd76a; outline-offset: 2px; }
 
   @media (max-width: 700px) {
     .bubble { max-width: 190px; padding: 10px 13px; border-radius: 15px; }
     .bubble-text { font-size: 15px; }
-    .next-btn { right: 16px; bottom: 16px; font-size: 12px; padding: 7px 16px; }
-    .back-btn { left: 16px; bottom: 16px; font-size: 12px; padding: 7px 16px; }
+    .left-btns  { left: 12px;  bottom: 14px; gap: 6px; }
+    .right-btns { right: 12px; bottom: 14px; gap: 6px; }
+    .back-btn, .exit-btn, .auto-btn, .next-btn { font-size: 11px; padding: 7px 12px; letter-spacing: 1px; }
   }
 </style>
 </head>
@@ -164,13 +180,32 @@
     <div class="tail" id="tail"></div>
   </div>
 </div>
-<button class="back-btn" id="backBtn" type="button">BACK</button>
-<button class="next-btn" id="nextBtn" type="button">NEXT</button>
+
+<div class="left-btns">
+  <button class="back-btn" id="backBtn" type="button">BACK</button>
+  <button class="exit-btn" id="exitBtn" type="button">EXIT</button>
+</div>
+<div class="right-btns">
+  <button class="auto-btn" id="autoBtn" type="button" aria-pressed="false">&#9654; AUTOPLAY</button>
+  <button class="next-btn" id="nextBtn" type="button">NEXT</button>
+</div>
 
 <script>
-  // Set these two file names
-  const BACK_PAGE = "scene1.html";   // where the BACK button goes (the previous scene)
+  // Set these file names
+  const BACK_PAGE = "scene1.html";                    // where the BACK button goes (the previous scene)
+  const EXIT_PAGE = "../mainhtml/mars.html";          // where the EXIT button goes (the map page)
   const NEXT_PAGE = "scene3.html";                    // where CONTINUE goes (fill in later)
+
+  /* ===== AUTOPLAY =====
+     When AUTOPLAY is on, every line moves on by itself after a reading
+     pause, and the last line goes straight to the next scene, so nobody has
+     to tap NEXT or CONTINUE. The setting is remembered for the whole visit,
+     so the next scene keeps playing too (as long as that page has this same
+     code). Reading time per line = AUTO_BASE + AUTO_PER_CHAR * letters.   */
+  const AUTO_BASE = 1800;      // milliseconds every line waits at least
+  const AUTO_PER_CHAR = 55;    // extra milliseconds for each letter in the line
+  const AUTO_MIN = 3000;       // never shorter than this
+  const AUTO_KEY = "storyAutoplay";
 
   const dialogues = [
     { name: "Commander Lena", text: "NASA sent Opportunity to Mars in 2003 to explore the planet.", position: "lena", type: "medium" },
@@ -214,11 +249,16 @@
   const speakerName = document.getElementById("speakerName");
   const bubbleText  = document.getElementById("bubbleText");
   const btn         = document.getElementById("nextBtn");
+  const backBtn     = document.getElementById("backBtn");
+  const exitBtn     = document.getElementById("exitBtn");
+  const autoBtn     = document.getElementById("autoBtn");
 
   let currentDialogue = 0;
   let current = null;
   let currentWidth = WIDTHS.short;
   let busy = false;
+  let autoplay = false;
+  let autoTimer = null;
 
   function positionBubble() {
     if (!current) return;
@@ -278,6 +318,28 @@
     speech.style.transformOrigin = mx + "px " + my + "px";
   }
 
+  /* ---------- AUTOPLAY ---------- */
+  function readingTime(i) {
+    const len = dialogues[i].text.length;
+    return Math.max(AUTO_MIN, AUTO_BASE + AUTO_PER_CHAR * len);
+  }
+
+  function scheduleAuto() {
+    clearTimeout(autoTimer);
+    if (!autoplay) return;
+    autoTimer = setTimeout(nextDialogue, readingTime(currentDialogue));
+  }
+
+  function setAutoplay(on) {
+    autoplay = on;
+    autoBtn.classList.toggle("on", on);
+    autoBtn.setAttribute("aria-pressed", on ? "true" : "false");
+    autoBtn.innerHTML = on ? "&#10074;&#10074; PAUSE" : "&#9654; AUTOPLAY";
+    try { sessionStorage.setItem(AUTO_KEY, on ? "on" : "off"); } catch (e) {}
+    if (on) scheduleAuto();
+    else clearTimeout(autoTimer);
+  }
+
   function showDialogue(i) {
     const d = dialogues[i];
     const reveal = function () {
@@ -291,6 +353,7 @@
       btn.textContent = i === dialogues.length - 1 ? "CONTINUE" : "NEXT";
       btn.classList.add("show");
       busy = false;
+      scheduleAuto();            // start the reading pause for this line
     };
 
     if (speech.classList.contains("show")) {
@@ -304,6 +367,7 @@
 
   function nextDialogue() {
     if (busy) return;
+    clearTimeout(autoTimer);
     if (currentDialogue >= dialogues.length - 1) {
       goToNextScene();
       return;
@@ -313,33 +377,50 @@
   }
 
   function goToNextScene() {
-    if (NEXT_PAGE) window.location.href = NEXT_PAGE;   // connected later
+    if (NEXT_PAGE) {
+      window.location.href = NEXT_PAGE;   // autoplay (if on) carries on in the next scene
+    } else {
+      setAutoplay(false);                 // nothing after this scene, so stop
+    }
   }
 
   // Make the picture fit the way FIT says
   document.getElementById("scene").style.backgroundSize = FIT;
   document.getElementById("scene").style.backgroundPosition = (FIT === "cover") ? "center " + (FOCUS_Y * 100) + "%" : "center";
 
-  const backBtn = document.getElementById("backBtn");
+  // BACK and EXIT both stop autoplay before leaving
   backBtn.addEventListener("click", function () {
+    setAutoplay(false);
     window.location.href = BACK_PAGE;
+  });
+  exitBtn.addEventListener("click", function () {
+    setAutoplay(false);
+    window.location.href = EXIT_PAGE;
+  });
+
+  autoBtn.addEventListener("click", function () {
+    setAutoplay(!autoplay);
   });
 
   btn.addEventListener("click", nextDialogue);
   document.addEventListener("click", function (e) {
-    if (e.target !== btn && e.target !== backBtn) nextDialogue();   // click anywhere else = next
+    if (!e.target.closest("button")) nextDialogue();   // click anywhere else = next
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Enter" || e.key === " ") {
-      if (document.activeElement !== btn && document.activeElement !== backBtn) { e.preventDefault(); nextDialogue(); }
+      if (document.activeElement.tagName !== "BUTTON") { e.preventDefault(); nextDialogue(); }
     }
   });
   window.addEventListener("resize", positionBubble);
 
   window.addEventListener("load", function () {
     currentDialogue = 0;
+    let saved = false;
+    try { saved = sessionStorage.getItem(AUTO_KEY) === "on"; } catch (e) {}
+    setAutoplay(saved);
     setTimeout(function () { showDialogue(0); }, 500);
   });
 </script>
+<script src="voice.js"></script>
 </body>
 </html>

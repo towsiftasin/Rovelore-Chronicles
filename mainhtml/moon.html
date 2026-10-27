@@ -196,11 +196,11 @@ body {
   50% { translate: 0 -4px; }
 }
 
-.marker-1 { left: 26%; top: 40%; animation-delay: 0s; }
-.marker-2 { left: 50%; top: 36%; animation-delay: 0.6s; }
-.marker-3 { left: 20%; top: 65%; animation-delay: 1.2s; }
-.marker-4 { left: 68%; top: 52%; animation-delay: 1.8s; }
-.marker-5 { left: 44%; top: 69%; animation-delay: 2.4s; }
+/* Same four spots as the Mars page */
+.marker-1 { left: 26%; top: 35%; animation-delay: 0s; }
+.marker-2 { left: 50%; top: 33%; animation-delay: 0.6s; }
+.marker-3 { left: 24%; top: 64%; animation-delay: 1.2s; }
+.marker-4 { left: 52%; top: 66%; animation-delay: 2.4s; }
 
 .marker-icon {
   flex-shrink: 0;
@@ -512,7 +512,7 @@ body {
 
 
   <!-- MISSION MARKERS -->
-  <button class="marker marker-1" data-mission="apollo17">
+  <button class="marker marker-1" data-mission="lrv">
     <span class="marker-icon" aria-hidden="true">
       <svg viewBox="0 0 60 44" width="100%" height="100%">
         <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
@@ -525,70 +525,51 @@ body {
         <circle cx="46" cy="34" r="7" fill="#181818"/>
       </svg>
     </span>
-    <span class="marker-label">Apollo 17<br><span class="marker-sub">(Lunar Rover)</span></span>
+    <span class="marker-label">Lunar Roving Vehicle<br><span class="marker-sub">(Apollo 15, 16 &amp; 17)</span></span>
     <span class="marker-pin" aria-hidden="true"></span>
   </button>
 
-  <button class="marker marker-2" data-mission="lunarmodule">
+  <button class="marker marker-2" data-mission="sws">
     <span class="marker-icon" aria-hidden="true">
       <svg viewBox="0 0 60 50" width="100%" height="100%">
-        <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
-        <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
-        <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <rect x="27" y="1" width="6" height="6" fill="#2b5faa"/>
+        <rect x="12" y="36" width="36" height="8" rx="2" fill="#d8d3c5" stroke="#8a8578" stroke-width="1.5"/>
+        <rect x="23" y="18" width="14" height="18" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+        <circle cx="30" cy="14" r="9" fill="#e8b23a"/>
+        <line x1="30" y1="5" x2="30" y2="0" stroke="#c9c4b6" stroke-width="2.5"/>
       </svg>
     </span>
-    <span class="marker-label">Lunar Module<br><span class="marker-sub">(Chang'e 5)</span></span>
+    <span class="marker-label">Solar Wind Spectrometer<br><span class="marker-sub">(Apollo 12 &amp; 15)</span></span>
     <span class="marker-pin" aria-hidden="true"></span>
   </button>
 
-  <button class="marker marker-3" data-mission="apollo15">
-    <span class="marker-icon" aria-hidden="true">
-      <svg viewBox="0 0 60 44" width="100%" height="100%">
-        <line x1="30" y1="4" x2="30" y2="14" stroke="#c9c4b6" stroke-width="2.5"/>
-        <rect x="21" y="0" width="18" height="9" rx="3" fill="#e6e1d3"/>
-        <circle cx="25" cy="4" r="2" fill="#1a1a1a"/>
-        <circle cx="35" cy="4" r="2" fill="#1a1a1a"/>
-        <rect x="12" y="14" width="36" height="14" rx="4" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
-        <circle cx="14" cy="34" r="7" fill="#181818"/>
-        <circle cx="30" cy="36" r="7.5" fill="#181818"/>
-        <circle cx="46" cy="34" r="7" fill="#181818"/>
-      </svg>
-    </span>
-    <span class="marker-label">Apollo 15<br><span class="marker-sub">(Lunar Rover)</span></span>
-    <span class="marker-pin" aria-hidden="true"></span>
-  </button>
-
-  <button class="marker marker-4" data-mission="lro">
-    <span class="marker-icon" aria-hidden="true">
-      <svg viewBox="0 0 60 60" width="100%" height="100%">
-        <circle cx="30" cy="30" r="8" fill="#c9c4b6"/>
-        <rect x="0" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(-30 10 16)"/>
-        <rect x="40" y="10" width="20" height="12" fill="#2b5faa" transform="rotate(30 50 16)"/>
-        <rect x="0" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(30 10 44)"/>
-        <rect x="40" y="38" width="20" height="12" fill="#2b5faa" transform="rotate(-30 50 44)"/>
-      </svg>
-    </span>
-    <span class="marker-label">LRO<br><span class="marker-sub">(Orbiter)</span></span>
-    <span class="marker-pin" aria-hidden="true"></span>
-  </button>
-
-  <button class="marker marker-5" data-mission="chandrayaan3">
+  <button class="marker marker-3" data-mission="surveyor1">
     <span class="marker-icon" aria-hidden="true">
       <svg viewBox="0 0 60 50" width="100%" height="100%">
-        <polygon points="30,4 42,20 18,20" fill="#e8b23a"/>
-        <rect x="16" y="20" width="28" height="10" fill="#d8d3c5"/>
-        <line x1="16" y1="30" x2="6" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="44" y1="30" x2="54" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="20" y1="30" x2="14" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <line x1="40" y1="30" x2="46" y2="44" stroke="#8a8578" stroke-width="2.5"/>
-        <rect x="27" y="1" width="6" height="6" fill="#FF9933"/>
+        <rect x="22" y="2" width="16" height="5" fill="#2b5faa"/>
+        <line x1="30" y1="7" x2="30" y2="16" stroke="#c9c4b6" stroke-width="2.5"/>
+        <polygon points="30,14 44,28 16,28" fill="#d8d3c5" stroke="#8a8578" stroke-width="1.5"/>
+        <line x1="20" y1="28" x2="8" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="40" y1="28" x2="52" y2="44" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="30" y1="28" x2="30" y2="46" stroke="#8a8578" stroke-width="2.5"/>
       </svg>
     </span>
-    <span class="marker-label">Chandrayaan-3<br><span class="marker-sub">(Lander)</span></span>
+    <span class="marker-label">Surveyor 1<br><span class="marker-sub">(Lander)</span></span>
+    <span class="marker-pin" aria-hidden="true"></span>
+  </button>
+
+  <button class="marker marker-4" data-mission="lsm">
+    <span class="marker-icon" aria-hidden="true">
+      <svg viewBox="0 0 60 50" width="100%" height="100%">
+        <line x1="30" y1="26" x2="8" y2="12" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="30" y1="26" x2="52" y2="12" stroke="#8a8578" stroke-width="2.5"/>
+        <line x1="30" y1="26" x2="30" y2="4" stroke="#8a8578" stroke-width="2.5"/>
+        <circle cx="8" cy="12" r="4" fill="#2b5faa"/>
+        <circle cx="52" cy="12" r="4" fill="#2b5faa"/>
+        <circle cx="30" cy="4" r="4" fill="#2b5faa"/>
+        <rect x="18" y="26" width="24" height="16" rx="3" fill="#e6e1d3" stroke="#8a8578" stroke-width="1.5"/>
+      </svg>
+    </span>
+    <span class="marker-label">Lunar Surface Magnetometer<br><span class="marker-sub">(Apollo 12 &amp; 15)</span></span>
     <span class="marker-pin" aria-hidden="true"></span>
   </button>
 
@@ -657,42 +638,36 @@ body {
 
   /* ---------- MISSIONS ----------
      "story" = the page a marker click goes to.
+     Change the folder names below to match your real folders.
      Remove "story" (or set it to "") and the marker opens the modal instead. */
   const missions = {
-    apollo17: {
-      title: 'Apollo 17',
-      location: 'Taurus–Littrow Valley',
-      mission: 'Apollo 17',
-      body: 'Explore the story of the last crewed mission to the Moon and the lunar rover left behind on the surface.',
-      story: '../apollo17/scene1.html'
-    },
-    lunarmodule: {
-      title: "Lunar Module",
-      location: 'Oceanus Procellarum',
-      mission: "Chang'e 5",
-      body: 'Explore the story of the lander and ascent vehicle that helped return lunar samples to Earth.',
-      story: '../lunarmodule/scene1.html'
-    },
-    apollo15: {
-      title: 'Apollo 15',
-      location: 'Hadley–Apennine',
-      mission: 'Apollo 15',
-      body: 'Explore the story of the first mission to use a lunar roving vehicle to explore the surface.',
+    lrv: {
+      title: 'Lunar Roving Vehicle',
+      location: 'Apollo 15, 16 and 17 landing sites',
+      mission: 'Apollo 15, 16 and 17',
+      body: 'Explore the story of the electric rover that let astronauts travel far beyond their landing sites on the Moon.',
       story: '../apollo15/scene1.html'
     },
-    lro: {
-      title: 'LRO',
-      location: 'Lunar Orbit',
-      mission: 'Lunar Reconnaissance Orbiter',
-      body: 'Explore the story of the orbiter that has been mapping the Moon\'s surface in detail since 2009.',
-      story: '../lro/scene1.html'
+    sws: {
+      title: 'Solar Wind Spectrometer',
+      location: 'Apollo 12 and 15 landing sites',
+      mission: 'Apollo 12 and Apollo 15',
+      body: 'Explore the story of the instrument that measured the particles of the solar wind reaching the Moon.',
+      story: '../SWS/scene1.html'
     },
-    chandrayaan3: {
-      title: 'Chandrayaan-3',
-      location: 'Lunar South Pole',
-      mission: 'Chandrayaan-3',
-      body: 'Explore the story of the lander that made the first successful soft landing near the Moon\'s south pole.',
-      story: '../chandrayaan3/scene1.html'
+    surveyor1: {
+      title: 'Surveyor 1',
+      location: 'Oceanus Procellarum',
+      mission: 'Surveyor 1 (1966)',
+      body: 'Explore the story of the first U.S. spacecraft to make a soft landing on the Moon.',
+      story: '../surveyor1/scene1.html'
+    },
+    lsm: {
+      title: 'Lunar Surface Magnetometer',
+      location: 'Apollo 12 and 15 landing sites',
+      mission: 'Apollo 12 and Apollo 15',
+      body: 'Explore the story of the instrument that measured the magnetic field on the surface of the Moon.',
+      story: '../LSM/scene1.html'
     }
   };
 
