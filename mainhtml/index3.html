@@ -371,7 +371,6 @@ main {
 }
 
 /* Smaller screens: Lena is smaller and stands at the bottom-left. */
-/* Smaller screens: Lena is smaller and stands at the bottom-left. */
 @media (max-width: 1500px) {
   :root { --lena-h: 65vh; }
   .bubble {
@@ -485,6 +484,38 @@ main {
    Nothing here touches your other pages.
 ===================================================================== */
 
+// ---------- LENA'S VOICE (same settings as voice.js) ----------
+const LENA_VOICE = { pitch: 0.85, rate: 0.93 };   // calm and lower
+const FEMALE_NAMES = /female|zira|samantha|karen|victoria|susan|hazel|aria|jenny|libby|moira|tessa|fiona|serena|google uk english female|google us english/i;
+
+function pickLenaVoice() {
+  const list = (speechSynthesis.getVoices() || []).filter(function (v) { return /^en/i.test(v.lang); });
+  if (!list.length) return null;
+  const female = list.filter(function (v) { return FEMALE_NAMES.test(v.name); });
+  const pool = female.length ? female : list;
+  return pool[1] || pool[0];        // Lena = the second voice, exactly like voice.js
+}
+
+function speakLena(text) {
+  if (!("speechSynthesis" in window) || !window.SpeechSynthesisUtterance) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/\s+/g, " ").trim());
+  const v = pickLenaVoice();
+  if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
+  u.pitch = LENA_VOICE.pitch;
+  u.rate = LENA_VOICE.rate;
+  synth.speak(u);
+}
+
+// Some browsers load voices late; ask for them early
+if ("speechSynthesis" in window) speechSynthesis.getVoices();
+
+// Stop talking when leaving the page
+window.addEventListener("pagehide", function () {
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+});
+
 // ---------- 1. WHERE EACH BUTTON GOES (edit these file names) ----------
 const ROUTES = {
   home:    "../index.html",
@@ -497,12 +528,13 @@ const ROUTES = {
 };
 
 // ---------- 2. LENA'S TIMELINE (in milliseconds) ----------
+// Longer than before so she has time to finish speaking before she leaves.
 const TIMING = {
   slideIn:    200,
   bubble:     900,
-  bubbleOff: 3900,
-  slideOut:  4000,
-  finished:  4900
+  bubbleOff: 6200,
+  slideOut:  6300,
+  finished:  7200
 };
 
 /* =====================================================================
@@ -578,6 +610,7 @@ document.querySelectorAll("[data-nav]").forEach(function (el) {
   }
 
   function finish() {
+    if ("speechSynthesis" in window) speechSynthesis.cancel();   // stop talking if she leaves early
     wrap.classList.add("gone");
     tail.style.display = "none";
     document.body.classList.remove("intro-active");   // choices settle in the centre
@@ -627,6 +660,7 @@ document.querySelectorAll("[data-nav]").forEach(function (el) {
     positionBubble();                                   // re-aim right before showing
     bubble.classList.add("show");
     tail.classList.add("show");
+    speakLena(document.getElementById("line1").textContent);   // Lena speaks her line
   }, TIMING.bubble);
   setTimeout(function () {
     bubble.classList.remove("show");

@@ -1,0 +1,9 @@
+{
+  "_example": {
+    "image": "https://example.com/card-image.jpg",
+    "gallery": ["https://example.com/1.jpg", "https://example.com/2.jpg"],
+    "videos": [{ "url": "https://example.com/video.mp4", "title": "Landing", "poster": "" }],
+    "sourceUrl": "https://official-mission-page",
+    "discoveries": ["Add a verified discovery here"]
+  }
+}

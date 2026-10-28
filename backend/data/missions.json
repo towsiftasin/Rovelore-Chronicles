@@ -1,0 +1,90 @@
+[
+  {
+    "id": "sojourner", "name": "Sojourner Rover", "destination": "Mars", "type": "Rover",
+    "mission": "Mars Pathfinder", "year": 1997, "location": "Ares Vallis", "status": "Ended",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Dec 4, 1996", "arrival": "Jul 4, 1997 (Pathfinder landing)",
+    "description": "Explore the story of Sojourner, the first successful Mars rover, which explored the surface of Ares Vallis and studied Martian rocks and soil.",
+    "spacecraft": "Six-wheeled microrover carried to the surface by the Pathfinder lander.",
+    "objectives": ["Demonstrate a low-cost way to reach Mars and operate a small rover.", "Study Martian rocks and soil."],
+    "discoveries": [],
+    "nasaQuery": "Sojourner rover Mars Pathfinder", "nasaVideoQuery": "Mars Pathfinder Sojourner"
+  },
+  {
+    "id": "curiosity", "name": "Curiosity Rover", "destination": "Mars", "type": "Rover",
+    "mission": "Mars Science Laboratory", "year": 2012, "location": "Gale Crater", "status": "Active",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Nov 26, 2011", "arrival": "Aug 2012",
+    "description": "A Mars rover studying the planet's climate and geology for over a decade.",
+    "spacecraft": "Car-sized rover carrying a suite of science instruments.",
+    "objectives": ["Study Mars' climate and geology.", "Assess whether Mars once had conditions that could support microbial life."],
+    "discoveries": [],
+    "nasaQuery": "Curiosity rover Gale Crater", "nasaVideoQuery": "Curiosity rover Mars"
+  },
+  {
+    "id": "opportunity", "name": "Opportunity Rover", "destination": "Mars", "type": "Rover",
+    "mission": "Mars Exploration Rover", "year": 2004, "location": "Endeavour Crater", "status": "Ended",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Jul 7, 2003", "arrival": "Jan 25, 2004",
+    "description": "The rover that outlasted its planned 90-day mission by nearly 15 years.",
+    "spacecraft": "Solar-powered rover, twin of the Spirit rover.",
+    "objectives": ["Search for evidence of past water on Mars."],
+    "discoveries": [],
+    "nasaQuery": "Opportunity rover Mars", "nasaVideoQuery": "Opportunity rover Mars"
+  },
+  {
+    "id": "perseverance", "name": "Perseverance Rover", "destination": "Mars", "type": "Rover",
+    "mission": "Mars 2020", "year": 2020, "location": "Jezero Crater", "status": "Active",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Jul 30, 2020", "arrival": "Feb 18, 2021",
+    "description": "The rover searching for signs of ancient microbial life and collecting samples for future return to Earth.",
+    "spacecraft": "Rover with a sample-collection system; it travelled with the Ingenuity helicopter.",
+    "objectives": ["Search for signs of ancient microbial life.", "Collect samples for future return to Earth."],
+    "discoveries": [],
+    "nasaQuery": "Perseverance rover Jezero Crater", "nasaVideoQuery": "Perseverance rover Mars"
+  },
+  {
+    "id": "apollo15", "name": "Apollo 15", "destination": "Moon", "type": "Crewed Mission",
+    "mission": "Apollo 15", "year": 1971, "location": "Hadley\u2013Apennine", "status": "Completed",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Jul 26, 1971", "arrival": "Jul 30, 1971",
+    "description": "The first mission to use a lunar roving vehicle to explore the surface.",
+    "spacecraft": "Command/Service Module, Lunar Module Falcon and the first Lunar Roving Vehicle.",
+    "objectives": ["Explore the Hadley\u2013Apennine region using a lunar roving vehicle."],
+    "discoveries": [],
+    "nasaQuery": "Apollo 15 lunar rover Hadley", "nasaVideoQuery": "Apollo 15"
+  },
+  {
+    "id": "apollo17", "name": "Apollo 17", "destination": "Moon", "type": "Crewed Mission",
+    "mission": "Apollo 17", "year": 1972, "location": "Taurus\u2013Littrow Valley", "status": "Completed",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Dec 7, 1972", "arrival": "Dec 11, 1972",
+    "description": "The last crewed mission to the Moon, and the lunar rover left behind on the surface.",
+    "spacecraft": "Command Module America, Lunar Module Challenger and a Lunar Roving Vehicle.",
+    "objectives": ["Explore the Taurus\u2013Littrow Valley."],
+    "discoveries": [],
+    "nasaQuery": "Apollo 17 Taurus-Littrow", "nasaVideoQuery": "Apollo 17"
+  },
+  {
+    "id": "lunarmodule", "name": "Lunar Module", "destination": "Moon", "type": "Lander",
+    "mission": "Chang'e 5", "year": 2020, "location": "Oceanus Procellarum", "status": "Completed",
+    "source": "CNSA", "sourceUrl": "",
+    "launch": "Nov 23, 2020", "arrival": "Dec 1, 2020",
+    "description": "The lander and ascent vehicle that helped return lunar samples to Earth.",
+    "spacecraft": "Orbiter, lander, ascent vehicle and returner.",
+    "objectives": ["Collect lunar samples and return them to Earth."],
+    "discoveries": [],
+    "nasaQuery": "Chang'e 5 lunar lander", "nasaVideoQuery": ""
+  },
+  {
+    "id": "lro", "name": "LRO", "destination": "Moon", "type": "Orbiter",
+    "mission": "Lunar Reconnaissance Orbiter", "year": 2009, "location": "Lunar Orbit", "status": "Active",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Jun 18, 2009", "arrival": "Jun 23, 2009 (lunar orbit)",
+    "description": "The orbiter that has been mapping the Moon's surface in detail since 2009.",
+    "spacecraft": "Orbiter carrying instruments that map the Moon.",
+    "objectives": ["Map the Moon's surface in detail."],
+    "discoveries": [],
+    "nasaQuery": "Lunar Reconnaissance Orbiter", "nasaVideoQuery": "Lunar Reconnaissance Orbiter"
+  }
+]

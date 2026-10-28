@@ -1057,15 +1057,50 @@ document.querySelectorAll('.marker').forEach((marker) => {
 });
 
 /* =====================================================================
+   LENA'S VOICE (same settings as voice.js)
+===================================================================== */
+const LENA_VOICE = { pitch: 0.85, rate: 0.93 };   // calm and lower
+const FEMALE_NAMES = /female|zira|samantha|karen|victoria|susan|hazel|aria|jenny|libby|moira|tessa|fiona|serena|google uk english female|google us english/i;
+
+function pickLenaVoice() {
+  const list = (speechSynthesis.getVoices() || []).filter(function (v) { return /^en/i.test(v.lang); });
+  if (!list.length) return null;
+  const female = list.filter(function (v) { return FEMALE_NAMES.test(v.name); });
+  const pool = female.length ? female : list;
+  return pool[1] || pool[0];        // Lena = the second voice, exactly like voice.js
+}
+
+function speakLena(text) {
+  if (!("speechSynthesis" in window) || !window.SpeechSynthesisUtterance) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/\s+/g, " ").trim());
+  const v = pickLenaVoice();
+  if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
+  u.pitch = LENA_VOICE.pitch;
+  u.rate = LENA_VOICE.rate;
+  synth.speak(u);
+}
+
+// Some browsers load voices late; ask for them early
+if ("speechSynthesis" in window) speechSynthesis.getVoices();
+
+// Stop talking when leaving the page (e.g. when a marker is clicked)
+window.addEventListener("pagehide", function () {
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+});
+
+/* =====================================================================
    COMMANDER LENA'S INTRODUCTION
    Edit the times below (milliseconds) to change how long she stays.
+   Longer than before so she has time to finish her two sentences.
 ===================================================================== */
 const TIMING = {
   slideIn:    200,
   bubble:     900,
-  bubbleOff: 3900,
-  slideOut:  4000,
-  finished:  4900
+  bubbleOff: 9000,
+  slideOut:  9100,
+  finished: 10000
 };
 
 /* =====================================================================
@@ -1131,6 +1166,7 @@ const SPOT = { x: 300, y: 370, tipDx: -16, tipDy: 0, baseHalf: 11, length: 0.4 }
   }
 
   function finish() {
+    if ("speechSynthesis" in window) speechSynthesis.cancel();   // stop talking if she leaves early
     wrap.classList.add("gone");
     tail.style.display = "none";
   }
@@ -1179,6 +1215,7 @@ const SPOT = { x: 300, y: 370, tipDx: -16, tipDy: 0, baseHalf: 11, length: 0.4 }
     positionBubble();                                   // re-aim right before showing
     bubble.classList.add("show");
     tail.classList.add("show");
+    speakLena(document.getElementById("line1").textContent);   // Lena speaks her line
   }, TIMING.bubble);
   setTimeout(function () {
     bubble.classList.remove("show");
