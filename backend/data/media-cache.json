@@ -50,7 +50,7 @@
         "nasaId": "JPL-20230607-MARSf-0001-Mars Report Whats in A Name"
       }
     ],
-    "fetchedAt": 1793180761728
+    "fetchedAt": 1793430515264
   },
   "curiosity": {
     "images": [
@@ -180,7 +180,7 @@
         "nasaId": "JPL-20211208-M2020f-0001-Youve_Got_Perseverance"
       }
     ],
-    "fetchedAt": 1793180771803
+    "fetchedAt": 1793430519092
   },
   "perseverance": {
     "images": [
@@ -421,5 +421,282 @@
       }
     ],
     "fetchedAt": 1793180794896
+  },
+  "spirit": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA03274/PIA03274~medium.jpg",
+        "title": "Intricately Rippled Sand Deposits",
+        "nasaId": "PIA03274"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA14371/PIA14371~medium.jpg",
+        "title": "Maadim Vallis",
+        "nasaId": "PIA14371"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA03250/PIA03250~small.jpg",
+        "title": "Sweeping View of the Columbia",
+        "nasaId": "PIA03250"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA07075/PIA07075~small.jpg",
+        "title": "Track of Right-Wheel Drag 3-D",
+        "nasaId": "PIA07075"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA16572/PIA16572~small.jpg",
+        "title": "Inspecting Soils Across Mars",
+        "nasaId": "PIA16572"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA06038/PIA06038~small.jpg",
+        "title": "Spirit View on Sol 148 3-D",
+        "nasaId": "PIA06038"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA06026/PIA06026~small.jpg",
+        "title": "Spirit View on Sol 142 3-D",
+        "nasaId": "PIA06026"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA06032/PIA06032~small.jpg",
+        "title": "Spirit View on Sol 147 3-D",
+        "nasaId": "PIA06032"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/ksc_122104_spirit_anniv/ksc_122104_spirit_anniv~mobile.mp4",
+        "title": "KSC-04-S-00404",
+        "poster": "https://images-assets.nasa.gov/video/ksc_122104_spirit_anniv/ksc_122104_spirit_anniv~small_1.jpg",
+        "nasaId": "ksc_122104_spirit_anniv"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/ksc_091704_odyssey/ksc_091704_odyssey~mobile.mp4",
+        "title": "KSC-04-S-00315",
+        "poster": "https://images-assets.nasa.gov/video/ksc_091704_odyssey/ksc_091704_odyssey~small_1.jpg",
+        "nasaId": "ksc_091704_odyssey"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/JPL-20230607-MARSf-0001-Mars Report Whats in A Name/JPL-20230607-MARSf-0001-Mars Report Whats in A Name~medium.mp4",
+        "title": "How Does NASA Name Things on Mars? (Mars Report - June 2023)",
+        "poster": "https://images-assets.nasa.gov/video/JPL-20230607-MARSf-0001-Mars Report Whats in A Name/JPL-20230607-MARSf-0001-Mars Report Whats in A Name~small_1.jpg",
+        "nasaId": "JPL-20230607-MARSf-0001-Mars Report Whats in A Name"
+      }
+    ],
+    "fetchedAt": 1793430523090
+  },
+  "insight": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA22232/PIA22232~medium.jpg",
+        "title": "Measuring the Pulse of Mars",
+        "nasaId": "PIA22232"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA22927/PIA22927~thumb.jpg",
+        "title": "Of Wind and Dust Devils on Mars",
+        "nasaId": "PIA22927"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA22228/PIA22228~medium.jpg",
+        "title": "InSight on the Surface of Mars",
+        "nasaId": "PIA22228"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA17357/PIA17357~medium.jpg",
+        "title": "Landing Area Narrowed for 2016 InSight Mission to Mars",
+        "nasaId": "PIA17357"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA19143/PIA19143~small.jpg",
+        "title": "Finalist Site for Next Landing on Mars",
+        "nasaId": "PIA19143"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/JPL-20211115-MARSf-0001-Hows the Weather on Mars/JPL-20211115-MARSf-0001-Hows the Weather on Mars~medium.mp4",
+        "title": "How’s the Weather on Mars? (NASA Mars Report) (November 15, 2021)",
+        "poster": "https://images-assets.nasa.gov/video/JPL-20211115-MARSf-0001-Hows the Weather on Mars/JPL-20211115-MARSf-0001-Hows the Weather on Mars~small_1.jpg",
+        "nasaId": "JPL-20211115-MARSf-0001-Hows the Weather on Mars"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/JPL-20210723-INSIGHf-0001-Journey to the Center of Mars/JPL-20210723-INSIGHf-0001-Journey to the Center of Mars~medium.mp4",
+        "title": "InSight: Journey to the Center of Mars",
+        "poster": "https://images-assets.nasa.gov/video/JPL-20210723-INSIGHf-0001-Journey to the Center of Mars/JPL-20210723-INSIGHf-0001-Journey to the Center of Mars~medium_1.jpg",
+        "nasaId": "JPL-20210723-INSIGHf-0001-Journey to the Center of Mars"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080/JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080~medium.mp4",
+        "title": "InSight Captures Sound of a Meteoroid Striking Mars",
+        "poster": "https://images-assets.nasa.gov/video/JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080/JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080~small_1.jpg",
+        "nasaId": "JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080"
+      }
+    ],
+    "fetchedAt": 1793430527176
+  },
+  "lrv": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/S71-30542/S71-30542~medium.jpg",
+        "title": "View of Apollo 15 Lunar Roving Vehicle and Lunar Module during simulations",
+        "nasaId": "S71-30542"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/S71-16722/S71-16722~medium.jpg",
+        "title": "Members of Apollo 15 crew shown with Lunar Roving Vehicle One-G trainer",
+        "nasaId": "S71-16722"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as15-86-11603/as15-86-11603~medium.jpg",
+        "title": "Astronaut James Irwin works at Lunar Roving Vehicle during Apollo 15 EVA",
+        "nasaId": "as15-86-11603"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as15-86-11602/as15-86-11602~medium.jpg",
+        "title": "Astronaut James Irwin works at Lunar Roving Vehicle during Apollo 15 EVA",
+        "nasaId": "as15-86-11602"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/7022585/7022585~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "7022585"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/7022567/7022567~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "7022567"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/S71-38188/S71-38188~medium.jpg",
+        "title": "Artists concept of Apollo 15 crewmen performing deployment of LRV",
+        "nasaId": "S71-38188"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/9250827/9250827~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "9250827"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/Moon_Base_Update-Oct-Lunar_Rovers/Moon_Base_Update-Oct-Lunar_Rovers~medium.mp4",
+        "title": "NASA Moon Base: Rovers and Lunar Terrain Vehicles (October 2026 Update)",
+        "poster": "https://images-assets.nasa.gov/video/Moon_Base_Update-Oct-Lunar_Rovers/Moon_Base_Update-Oct-Lunar_Rovers~small.jpg",
+        "nasaId": "Moon_Base_Update-Oct-Lunar_Rovers"
+      }
+    ],
+    "fetchedAt": 1793430530444
+  },
+  "solarwindspectrometer": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/6903621/6903621~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "6903621"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~mobile.mp4",
+        "title": "Compilation Video - Apollo 8 and Apollo 12",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~medium.mp4",
+        "title": "Apollo 12 Mission Summary and Highlights - featuring Splashdown with President Nixon",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~medium.mp4",
+        "title": "Apollo 12 - The Pinpoint Mission",
+        "poster": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~small_1.jpg",
+        "nasaId": "NHQ_2019_1114_Apollo 12 - The Pinpoint Mission"
+      }
+    ],
+    "fetchedAt": 1793430534242
+  },
+  "surveyor1": {
+    "images": [],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/Chris_Williams_Thinking_Science/Chris_Williams_Thinking_Science~medium.mp4",
+        "title": "NASA Astronaut Chris Williams: Thinking Like a Scientist  ",
+        "poster": "https://images-assets.nasa.gov/video/Chris_Williams_Thinking_Science/Chris_Williams_Thinking_Science~small.jpg",
+        "nasaId": "Chris_Williams_Thinking_Science"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/jsc2024m000183_Butch_Wilmore_and_Suni_Williams_conduct_International_Space_Station_Research_241112-MP4/jsc2024m000183_Butch_Wilmore_and_Suni_Williams_conduct_International_Space_Station_Research_241112-MP4~medium.mp4",
+        "title": "NASA Astronauts Butch Wilmore and Suni Williams conduct International Space Station Research",
+        "poster": "https://images-assets.nasa.gov/video/jsc2024m000183_Butch_Wilmore_and_Suni_Williams_conduct_International_Space_Station_Research_241112-MP4/jsc2024m000183_Butch_Wilmore_and_Suni_Williams_conduct_International_Space_Station_Research_241112-MP4~small.jpg",
+        "nasaId": "jsc2024m000183_Butch_Wilmore_and_Suni_Williams_conduct_International_Space_Station_Research_241112-MP4"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120/jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120~medium.mp4",
+        "title": "NASA’s SpaceX Crew-11: Science in Orbit",
+        "poster": "https://images-assets.nasa.gov/video/jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120/jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120~small.jpg",
+        "nasaId": "jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120"
+      }
+    ],
+    "fetchedAt": 1793430538527
+  },
+  "lunarmagnetometer": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/ARC-1969-AS12-47-6921/ARC-1969-AS12-47-6921~medium.jpg",
+        "title": "ARC-1969-AS12-47-6921",
+        "nasaId": "ARC-1969-AS12-47-6921"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as12-46-6813/as12-46-6813~medium.jpg",
+        "title": "Astronaut Alan Bean deploys Lunar Surface Magnetometer on lunar surface",
+        "nasaId": "as12-46-6813"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/S70-50762/S70-50762~medium.jpg",
+        "title": "Drawings of the Modular Equipment Transporter and Hand Tool Carrier",
+        "nasaId": "S70-50762"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as16-114-18388/as16-114-18388~medium.jpg",
+        "title": "Astronaut John Young stands at ALSEP deployment site during first EVA",
+        "nasaId": "as16-114-18388"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/6903633/6903633~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "6903633"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/S71-02250/S71-02250~medium.jpg",
+        "title": "View of Scientific Instrument Module to be flown on Apollo 15",
+        "nasaId": "S71-02250"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~mobile.mp4",
+        "title": "Compilation Video - Apollo 8 and Apollo 12",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~medium.mp4",
+        "title": "Apollo 12 Mission Summary and Highlights - featuring Splashdown with President Nixon",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~medium.mp4",
+        "title": "Apollo 12 - The Pinpoint Mission",
+        "poster": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~small_1.jpg",
+        "nasaId": "NHQ_2019_1114_Apollo 12 - The Pinpoint Mission"
+      }
+    ],
+    "fetchedAt": 1793430543202
   }
 }

@@ -11,17 +11,6 @@
     "nasaQuery": "Sojourner rover Mars Pathfinder", "nasaVideoQuery": "Mars Pathfinder Sojourner"
   },
   {
-    "id": "curiosity", "name": "Curiosity Rover", "destination": "Mars", "type": "Rover",
-    "mission": "Mars Science Laboratory", "year": 2012, "location": "Gale Crater", "status": "Active",
-    "source": "NASA", "sourceUrl": "",
-    "launch": "Nov 26, 2011", "arrival": "Aug 2012",
-    "description": "A Mars rover studying the planet's climate and geology for over a decade.",
-    "spacecraft": "Car-sized rover carrying a suite of science instruments.",
-    "objectives": ["Study Mars' climate and geology.", "Assess whether Mars once had conditions that could support microbial life."],
-    "discoveries": [],
-    "nasaQuery": "Curiosity rover Gale Crater", "nasaVideoQuery": "Curiosity rover Mars"
-  },
-  {
     "id": "opportunity", "name": "Opportunity Rover", "destination": "Mars", "type": "Rover",
     "mission": "Mars Exploration Rover", "year": 2004, "location": "Endeavour Crater", "status": "Ended",
     "source": "NASA", "sourceUrl": "",
@@ -33,58 +22,69 @@
     "nasaQuery": "Opportunity rover Mars", "nasaVideoQuery": "Opportunity rover Mars"
   },
   {
-    "id": "perseverance", "name": "Perseverance Rover", "destination": "Mars", "type": "Rover",
-    "mission": "Mars 2020", "year": 2020, "location": "Jezero Crater", "status": "Active",
+    "id": "spirit", "name": "Spirit Rover", "destination": "Mars", "type": "Rover",
+    "mission": "Mars Exploration Rover", "year": 2004, "location": "Gusev Crater", "status": "Ended",
     "source": "NASA", "sourceUrl": "",
-    "launch": "Jul 30, 2020", "arrival": "Feb 18, 2021",
-    "description": "The rover searching for signs of ancient microbial life and collecting samples for future return to Earth.",
-    "spacecraft": "Rover with a sample-collection system; it travelled with the Ingenuity helicopter.",
-    "objectives": ["Search for signs of ancient microbial life.", "Collect samples for future return to Earth."],
+    "launch": "Jun 10, 2003", "arrival": "Jan 4, 2004",
+    "description": "The first of the twin Mars Exploration Rovers, which explored Gusev Crater far longer than its planned 90-day mission.",
+    "spacecraft": "Solar-powered rover, twin of the Opportunity rover.",
+    "objectives": ["Search for evidence of past water on Mars.", "Study the geology of Gusev Crater."],
     "discoveries": [],
-    "nasaQuery": "Perseverance rover Jezero Crater", "nasaVideoQuery": "Perseverance rover Mars"
+    "nasaQuery": "Spirit rover Mars Gusev Crater", "nasaVideoQuery": "Spirit rover Mars"
   },
   {
-    "id": "apollo15", "name": "Apollo 15", "destination": "Moon", "type": "Crewed Mission",
+    "id": "insight", "name": "InSight Lander", "destination": "Mars", "type": "Lander",
+    "mission": "InSight", "year": 2018, "location": "Elysium Planitia", "status": "Ended",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "May 5, 2018", "arrival": "Nov 26, 2018",
+    "description": "A stationary lander that listened for marsquakes and studied the deep interior of Mars.",
+    "spacecraft": "Stationary lander carrying a seismometer, a heat probe and a radio science experiment.",
+    "objectives": ["Study the deep interior of Mars.", "Measure marsquakes and the planet's heat flow."],
+    "discoveries": [],
+    "nasaQuery": "InSight lander Mars Elysium Planitia", "nasaVideoQuery": "InSight lander Mars"
+  },
+  {
+    "id": "lrv", "name": "Lunar Roving Vehicle", "destination": "Moon", "type": "Rover",
     "mission": "Apollo 15", "year": 1971, "location": "Hadley\u2013Apennine", "status": "Completed",
     "source": "NASA", "sourceUrl": "",
     "launch": "Jul 26, 1971", "arrival": "Jul 30, 1971",
-    "description": "The first mission to use a lunar roving vehicle to explore the surface.",
-    "spacecraft": "Command/Service Module, Lunar Module Falcon and the first Lunar Roving Vehicle.",
-    "objectives": ["Explore the Hadley\u2013Apennine region using a lunar roving vehicle."],
+    "description": "The electric-powered vehicle that let Apollo astronauts travel much farther across the lunar surface, first used on Apollo 15.",
+    "spacecraft": "Folding, battery-powered two-seat rover carried to the Moon on the Lunar Module.",
+    "objectives": ["Carry astronauts and equipment across the lunar surface.", "Extend the range of surface exploration."],
     "discoveries": [],
-    "nasaQuery": "Apollo 15 lunar rover Hadley", "nasaVideoQuery": "Apollo 15"
+    "nasaQuery": "Lunar Roving Vehicle Apollo 15", "nasaVideoQuery": "Apollo 15 lunar rover"
   },
   {
-    "id": "apollo17", "name": "Apollo 17", "destination": "Moon", "type": "Crewed Mission",
-    "mission": "Apollo 17", "year": 1972, "location": "Taurus\u2013Littrow Valley", "status": "Completed",
+    "id": "solarwindspectrometer", "name": "Solar Wind Spectrometer", "destination": "Moon", "type": "Instrument",
+    "mission": "Apollo 12 (ALSEP)", "year": 1969, "location": "Oceanus Procellarum", "status": "Completed",
     "source": "NASA", "sourceUrl": "",
-    "launch": "Dec 7, 1972", "arrival": "Dec 11, 1972",
-    "description": "The last crewed mission to the Moon, and the lunar rover left behind on the surface.",
-    "spacecraft": "Command Module America, Lunar Module Challenger and a Lunar Roving Vehicle.",
-    "objectives": ["Explore the Taurus\u2013Littrow Valley."],
+    "launch": "Nov 14, 1969", "arrival": "Nov 19, 1969",
+    "description": "An experiment placed on the lunar surface to measure the solar wind streaming toward the Moon.",
+    "spacecraft": "Part of the Apollo Lunar Surface Experiments Package set up by astronauts.",
+    "objectives": ["Measure the energy and flow of the solar wind at the lunar surface."],
     "discoveries": [],
-    "nasaQuery": "Apollo 17 Taurus-Littrow", "nasaVideoQuery": "Apollo 17"
+    "nasaQuery": "Apollo 12 Solar Wind Spectrometer", "nasaVideoQuery": "Apollo 12"
   },
   {
-    "id": "lunarmodule", "name": "Lunar Module", "destination": "Moon", "type": "Lander",
-    "mission": "Chang'e 5", "year": 2020, "location": "Oceanus Procellarum", "status": "Completed",
-    "source": "CNSA", "sourceUrl": "",
-    "launch": "Nov 23, 2020", "arrival": "Dec 1, 2020",
-    "description": "The lander and ascent vehicle that helped return lunar samples to Earth.",
-    "spacecraft": "Orbiter, lander, ascent vehicle and returner.",
-    "objectives": ["Collect lunar samples and return them to Earth."],
-    "discoveries": [],
-    "nasaQuery": "Chang'e 5 lunar lander", "nasaVideoQuery": ""
-  },
-  {
-    "id": "lro", "name": "LRO", "destination": "Moon", "type": "Orbiter",
-    "mission": "Lunar Reconnaissance Orbiter", "year": 2009, "location": "Lunar Orbit", "status": "Active",
+    "id": "surveyor1", "name": "Surveyor 1", "destination": "Moon", "type": "Lander",
+    "mission": "Surveyor 1", "year": 1966, "location": "Oceanus Procellarum", "status": "Completed",
     "source": "NASA", "sourceUrl": "",
-    "launch": "Jun 18, 2009", "arrival": "Jun 23, 2009 (lunar orbit)",
-    "description": "The orbiter that has been mapping the Moon's surface in detail since 2009.",
-    "spacecraft": "Orbiter carrying instruments that map the Moon.",
-    "objectives": ["Map the Moon's surface in detail."],
+    "launch": "May 30, 1966", "arrival": "Jun 2, 1966",
+    "description": "NASA's first soft landing on the Moon, sending back thousands of images of the lunar surface.",
+    "spacecraft": "Uncrewed lander with a television camera and surface-sampling instruments.",
+    "objectives": ["Demonstrate a soft landing on the Moon.", "Photograph the lunar surface in preparation for Apollo."],
     "discoveries": [],
-    "nasaQuery": "Lunar Reconnaissance Orbiter", "nasaVideoQuery": "Lunar Reconnaissance Orbiter"
+    "nasaQuery": "Surveyor 1 lunar lander", "nasaVideoQuery": "Surveyor 1"
+  },
+  {
+    "id": "lunarmagnetometer", "name": "Lunar Surface Magnetometer", "destination": "Moon", "type": "Instrument",
+    "mission": "Apollo 12 (ALSEP)", "year": 1969, "location": "Oceanus Procellarum", "status": "Completed",
+    "source": "NASA", "sourceUrl": "",
+    "launch": "Nov 14, 1969", "arrival": "Nov 19, 1969",
+    "description": "An instrument left on the Moon to measure magnetic fields at the lunar surface.",
+    "spacecraft": "Part of the Apollo Lunar Surface Experiments Package set up by astronauts.",
+    "objectives": ["Measure magnetic fields at the lunar surface.", "Study the Moon's magnetic properties."],
+    "discoveries": [],
+    "nasaQuery": "Apollo Lunar Surface Magnetometer", "nasaVideoQuery": "Apollo 12"
   }
 ]
