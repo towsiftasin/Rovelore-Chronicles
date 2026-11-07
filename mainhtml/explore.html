@@ -143,6 +143,14 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
 .chip:hover { border-color: var(--yellow); }
 .panel a { color: var(--yellow); }
 
+/* ---- 3D model viewer ---- */
+.model-box { border-radius: 16px; overflow: hidden; border: 2px solid var(--line);
+  background: radial-gradient(circle at 50% 35%, rgba(255,255,255,.10), rgba(5,8,25,.65)); }
+.model-box model-viewer { display: block; width: 100%; height: 420px; --poster-color: transparent; }
+.model-hint { font-family: var(--hand); font-size: 16px; color: var(--text-soft); margin-top: 8px; }
+.model-fail { display: grid; place-items: center; height: 220px; text-align: center; padding: 12px; font-family: var(--hand); font-size: 18px; color: var(--text-soft); }
+@media (max-width: 760px) { .model-box model-viewer { height: 300px; } }
+
 /* ---- Responsive ---- */
 @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } .layout { grid-template-columns: 210px 1fr; } }
 @media (max-width: 760px) {
@@ -159,6 +167,8 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
 .nav-link:focus-visible, .btn:focus-visible, .fbtn:focus-visible, .chip:focus-visible, .back:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
+<!-- Google model-viewer: shows .glb 3D models (rotate / zoom) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -255,13 +265,14 @@ function loadMissions() {
 const FILTER_OPTIONS = {
   destination: ["All", "Mars", "Moon"],
   type: ["Rover", "Lander", "Orbiter", "Instrument", "Crewed Mission", "Spacecraft"],
-  media: ["Images", "Videos", "Both"],
+  media: ["Images", "Videos", "Both", "3D Model"],
   status: ["Active", "Completed", "Ended", "Abandoned"]
 };
 const state = { destination: "All", type: null, media: null, status: null, query: "" };
 
 const hasImages = function (m) { return !!m.image || m.gallery.length > 0; };
 const hasVideos = function (m) { return m.videos.length > 0; };
+const hasModel = function (m) { return !!m.model; };
 
 function matches(m) {
   if (state.destination !== "All" && m.destination !== state.destination) return false;
@@ -270,6 +281,7 @@ function matches(m) {
   if (state.media === "Images" && !hasImages(m)) return false;
   if (state.media === "Videos" && !hasVideos(m)) return false;
   if (state.media === "Both" && !(hasImages(m) && hasVideos(m))) return false;
+  if (state.media === "3D Model" && !hasModel(m)) return false;
   if (state.query) {
     const text = [m.name, m.destination, m.type, m.mission, m.year, m.location, m.description, m.status].join(" ").toLowerCase();
     if (text.indexOf(state.query.toLowerCase()) === -1) return false;
@@ -354,7 +366,8 @@ function renderCards() {
         '<div class="loc">' + esc(m.location) + '</div>' +
         '<p class="desc">' + esc(m.description) + '</p>' +
         '<div class="media"><span class="' + (hasImages(m) ? "" : "off") + '">\uD83D\uDCF7 Images</span>' +
-          '<span class="' + (hasVideos(m) ? "" : "off") + '">\u25B6 Videos</span></div>' +
+          '<span class="' + (hasVideos(m) ? "" : "off") + '">\u25B6 Videos</span>' +
+          '<span class="' + (hasModel(m) ? "" : "off") + '">\uD83E\uDDCA 3D</span></div>' +
         '<button class="btn" type="button">View Details </button>' +
       '</div>';
     card.querySelector(".btn").addEventListener("click", function () { location.hash = "mission=" + m.id; });
@@ -383,6 +396,12 @@ function renderDetail(m) {
     : '<span class="todo">Source: ' + esc(m.source) + '</span>';
   const related = missions.filter(function (x) { return x.destination === m.destination && x.id !== m.id; }).slice(0, 4)
     .map(function (x) { return '<button class="chip" type="button" data-id="' + esc(x.id) + '">' + esc(x.name) + "</button>"; }).join("");
+  // 3D model: "model" is either a full https:// link, or a file name inside backend/models (e.g. "spirit.glb")
+  const modelSrc = !m.model ? "" : (/^https?:\/\//i.test(m.model) ? m.model : API_BASE + "/models/" + m.model.replace(/^\/?models\//, ""));
+  const modelPanel = modelSrc
+    ? '<div class="panel"><h2>3D model</h2><div class="model-box"><model-viewer src="' + esc(modelSrc) + '" alt="3D model of ' + esc(m.name) + '" camera-controls auto-rotate touch-action="pan-y" shadow-intensity="1" loading="lazy"></model-viewer></div>' +
+      '<p class="model-hint">Drag to rotate \u2022 scroll or pinch to zoom' + (m.modelCredit ? ' \u2022 ' + esc(m.modelCredit) : '') + '</p></div>'
+    : '';
   const fact = function (k, v) { return '<div class="fact"><small>' + k + "</small><span>" + esc(v) + "</span></div>"; };
 
   const view = document.getElementById("detailView");
@@ -397,6 +416,7 @@ function renderDetail(m) {
     '<div class="panel"><h2>Spacecraft information</h2><p>' + esc(m.spacecraft) + "</p></div>" +
     '<div class="panel"><h2>Scientific objectives</h2>' + listHTML(m.objectives, "Objectives coming soon.") + "</div>" +
     '<div class="panel"><h2>Key discoveries</h2>' + listHTML(m.discoveries, "Key discoveries coming soon.") + "</div>" +
+    modelPanel +
     '<div class="panel"><h2>Images</h2><div class="gallery">' + gallery + "</div></div>" +
     '<div class="panel"><h2>Videos</h2>' + videos + "</div>" +
     '<div class="panel"><h2>Source</h2><p>' + source + "</p></div>" +
@@ -404,6 +424,10 @@ function renderDetail(m) {
     "</div>";
 
   document.getElementById("backBtn").addEventListener("click", function () { location.hash = ""; });
+  const mv = view.querySelector("model-viewer");
+  if (mv) mv.addEventListener("error", function () {
+    mv.parentNode.innerHTML = '<div class="model-fail">Could not load this 3D model.<br>Check the file name in the model field.</div>';
+  });
   view.querySelectorAll(".chip").forEach(function (c) {
     c.addEventListener("click", function () { location.hash = "mission=" + c.dataset.id; });
   });

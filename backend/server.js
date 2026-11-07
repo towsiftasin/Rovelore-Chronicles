@@ -124,6 +124,8 @@ function build(m) {
     gallery: gallery,
     videos: videos,
     sourceUrl: sourceUrl,
+    model: over.model || m.model || "",
+    modelCredit: over.modelCredit || m.modelCredit || "",
     discoveries: (over.discoveries && over.discoveries.length) ? over.discoveries : m.discoveries
   });
   delete out.nasaQuery;
@@ -134,6 +136,8 @@ function build(m) {
 // ---------- API ----------
 const app = express();
 app.use(cors());   // lets your HTML page (any origin / file://) call the API
+// 3D model files (.glb) in backend/models are served at http://localhost:3000/models/<file>
+app.use("/models", express.static(path.join(__dirname, "models")));
 
 app.get("/api/health", function (req, res) {
   res.json({ ok: true, mediaReady: Object.keys(mediaCache).length, refreshing: refreshing });
@@ -150,6 +154,7 @@ app.get("/api/missions", function (req, res) {
   if (media === "Images") list = list.filter(function (m) { return m.gallery.length > 0; });
   if (media === "Videos") list = list.filter(function (m) { return m.videos.length > 0; });
   if (media === "Both")   list = list.filter(function (m) { return m.gallery.length > 0 && m.videos.length > 0; });
+  if (media === "3D Model") list = list.filter(function (m) { return !!m.model; });
   if (q) list = list.filter(function (m) {
     return [m.name, m.destination, m.type, m.mission, m.year, m.location, m.description, m.status].join(" ").toLowerCase().indexOf(q) !== -1;
   });

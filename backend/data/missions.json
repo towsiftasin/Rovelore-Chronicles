@@ -8,6 +8,7 @@
     "spacecraft": "Six-wheeled microrover carried to the surface by the Pathfinder lander.",
     "objectives": ["Demonstrate a low-cost way to reach Mars and operate a small rover.", "Study Martian rocks and soil."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Sojourner rover Mars Pathfinder", "nasaVideoQuery": "Mars Pathfinder Sojourner"
   },
   {
@@ -19,6 +20,7 @@
     "spacecraft": "Solar-powered rover, twin of the Spirit rover.",
     "objectives": ["Search for evidence of past water on Mars."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Opportunity rover Mars", "nasaVideoQuery": "Opportunity rover Mars"
   },
   {
@@ -30,6 +32,7 @@
     "spacecraft": "Solar-powered rover, twin of the Opportunity rover.",
     "objectives": ["Search for evidence of past water on Mars.", "Study the geology of Gusev Crater."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Spirit rover Mars Gusev Crater", "nasaVideoQuery": "Spirit rover Mars"
   },
   {
@@ -41,6 +44,7 @@
     "spacecraft": "Stationary lander carrying a seismometer, a heat probe and a radio science experiment.",
     "objectives": ["Study the deep interior of Mars.", "Measure marsquakes and the planet's heat flow."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "InSight lander Mars Elysium Planitia", "nasaVideoQuery": "InSight lander Mars"
   },
   {
@@ -52,6 +56,7 @@
     "spacecraft": "Folding, battery-powered two-seat rover carried to the Moon on the Lunar Module.",
     "objectives": ["Carry astronauts and equipment across the lunar surface.", "Extend the range of surface exploration."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Lunar Roving Vehicle Apollo 15", "nasaVideoQuery": "Apollo 15 lunar rover"
   },
   {
@@ -63,6 +68,7 @@
     "spacecraft": "Part of the Apollo Lunar Surface Experiments Package set up by astronauts.",
     "objectives": ["Measure the energy and flow of the solar wind at the lunar surface."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Apollo 12 Solar Wind Spectrometer", "nasaVideoQuery": "Apollo 12"
   },
   {
@@ -74,6 +80,7 @@
     "spacecraft": "Uncrewed lander with a television camera and surface-sampling instruments.",
     "objectives": ["Demonstrate a soft landing on the Moon.", "Photograph the lunar surface in preparation for Apollo."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Surveyor 1 lunar lander", "nasaVideoQuery": "Surveyor 1"
   },
   {
@@ -85,6 +92,7 @@
     "spacecraft": "Part of the Apollo Lunar Surface Experiments Package set up by astronauts.",
     "objectives": ["Measure magnetic fields at the lunar surface.", "Study the Moon's magnetic properties."],
     "discoveries": [],
+    "model": "", "modelCredit": "",
     "nasaQuery": "Apollo Lunar Surface Magnetometer", "nasaVideoQuery": "Apollo 12"
   }
 ]
