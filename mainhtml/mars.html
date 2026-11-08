@@ -54,16 +54,19 @@ body {
 
 /* =========================
    MAIN STAGE
+   FIX: no max-width / auto margins, so the background image
+   always covers the full width of the screen.
 ========================= */
 
 .stage {
   position: relative;
   width: 100%;
-  max-width: 1648px;
   min-height: 100vh;
-  margin: 0 auto;
+  min-height: 100dvh;
+  margin: 0;
   overflow: hidden;
 
+  background-color: #000;
   background-image: url("../images/mars2.png");
   background-size: cover;
   background-position: center;
