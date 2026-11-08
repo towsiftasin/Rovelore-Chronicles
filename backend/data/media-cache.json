@@ -50,7 +50,7 @@
         "nasaId": "JPL-20230607-MARSf-0001-Mars Report Whats in A Name"
       }
     ],
-    "fetchedAt": 1794073791520
+    "fetchedAt": 1794155429820
   },
   "curiosity": {
     "images": [
@@ -180,7 +180,7 @@
         "nasaId": "JPL-20211208-M2020f-0001-Youve_Got_Perseverance"
       }
     ],
-    "fetchedAt": 1794073796247
+    "fetchedAt": 1794155435241
   },
   "perseverance": {
     "images": [
@@ -485,7 +485,7 @@
         "nasaId": "JPL-20230607-MARSf-0001-Mars Report Whats in A Name"
       }
     ],
-    "fetchedAt": 1794073800997
+    "fetchedAt": 1794155440310
   },
   "insight": {
     "images": [
@@ -535,49 +535,49 @@
         "nasaId": "JPL-20220919-INSIGHf-0001-InSight Captures Sound of a Meteoroid Striking Mars_1080"
       }
     ],
-    "fetchedAt": 1794073804824
+    "fetchedAt": 1794155444782
   },
   "lrv": {
     "images": [
       {
+        "url": "https://images-assets.nasa.gov/image/as17-146-22367/as17-146-22367~medium.jpg",
+        "title": "View of the Lunar Roving Vehicle in its final parking space",
+        "nasaId": "as17-146-22367"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as15-88-11901/as15-88-11901~medium.jpg",
+        "title": "Lunar Roving Vehicle photographed against lunar background during EVA",
+        "nasaId": "as15-88-11901"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as17-134-20476/as17-134-20476~medium.jpg",
+        "title": "View of Astronaut Eugene Cernan beside lunar roving vehicle during EVA",
+        "nasaId": "as17-134-20476"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as17-140-21494/as17-140-21494~medium.jpg",
+        "title": "View of Lunar Roving Vehicle parked at Station 6 by Apollo 16 astronauts",
+        "nasaId": "as17-140-21494"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as16-107-17436/as16-107-17436~medium.jpg",
+        "title": "View of the Lunar Module \"Orion\" and Lunar Roving Vehicle during first EVA",
+        "nasaId": "as16-107-17436"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as16-107-17473/as16-107-17473~medium.jpg",
+        "title": "Lunar Roving Vehicle parked in lunar depression on slope of Stone Mountain",
+        "nasaId": "as16-107-17473"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/as17-134-20454/as17-134-20454~medium.jpg",
+        "title": "Astronaut Harrison Schmitt seated in Lunar Roving Vehicle during EVA-3",
+        "nasaId": "as17-134-20454"
+      },
+      {
         "url": "https://images-assets.nasa.gov/image/S71-30542/S71-30542~medium.jpg",
         "title": "View of Apollo 15 Lunar Roving Vehicle and Lunar Module during simulations",
         "nasaId": "S71-30542"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/S71-16722/S71-16722~medium.jpg",
-        "title": "Members of Apollo 15 crew shown with Lunar Roving Vehicle One-G trainer",
-        "nasaId": "S71-16722"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/as15-86-11603/as15-86-11603~medium.jpg",
-        "title": "Astronaut James Irwin works at Lunar Roving Vehicle during Apollo 15 EVA",
-        "nasaId": "as15-86-11603"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/as15-86-11602/as15-86-11602~medium.jpg",
-        "title": "Astronaut James Irwin works at Lunar Roving Vehicle during Apollo 15 EVA",
-        "nasaId": "as15-86-11602"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/7022585/7022585~medium.jpg",
-        "title": "Saturn Apollo Program",
-        "nasaId": "7022585"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/7022567/7022567~medium.jpg",
-        "title": "Saturn Apollo Program",
-        "nasaId": "7022567"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/S71-38188/S71-38188~medium.jpg",
-        "title": "Artists concept of Apollo 15 crewmen performing deployment of LRV",
-        "nasaId": "S71-38188"
-      },
-      {
-        "url": "https://images-assets.nasa.gov/image/9250827/9250827~medium.jpg",
-        "title": "Saturn Apollo Program",
-        "nasaId": "9250827"
       }
     ],
     "videos": [
@@ -588,7 +588,7 @@
         "nasaId": "Moon_Base_Update-Oct-Lunar_Rovers"
       }
     ],
-    "fetchedAt": 1794073808070
+    "fetchedAt": 1794155448627
   },
   "solarwindspectrometer": {
     "images": [
@@ -642,7 +642,7 @@
         "nasaId": "jsc2026m000004_NASA’s_SpaceX_Crew-11_Science_in_Orbit_250120"
       }
     ],
-    "fetchedAt": 1794073817215
+    "fetchedAt": 1794155458119
   },
   "lunarmagnetometer": {
     "images": [
@@ -698,5 +698,51 @@
       }
     ],
     "fetchedAt": 1794073821739
+  },
+  "sws": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/6903621/6903621~medium.jpg",
+        "title": "Saturn Apollo Program",
+        "nasaId": "6903621"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~mobile.mp4",
+        "title": "Compilation Video - Apollo 8 and Apollo 12",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520/KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_8_Review_Apollo_12_C7_Exit_White_Room-B_520"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~medium.mp4",
+        "title": "Apollo 12 Mission Summary and Highlights - featuring Splashdown with President Nixon",
+        "poster": "https://images-assets.nasa.gov/video/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599/KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599~thumb_1.jpg",
+        "nasaId": "KSC-1969-MH-NAS01-0001-Apollo_12_Mission_Summary_Highlights_Splashdown_with_President_Nixon-HM_3599"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~medium.mp4",
+        "title": "Apollo 12 - The Pinpoint Mission",
+        "poster": "https://images-assets.nasa.gov/video/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission/NHQ_2019_1114_Apollo 12 - The Pinpoint Mission~small_1.jpg",
+        "nasaId": "NHQ_2019_1114_Apollo 12 - The Pinpoint Mission"
+      }
+    ],
+    "fetchedAt": 1794155453244
+  },
+  "ranger7": {
+    "images": [
+      {
+        "url": "https://images-assets.nasa.gov/image/PIA02975/PIA02975~small.jpg",
+        "title": "First Image of the Moon taken by a U.S. Spacecraft",
+        "nasaId": "PIA02975"
+      },
+      {
+        "url": "https://images-assets.nasa.gov/image/S70-28115/S70-28115~medium.jpg",
+        "title": "Map - Lunar Samples",
+        "nasaId": "S70-28115"
+      }
+    ],
+    "videos": [],
+    "fetchedAt": 1794155459855
   }
 }

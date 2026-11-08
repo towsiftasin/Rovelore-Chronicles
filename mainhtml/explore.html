@@ -1,177 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rovelore Chronicles — Explore</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
-/* =========================================================
-   Explore page – same theme as the Stories page
-   (Baloo 2 + Patrick Hand, golden yellow details, rounded shapes)
-   ========================================================= */
-:root {
-  --bg: #070B1A; --bg-soft: #0E1530;
-  --yellow: #FFC928; --text: #F3EFE6; --text-soft: #B9C2DA;
-  --mars: #E47B61; --moon: #9FB8D8;
-  --line: rgba(255,255,255,.16);
-  --heading: "Baloo 2", "Trebuchet MS", sans-serif;
-  --hand: "Patrick Hand", "Comic Sans MS", cursive;
+/* ========== 1. Design tokens ========== */
+:root{
+  --bg:#050816; --ink:#eef2ff; --mute:#aab4e0;
+  --blue:#3d8bff; --cyan:#5fe0ff; --gold:#ffb23e; --yellow:#FFC928;
+  --text:#F3EFE6; --text-soft:#B9C2DA; --line:rgba(255,255,255,.16);
+  --mars:#E47B61; --moon:#9FB8D8;
+  --heading:"Baloo 2","Trebuchet MS",sans-serif; --hand:"Patrick Hand","Comic Sans MS",cursive;
+  --card-w:clamp(110px,min(14.5vw,calc((100dvh - 250px)/1.75)),205px);   /* width of one mission card */
+  /* BACKGROUND IMAGE: save your picture in the images folder and put its file name here */
+  --bg-image:url('../images/2nd.png');
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:var(--heading);color:var(--ink);
+  background:#000}   /* black shows until the background image loads (or if it is missing) */
+/* The background image: it covers the whole screen, stays centred, and never stretches.
+   A dark layer sits on top of it so the white writing stays easy to read. */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(2,4,14,.35),rgba(2,4,14,.65)),var(--bg-image) center/cover no-repeat}
+button,a{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-/* ---- Background: CSS only (no images): navy base, indigo/purple/coral glows, tiny stars ---- */
-body { font-family: var(--heading); color: var(--text); line-height: 1.5; min-height: 100vh; overflow-x: hidden;
-  background:
-    radial-gradient(ellipse at 50% 0%,  rgba(30,85,190,.35), transparent 50%),
-    radial-gradient(ellipse at 15% 35%, rgba(55,40,180,.22), transparent 42%),
-    radial-gradient(ellipse at 85% 40%, rgba(91,35,125,.22), transparent 42%),
-    radial-gradient(ellipse at 50% 100%, rgba(228,123,97,.20), transparent 50%),
-    linear-gradient(180deg, #030817 0%, #071B52 40%, #1a1450 75%, #351B45 100%) fixed; }
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
-  background-image: url("../images/2nd.png"); background-size: cover; background-position: center; background-repeat: no-repeat;
- }
+/* ========== 2. Header ========== */
+header,h1,.sub,.scene{position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:clamp(10px,2.5vh,24px) 48px clamp(6px,1.5vh,14px)}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand-name{font-size:1.25rem;font-weight:700;color:#fff}
+.mainnav{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.nav-link{background:none;border:0;color:#fff;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;padding:4px 0;position:relative}
+.nav-link.active{color:#FFC928}
+.nav-link.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;border-radius:2px;background:#FFC928}
+.nav-link:hover:not(.active){color:#FFC928;opacity:.85}
+@media(max-width:760px){header{flex-direction:column;align-items:flex-start;padding:20px 24px 12px}.mainnav{gap:16px;font-size:.95rem}}
+h1{text-align:center;font-size:clamp(1.5rem,3.6vw,2.3rem);margin:6px 0 2px;letter-spacing:-.02em;text-shadow:0 2px 12px rgba(0,0,0,.75)}
+h1 span{color:var(--gold)}
+.sub{text-align:center;color:var(--text);text-shadow:0 2px 10px rgba(0,0,0,.8);margin:0 4vw;font-family:var(--hand);font-size:clamp(1.2rem,2.4vw,1.7rem)}
 
-/* ---- Header: copied from your home page so the logo and links sit in the same place ---- */
-.topbar { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
-  padding: 24px 48px 14px; flex-wrap: wrap; gap: 16px; }
-.brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.brand-name { font-size: 1.25rem; font-weight: 700; color: #FFFFFF; }
-.mainnav { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
-.nav-link { background: none; border: none; color: #FFFFFF; font-family: inherit; font-size: 1rem; font-weight: 600;
-  cursor: pointer; padding: 4px 0; position: relative; }
-.nav-link.active { color: #FFC928; }
-.nav-link.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
-  border-radius: 2px; background: #FFC928; }                       /* active page = gold underline */
-.nav-link:hover:not(.active) { color: #FFC928; opacity: 0.85; }
+/* ========== 3. The 3D carousel scene ========== */
+/* LIST PAGE FITS THE SCREEN: no scrolling, the carousel fills the space under the title */
+body.list-mode{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+#listView{flex:1;min-height:0;display:flex;flex-direction:column}
+#listView[hidden]{display:none}
+.scene{flex:1;min-height:0;width:100%;margin:0 auto;max-width:1400px;overflow:hidden;
+  perspective:1500px; perspective-origin:50% 50%}   /* camera at the height of the cards, so they stay on one line */
+.world{position:absolute;inset:0;transform-style:preserve-3d}   /* children keep their 3D depth */
 
-main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
+/* loading / error message inside the scene */
+.status{position:absolute;inset:0;z-index:3;display:none;place-items:center;align-content:center;gap:14px;text-align:center;
+  padding:0 24px;font-family:var(--hand);font-size:clamp(1.2rem,2.2vw,1.6rem);color:var(--text-soft)}
+.status.show{display:grid}
+.retry{padding:9px 22px;border-radius:999px;border:none;background:#FFC928;color:#1a1400;font-family:var(--heading);font-weight:700;box-shadow:0 4px 0 #c99500}
 
-/* ---- Hero (compact) ---- */
-.hero { text-align: center; padding: 4px 0 26px; }
-.hero h1 { font-size: clamp(40px, 7vw, 64px); font-weight: 800; line-height: 1.1; display: inline-flex; gap: 8px; align-items: flex-start; }
-.hero h1 svg { margin-top: 6px; }
-.swoop { display: block; margin: 0 auto; }
-.subtitle { font-family: var(--hand); font-size: clamp(22px, 3vw, 30px); color: var(--text); margin-top: 4px; }
-.intro { font-family: var(--hand); font-size: 19px; color: var(--text-soft); max-width: 640px; margin: 8px auto 0; }
+/* ========== 4. Mission cards ========== */
+.card{position:absolute;left:calc(50% - var(--card-w)/2);top:calc(50% - var(--card-w)*.65);
+  width:var(--card-w);height:calc(var(--card-w)*1.3);display:flex;flex-direction:column;
+  border:1px solid #3d8bffaa;border-radius:16px;overflow:hidden;cursor:pointer;
+  background:#08103a;box-shadow:0 0 18px #3d8bff55;-webkit-font-smoothing:antialiased}
+.card .shot{position:relative;flex:1 1 52%;min-height:0;display:grid;place-items:center;background:linear-gradient(#16226a,#0a1030)}
+.card .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.card .noimg{font-family:var(--heading);font-weight:500;font-size:.9rem;color:#D5DCF5;padding:8px;text-align:center}
+.tagdest{position:absolute;left:8px;top:8px;z-index:1;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.3px;color:#0a1030;background:var(--moon);box-shadow:0 2px 6px rgba(0,0,0,.55)}
+.tagdest.Mars{background:var(--mars)}
+.card .info{padding:9px 10px 10px;text-align:center;background:linear-gradient(#0b1240,#050816 65%);border-top:2px solid #3d8bff66}
+.card h3{margin:0;font-family:var(--heading);font-weight:800;line-height:1.2;color:#fff;font-size:clamp(1rem,1.7vw,1.45rem);text-shadow:0 2px 8px #000}
+.card p{margin:4px 0 0;font-family:var(--heading);font-weight:500;font-size:clamp(.82rem,1.15vw,1.02rem);color:#E8EDFF;line-height:1.35;text-shadow:0 1px 4px #000;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.card.active{border:2px solid var(--cyan);box-shadow:0 0 28px #5fe0ffcc,0 0 60px #3d8bff88,inset 0 0 18px #3d8bff55}
+.card.active .info{padding-bottom:46px}
 
-/* ---- Layout: filters left, results right ---- */
-.layout { display: grid; grid-template-columns: 250px 1fr; gap: 26px; align-items: start; }
-.filters { position: sticky; top: 16px; padding: 22px 18px; border-radius: 22px;
-  background: rgba(10,16,48,.7); border: 2px solid var(--line); }
-.filters h2 { font-size: 22px; padding-bottom: 8px; margin-bottom: 6px; border-bottom: 2px solid rgba(255,201,40,.5); }
-.fgroup { margin-top: 16px; }
-.fgroup h3 { font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); margin-bottom: 6px; }
-.fbtn { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 8px 12px; margin: 2px 0;
-  font: 500 16px var(--heading); color: var(--text-soft); background: none; border: 2px solid transparent;
-  border-radius: 12px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
-.fbtn:hover { background: rgba(255,255,255,.07); color: #fff; }
-.fbtn.on { background: rgba(255,201,40,.14); border-color: var(--yellow); color: #fff; }
-.reset { margin-top: 18px; width: 100%; padding: 9px; font: 600 15px var(--heading); color: var(--text-soft);
-  background: none; border: 2px dashed var(--line); border-radius: 12px; cursor: pointer; }
-.reset:hover { color: #fff; border-color: var(--yellow); }
-.filter-toggle { display: none; }
+/* the button lives OUTSIDE the 3D cards, so it is never scaled or blurred */
+.btn{display:none;margin-top:8px;padding:8px 20px;border-radius:999px;border:none;background:#FFC928;color:#1a1400;font-family:var(--heading);font-weight:700;font-size:clamp(.78rem,1.1vw,.95rem);text-decoration:none;box-shadow:0 4px 0 #c99500;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #c99500}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #c99500}
+#detailsBtn{display:inline-block;position:absolute;left:0;top:0;margin:0;z-index:6;white-space:nowrap}
 
-.toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
-.search { flex: 1; min-width: 220px; padding: 13px 20px; font: 500 17px var(--hand); color: var(--text);
-  background: rgba(10,16,48,.7); border: 2px solid var(--line); border-radius: 999px; outline: none; transition: border-color .2s; }
-.search::placeholder { color: var(--text-soft); }
-.search:focus { border-color: var(--yellow); }
-.count { font-family: var(--hand); font-size: 19px; color: var(--text-soft); }
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid var(--blue);background:#0b1448cc;font-size:1.3rem}
+.arrow.l{left:1.5vw}.arrow.r{right:1.5vw}
 
-/* ---- Mission cards ---- */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.card { display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
-  background: rgba(14,21,56,.78); border: 2px solid var(--line);
-  transition: transform .25s, border-color .25s, box-shadow .25s; animation: rise .5s ease both; }
-.card.Mars { --accent: var(--mars); } .card.Moon { --accent: var(--moon); }
-.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 14px 30px rgba(0,0,0,.4); }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+/* ========== 5. Detail view (opens when you press View Details) ========== */
+#detailView{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 60px}
+.back{margin-bottom:18px;background:none;border:2px solid var(--line);color:var(--text);border-radius:999px;padding:8px 18px;font:600 16px var(--heading)}
+.back:hover{border-color:var(--yellow)}
+.detail{animation:rise .5s ease both}
+.detail.Mars{--accent:var(--mars)} .detail.Moon{--accent:var(--moon)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.detail h1{text-align:left;letter-spacing:normal;font-size:clamp(34px,6vw,54px);font-weight:800;line-height:1.1;margin:6px 0}
+.detail .lead{font-family:var(--hand);font-size:22px;color:var(--text-soft);max-width:760px;margin:0}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px}
+.dest{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--accent)}
+.dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--accent) 60%)}
+.type{padding:1px 10px;border:1.5px solid var(--line);border-radius:999px;color:var(--text-soft);font-size:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:22px 0}
+.fact{padding:12px 16px;border-radius:16px;background:rgba(14,21,56,.78);border:2px solid var(--line)}
+.fact small{display:block;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--yellow)}
+.fact span{font-family:var(--hand);font-size:19px}
+.panel{padding:20px 24px;margin-bottom:18px;border-radius:22px;background:rgba(14,21,56,.78);border:2px solid var(--line)}
+.panel h2{font-size:24px;margin:0 0 8px}
+.panel h2::after{content:"";display:block;width:50px;height:3px;margin-top:4px;background:var(--yellow);border-radius:3px}
+.panel p,.panel li{font-family:var(--hand);font-size:19px;color:var(--text-soft);margin:0}
+.panel ul{padding-left:22px;margin:0}
+.panel a{color:var(--yellow)}
+.todo{font-style:italic;opacity:.7}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.gallery img,.gallery .ph{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px}
+.gallery .ph{display:grid;place-items:center;text-align:center;padding:8px;font-family:var(--hand);color:var(--text-soft);border:2px dashed var(--line);background:rgba(255,255,255,.03)}
+.videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.videos figure{margin:0}
+.videos video{width:100%;aspect-ratio:16/9;border-radius:14px;background:#000}
+.videos figcaption{font-family:var(--hand);font-size:17px;color:var(--text-soft);margin-top:6px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:8px 16px;font:600 15px var(--heading);color:var(--text);background:none;border:2px solid var(--line);border-radius:999px}
+.chip:hover{border-color:var(--yellow)}
+/* 3D model viewer */
+.model-box{border-radius:16px;overflow:hidden;border:2px solid var(--line);background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.10),rgba(5,8,25,.65))}
+.model-box model-viewer{display:block;width:100%;height:420px;--poster-color:transparent}
+.model-hint{font-family:var(--hand);font-size:16px;color:var(--text-soft);margin-top:8px}
+.model-fail{display:grid;place-items:center;height:220px;text-align:center;padding:12px;font-family:var(--hand);font-size:18px;color:var(--text-soft)}
+@media(max-width:760px){#detailView{padding:0 14px 40px}.model-box model-viewer{height:300px}}
 
-/* Image area: shows the real image if "image" is set, otherwise a clear placeholder */
-.thumb { position: relative; aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; overflow: hidden;
-  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 45%, #0E1530), #0E1530 75%); }
-.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.thumb .ph { font-family: var(--hand); font-size: 16px; color: var(--text-soft); padding: 10px; }
-.card-body { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px 18px; flex: 1; }
-.card h3 { font-size: 24px; font-weight: 700; line-height: 1.2; }
-.badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 15px; }
-.dest { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent); }
-.dot { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, var(--accent) 60%); }
-.type { padding: 1px 10px; border: 1.5px solid var(--line); border-radius: 999px; color: var(--text-soft); font-size: 14px; }
-.meta { font-family: var(--hand); font-size: 18px; color: var(--accent); }
-.loc { font-family: var(--hand); font-size: 17px; color: var(--text-soft); }
-.desc { font-family: var(--hand); font-size: 18px; color: var(--text-soft); flex: 1; margin-top: 4px; }
-.media { display: flex; gap: 14px; font-size: 14px; color: var(--text-soft); margin: 6px 0; }
-.media .off { opacity: .35; }
-.btn { align-self: flex-start; font: 700 15px var(--heading); color: #1a1400; background: var(--yellow); border: none;
-  border-radius: 999px; padding: 9px 20px; cursor: pointer; box-shadow: 0 4px 0 #c99500; transition: transform .2s, box-shadow .2s; }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c99500; }
-.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #c99500; }
-.empty { grid-column: 1 / -1; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--text-soft); padding: 50px 10px; }
+/* phones: taller cards so the picture still has room next to the text */
+@media(max-width:760px){:root{--card-w:clamp(110px,min(34vw,calc((100dvh - 300px)/2.2)),200px)}.card{height:calc(var(--card-w)*1.75);top:calc(50% - var(--card-w)*.875)}}
 
-/* ---- Detail view ---- */
-.back { margin-bottom: 18px; background: none; border: 2px solid var(--line); color: var(--text); border-radius: 999px;
-  padding: 8px 18px; font: 600 16px var(--heading); cursor: pointer; }
-.back:hover { border-color: var(--yellow); }
-.detail { animation: rise .5s ease both; }
-.detail.Mars { --accent: var(--mars); } .detail.Moon { --accent: var(--moon); }
-.detail h1 { font-size: clamp(34px, 6vw, 54px); font-weight: 800; line-height: 1.1; margin: 6px 0; }
-.detail .lead { font-family: var(--hand); font-size: 22px; color: var(--text-soft); max-width: 760px; }
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 22px 0; }
-.fact { padding: 12px 16px; border-radius: 16px; background: rgba(14,21,56,.78); border: 2px solid var(--line); }
-.fact small { display: block; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--yellow); }
-.fact span { font-family: var(--hand); font-size: 19px; }
-.panel { padding: 20px 24px; margin-bottom: 18px; border-radius: 22px; background: rgba(14,21,56,.78); border: 2px solid var(--line); }
-.panel h2 { font-size: 24px; margin-bottom: 8px; }
-.panel h2::after { content: ""; display: block; width: 50px; height: 3px; margin-top: 4px; background: var(--yellow); border-radius: 3px; }
-.panel p, .panel li { font-family: var(--hand); font-size: 19px; color: var(--text-soft); }
-.panel ul { padding-left: 22px; }
-.todo { font-style: italic; opacity: .7; }
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-.gallery img, .gallery .ph { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 14px; }
-.gallery .ph { display: grid; place-items: center; text-align: center; padding: 8px; font-family: var(--hand); color: var(--text-soft);
-  border: 2px dashed var(--line); background: rgba(255,255,255,.03); }
-.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.videos figure { margin: 0; }
-.videos video { width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; background: #000; }
-.videos figcaption { font-family: var(--hand); font-size: 17px; color: var(--text-soft); margin-top: 6px; }
-.chips { display: flex; gap: 10px; flex-wrap: wrap; }
-.chip { padding: 8px 16px; font: 600 15px var(--heading); color: var(--text); background: none; border: 2px solid var(--line); border-radius: 999px; cursor: pointer; }
-.chip:hover { border-color: var(--yellow); }
-.panel a { color: var(--yellow); }
+/* click a picture to see it big */
+.gallery img{cursor:zoom-in;transition:transform .2s,box-shadow .2s}
+.gallery img:hover{transform:scale(1.03);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+#lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(2,4,14,.94);padding:56px 64px 64px}
+#lightbox.open{display:flex}
+#lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 10px 50px rgba(0,0,0,.7)}
+#lightbox .lb-btn{position:absolute;width:46px;height:46px;border-radius:50%;border:1px solid var(--blue);background:#0b1448dd;color:#fff;font-size:1.5rem;line-height:1;display:grid;place-items:center}
+#lightbox .lb-btn:hover{border-color:var(--yellow)}
+#lightbox .lb-close{top:14px;right:14px}
+#lightbox .lb-prev{left:12px;top:50%;transform:translateY(-50%)}
+#lightbox .lb-next{right:12px;top:50%;transform:translateY(-50%)}
+#lightbox .lb-count{position:absolute;left:0;right:0;bottom:18px;text-align:center;font-family:var(--hand);font-size:18px;color:var(--text-soft)}
+@media(max-width:760px){#lightbox{padding:56px 12px 56px}#lightbox .lb-prev{left:6px}#lightbox .lb-next{right:6px}}
 
-/* ---- 3D model viewer ---- */
-.model-box { border-radius: 16px; overflow: hidden; border: 2px solid var(--line);
-  background: radial-gradient(circle at 50% 35%, rgba(255,255,255,.10), rgba(5,8,25,.65)); }
-.model-box model-viewer { display: block; width: 100%; height: 420px; --poster-color: transparent; }
-.model-hint { font-family: var(--hand); font-size: 16px; color: var(--text-soft); margin-top: 8px; }
-.model-fail { display: grid; place-items: center; height: 220px; text-align: center; padding: 12px; font-family: var(--hand); font-size: 18px; color: var(--text-soft); }
-@media (max-width: 760px) { .model-box model-viewer { height: 300px; } }
-
-/* ---- Responsive ---- */
-@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } .layout { grid-template-columns: 210px 1fr; } }
-@media (max-width: 760px) {
-  .topbar { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px 24px 12px; }
-  .mainnav { gap: 16px; font-size: 0.95rem; }
-  main { padding: 0 14px 40px; }
-  .layout { grid-template-columns: 1fr; }
-  .grid { grid-template-columns: 1fr; }
-  .filter-toggle { display: block; width: 100%; margin-bottom: 14px; padding: 11px; font: 700 16px var(--heading); color: #1a1400;
-    background: var(--yellow); border: none; border-radius: 999px; cursor: pointer; }
-  .filters { display: none; position: static; margin-bottom: 16px; }
-  .filters.open { display: block; }
-}
-.nav-link:focus-visible, .btn:focus-visible, .fbtn:focus-visible, .chip:focus-visible, .back:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media(prefers-reduced-motion:reduce){.btn{transition:none}.detail{animation:none}.gallery img{transition:none}}
 </style>
-<!-- Google model-viewer: shows .glb 3D models (rotate / zoom) -->
+<!-- Google model-viewer: shows .glb 3D models (rotate / zoom) on the detail page -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
-<body>
-
+<body class="list-mode">
 <header class="topbar">
   <div class="brand" data-nav="home">
     <svg viewBox="0 0 48 40" width="36" height="30" aria-hidden="true">
@@ -190,261 +169,295 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
   </nav>
 </header>
 
-<main id="app">
-  <!-- LIST VIEW -->
-  <section id="listView">
-    <div class="hero">
-      <h1>Explore
-        <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/></svg>
-      </h1>
-      <svg class="swoop" viewBox="0 0 80 24" width="90" height="20" aria-hidden="true"><path d="M2 20 C 24 2, 56 2, 78 14" fill="none" stroke="#FFC928" stroke-width="3.5" stroke-linecap="round"/></svg>
-      <p class="subtitle">Real missions. Real machines. Real stories.</p>
-      <p class="intro">Discover real spacecraft, missions, images, videos, and the people and science behind humanity's exploration of Mars and the Moon.</p>
-    </div>
+<!-- LIST VIEW: the 3D carousel -->
+<div id="listView">
+  <h1>Explore the <span>Legacy</span></h1>
+  <p class="sub">Meet the machines exploring Mars and the Moon.</p>
 
-    <div class="layout">
-      <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false">Filters</button>
-      <aside class="filters" id="filters" aria-label="Filters">
-        <h2>Filter by</h2>
-        <div class="fgroup" data-group="destination"><h3>Destination</h3></div>
-        <div class="fgroup" data-group="type"><h3>Mission type</h3></div>
-        <div class="fgroup" data-group="media"><h3>Media</h3></div>
-        <div class="fgroup" data-group="status"><h3>Status</h3></div>
-        <button class="reset" id="reset" type="button">Reset filters</button>
-      </aside>
-
-      <div>
-        <div class="toolbar">
-          <input class="search" id="search" type="search" placeholder="Search missions, spacecraft, locations..." aria-label="Search missions">
-          <span class="count" id="count" aria-live="polite"></span>
-        </div>
-        <div class="grid" id="grid"></div>
-      </div>
-    </div>
+  <section class="scene" id="scene" aria-label="Mission carousel">
+    <div class="status show" id="status" role="status">Loading missions…</div>
+    <div class="world" id="world"></div>
+    <a class="btn" id="detailsBtn" href="#">View Details</a>
+    <button class="arrow l" id="prev" aria-label="Previous mission">‹</button>
+    <button class="arrow r" id="next" aria-label="Next mission">›</button>
   </section>
+</div>
 
-  <!-- DETAIL VIEW (filled by script) -->
-  <section id="detailView" hidden></section>
-</main>
+<!-- BIG PICTURE VIEWER (opens when you click a picture) -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-btn lb-close" type="button" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" type="button" id="lbPrev" aria-label="Previous image">&lsaquo;</button>
+  <img id="lbImg" alt="">
+  <button class="lb-btn lb-next" type="button" id="lbNext" aria-label="Next image">&rsaquo;</button>
+  <div class="lb-count" id="lbCount"></div>
+</div>
+
+<!-- DETAIL VIEW (filled by script) -->
+<main id="detailView" hidden></main>
 
 <script>
 /* =========================================================
    EXPLORE PAGE
-   1) Navigation   2) Load data from the backend API   3) Filters + search   4) Cards   5) Detail view
+   A) Navigation   B) Load missions from the backend   C) Build the cards
+   D) Carousel state   E) Place cards on the circle   F) UI for the selected mission
+   G) Animation loop   H) Controls   I) Detail view   J) Routing
    ========================================================= */
 
-// ---------- 1) NAVIGATION: change file names to match your site ----------
-const NAV_PAGES = {
-  home: "../index.html",        // these pages sit in the mainhtml folder, so the home page is one level up
-  start: "index3.html",
-  stories: "stories.html",
-  explore: "explore.html",
-  about: "about.html"
-};
-document.querySelectorAll("[data-nav]").forEach(function (el) {
-  el.addEventListener("click", function () { window.location.href = NAV_PAGES[el.dataset.nav]; });
-});
+/* ========== A. Navigation: change these file names to match your site ========== */
+const NAV_PAGES={home:'../index.html',start:'index3.html',stories:'stories.html',explore:'explore.html',about:'about.html'};
+document.querySelectorAll('[data-nav]').forEach(el=>el.addEventListener('click',()=>{window.location.href=NAV_PAGES[el.dataset.nav];}));
 
-// ---------- 2) DATA: loaded from the backend (backend/server.js) ----------
-/* Change API_BASE to your deployed backend URL when you publish the site.
-   Missions, images, videos and source links all come from the API now. */
-const API_BASE = "http://localhost:3000";
-let missions = [];
-let loadStatus = "loading";            // "loading" | "ready" | "error"
+/* ========== B. Mission data: loaded from the backend (backend/server.js) ==========
+   Change API_BASE to your deployed backend URL when you publish the site.
+   Each mission comes with: name, tagline, destination, image, gallery, videos, model ... */
+const API_BASE='http://localhost:3000';
+let missions=[];
 
-function loadMissions() {
-  loadStatus = "loading"; renderCards();
-  return fetch(API_BASE + "/api/missions")
-    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function (data) { missions = data; loadStatus = "ready"; })
-    .catch(function () { missions = []; loadStatus = "error"; })
-    .then(function () { renderCards(); route(); });
+const listEl=document.getElementById('listView');
+const detailEl=document.getElementById('detailView');
+const scene=document.getElementById('scene');
+const world=document.getElementById('world');
+const statusEl=document.getElementById('status');
+const btn=document.getElementById('detailsBtn');
+const prevBtn=document.getElementById('prev');
+const nextBtn=document.getElementById('next');
+
+function showStatus(html){ statusEl.innerHTML=html; statusEl.classList.add('show'); }
+function hideStatus(){ statusEl.classList.remove('show'); statusEl.innerHTML=''; }
+
+function loadMissions(){
+  showStatus('Loading missions…');
+  return fetch(API_BASE+'/api/missions')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(data=>{ missions=data; buildCards(); })
+    .catch(()=>{
+      missions=[]; buildCards();
+      showStatus('Could not reach the mission server.<br>Make sure the backend is running (npm start), then try again.<br><button class="retry" type="button" id="retry">Try again</button>');
+      document.getElementById('retry').addEventListener('click',loadMissions);
+    })
+    .then(route);
 }
 
-// ---------- 3) FILTERS + SEARCH ----------
-const FILTER_OPTIONS = {
-  destination: ["All", "Mars", "Moon"],
-  type: ["Rover", "Lander", "Orbiter", "Instrument", "Crewed Mission", "Spacecraft"],
-  media: ["Images", "Videos", "Both", "3D Model"],
-  status: ["Active", "Completed", "Ended", "Abandoned"]
-};
-const state = { destination: "All", type: null, media: null, status: null, query: "" };
+/* ========== C. Build the cards (each one is its own element) ========== */
+function esc(s){ const d=document.createElement('div'); d.textContent=String(s==null?'':s); return d.innerHTML; }
 
-const hasImages = function (m) { return !!m.image || m.gallery.length > 0; };
-const hasVideos = function (m) { return m.videos.length > 0; };
-const hasModel = function (m) { return !!m.model; };
-
-function matches(m) {
-  if (state.destination !== "All" && m.destination !== state.destination) return false;
-  if (state.type && m.type !== state.type) return false;
-  if (state.status && m.status !== state.status) return false;
-  if (state.media === "Images" && !hasImages(m)) return false;
-  if (state.media === "Videos" && !hasVideos(m)) return false;
-  if (state.media === "Both" && !(hasImages(m) && hasVideos(m))) return false;
-  if (state.media === "3D Model" && !hasModel(m)) return false;
-  if (state.query) {
-    const text = [m.name, m.destination, m.type, m.mission, m.year, m.location, m.description, m.status].join(" ").toLowerCase();
-    if (text.indexOf(state.query.toLowerCase()) === -1) return false;
-  }
-  return true;
-}
-
-// Build the filter buttons from FILTER_OPTIONS
-const filterBox = document.getElementById("filters");
-Object.keys(FILTER_OPTIONS).forEach(function (group) {
-  const wrap = filterBox.querySelector('[data-group="' + group + '"]');
-  FILTER_OPTIONS[group].forEach(function (value) {
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "fbtn"; b.textContent = value; b.dataset.value = value;
-    b.addEventListener("click", function () {
-      // "All" (destination) always selects; the other groups toggle off when clicked again
-      state[group] = (group === "destination") ? value : (state[group] === value ? null : value);
-      syncButtons(); renderCards();
+let cards=[], N=0, STEP=0;
+function buildCards(){
+  world.innerHTML=''; cards=[]; lastSel=-1;
+  N=missions.length; STEP=N?360/N:0;
+  target=current=0;
+  btn.style.display=N?'':'none';
+  if(!N){ showStatus('No missions found.'); return; }
+  hideStatus();
+  cards=missions.map((m,i)=>{
+    const el=document.createElement('article');
+    el.className='card';
+    el.setAttribute('role','button'); el.tabIndex=0; el.setAttribute('aria-label',m.name);
+    el.innerHTML='<div class="shot">'+
+        (m.image?'<img src="'+esc(m.image)+'" alt="'+esc(m.name)+'" loading="lazy">':'<span class="noimg">Image not available yet</span>')+
+        '<span class="tagdest '+esc(m.destination)+'">'+esc(m.destination)+'</span></div>'+
+      '<div class="info"><h3>'+esc(m.name)+'</h3><p>'+esc(m.tagline||m.description)+'</p></div>';
+    const im=el.querySelector('img');
+    if(im) im.addEventListener('error',()=>{ im.remove(); });   // broken link: fall back to the empty card
+    const open=()=>{ location.hash='mission='+m.id; };
+    el.addEventListener('click',e=>{
+      if(i!==sel()){ e.preventDefault(); goTo(i); }   // side card: rotate it to the front
+      else open();                                     // front card: open the mission
     });
-    wrap.appendChild(b);
-  });
-});
-function syncButtons() {
-  filterBox.querySelectorAll(".fgroup").forEach(function (wrap) {
-    wrap.querySelectorAll(".fbtn").forEach(function (b) {
-      b.classList.toggle("on", state[wrap.dataset.group] === b.dataset.value);
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(i!==sel()) goTo(i); else open(); }
     });
+    world.appendChild(el);
+    return el;
   });
-}
-document.getElementById("search").addEventListener("input", function (e) { state.query = e.target.value.trim(); renderCards(); });
-document.getElementById("reset").addEventListener("click", function () {
-  state.destination = "All"; state.type = state.media = state.status = null; state.query = "";
-  document.getElementById("search").value = ""; syncButtons(); renderCards();
-});
-// Mobile: the Filters button opens/closes the panel
-document.getElementById("filterToggle").addEventListener("click", function (e) {
-  const open = filterBox.classList.toggle("open");
-  e.currentTarget.setAttribute("aria-expanded", open);
-  e.currentTarget.textContent = open ? "Hide filters" : "Filters";
-});
-
-// ---------- 4) MISSION CARDS ----------
-function esc(s) { const d = document.createElement("div"); d.textContent = String(s); return d.innerHTML; }
-
-function imageHTML(src, name) {
-  // Real image from the API if there is one; otherwise a clear placeholder
-  return src ? '<img src="' + esc(src) + '" alt="' + esc(name) + '" loading="lazy">'
-             : '<span class="ph">Image not available yet</span>';
+  layout();
 }
 
-function renderCards() {
-  const grid = document.getElementById("grid");
-  grid.innerHTML = "";
-  if (loadStatus === "loading") {
-    document.getElementById("count").textContent = "";
-    grid.innerHTML = '<p class="empty">Loading missions\u2026</p>';
-    return;
-  }
-  if (loadStatus === "error") {
-    document.getElementById("count").textContent = "";
-    grid.innerHTML = '<p class="empty">Could not reach the mission server.<br>Make sure the backend is running (npm start), then try again.<br><button class="btn" type="button" id="retry" style="margin-top:14px">Try again</button></p>';
-    document.getElementById("retry").addEventListener("click", loadMissions);
-    return;
-  }
-  const list = missions.filter(matches);
-  document.getElementById("count").textContent = list.length + (list.length === 1 ? " mission" : " missions");
-  if (!list.length) {
-    grid.innerHTML = '<p class="empty">No missions match. Try clearing a filter.</p>';
-    return;
-  }
-  list.forEach(function (m, i) {
-    const card = document.createElement("article");
-    card.className = "card " + m.destination;
-    card.style.animationDelay = (i * 0.05) + "s";
-    card.innerHTML =
-      '<div class="thumb">' + imageHTML(m.image, m.name) + '</div>' +
-      '<div class="card-body">' +
-        '<h3>' + esc(m.name) + '</h3>' +
-        '<div class="badges"><span class="dest"><span class="dot"></span>' + esc(m.destination) + '</span>' +
-          '<span class="type">' + esc(m.type) + '</span></div>' +
-        '<div class="meta">' + esc(m.mission) + ' \u2022 ' + esc(m.year) + '</div>' +
-        '<div class="loc">' + esc(m.location) + '</div>' +
-        '<p class="desc">' + esc(m.description) + '</p>' +
-        '<div class="media"><span class="' + (hasImages(m) ? "" : "off") + '">\uD83D\uDCF7 Images</span>' +
-          '<span class="' + (hasVideos(m) ? "" : "off") + '">\u25B6 Videos</span>' +
-          '<span class="' + (hasModel(m) ? "" : "off") + '">\uD83E\uDDCA 3D</span></div>' +
-        '<button class="btn" type="button">View Details </button>' +
-      '</div>';
-    card.querySelector(".btn").addEventListener("click", function () { location.hash = "mission=" + m.id; });
-    grid.appendChild(card);
+/* ========== D. Carousel state ========== */
+let target=0;        // the card we are rotating TO (can grow past N, it just keeps counting)
+let current=0;       // the card position being drawn right now (eases toward target)
+let paused=false, R=300, lastSel=-1;
+const mod=(a,n)=>((a%n)+n)%n;
+const sel=()=>N?mod(Math.round(target),N):0;
+
+function goTo(i){            // rotate the short way round
+  const d=mod(i-sel()+N/2,N)-N/2;
+  target+=d; restartTimer();
+}
+const step=d=>{ if(!N)return; target+=d; restartTimer(); };
+
+/* ========== E. Place every card on the circle, every frame ========== */
+function draw(){
+  cards.forEach((el,i)=>{
+    const off=mod(i-current+N/2,N)-N/2;     // distance from the front, in cards
+    const phi=off*STEP;                     // angle around the orbit, in degrees
+    const cos=Math.cos(phi*Math.PI/180);
+    const z=R*cos;                          // positive = near the viewer
+    const grow=1+0.2*Math.exp(-Math.pow(phi/18,2));   // front card gets bigger
+    el.style.transform='rotateY('+phi+'deg) translateZ('+R+'px) rotateY('+(-phi)+'deg) scale('+grow+')';
+    // side cards get darker instead of see-through, so the text of cards behind never shows through
+    el.style.filter='brightness('+(0.38+0.62*Math.pow((cos+1)/2,1.6)).toFixed(3)+')';
+    el.style.zIndex=Math.round(z+R);
+    el.style.pointerEvents=cos<-0.2?'none':'auto';
   });
 }
 
-// ---------- 5) DETAIL VIEW (opens with #mission=id, so the browser Back button works) ----------
-function listHTML(items, todo) {
-  return items.length ? "<ul>" + items.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>"
-                      : '<p class="todo">' + todo + "</p>";
+/* ========== F. UI that depends on the selected mission ========== */
+function updateUI(){
+  const s=sel(); if(s===lastSel)return; lastSel=s;
+  btn.href='#mission='+missions[s].id;
+  cards.forEach((c,i)=>c.classList.toggle('active',i===s));
 }
 
-function renderDetail(m) {
-  const gallery = m.gallery.length
-    ? m.gallery.map(function (u) { return '<img src="' + esc(u) + '" alt="' + esc(m.name) + ' image" loading="lazy">'; }).join("")
+/* keep the flat button sitting on the bottom of the front card */
+function placeBtn(){
+  const r=cards[sel()].getBoundingClientRect(), s=scene.getBoundingClientRect();
+  btn.style.left=Math.round(r.left+r.width/2-s.left-btn.offsetWidth/2)+'px';
+  btn.style.top=Math.round(r.bottom-s.top-btn.offsetHeight-14)+'px';
+  btn.style.opacity=Math.max(0,1-Math.abs(target-current)*2);   // fades while the carousel is turning
+}
+
+/* ========== G. Animation loop (smooth easing) ========== */
+let last=performance.now();
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  if(N&&!listEl.hidden){
+    current+=(target-current)*(1-Math.exp(-dt*4));      // ease toward the target
+    draw(); updateUI(); placeBtn();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ========== H. Sizing, autoplay, controls ========== */
+function layout(){
+  const w=cards[0]&&cards[0].offsetWidth;                // needs the carousel to be visible
+  if(!w)return;
+  // orbit radius follows card size, and grows when there are many missions so cards never overlap
+  R=w*Math.max(1.9,0.62/Math.sin(Math.PI/Math.max(N,2)));
+}
+addEventListener('resize',layout);
+
+let timer;
+function restartTimer(){
+  clearInterval(timer);
+  if(!reduce) timer=setInterval(()=>{ if(!paused&&N&&!listEl.hidden) target+=1; },5000);   // slow automatic rotation
+}
+scene.addEventListener('mouseenter',()=>paused=true);      // pause while hovering
+scene.addEventListener('mouseleave',()=>paused=false);
+scene.addEventListener('focusin',()=>paused=true);
+scene.addEventListener('focusout',()=>paused=false);
+prevBtn.onclick=()=>step(-1);
+nextBtn.onclick=()=>step(1);
+addEventListener('keydown',e=>{
+  if(listEl.hidden||lb.classList.contains('open'))return;
+  if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);
+});
+let sx=null;                                            // swipe on touch screens
+scene.addEventListener('pointerdown',e=>sx=e.clientX);
+scene.addEventListener('pointerup',e=>{ if(sx!==null&&Math.abs(e.clientX-sx)>50)step(e.clientX<sx?1:-1); sx=null; });
+
+/* ========== I. Detail view (opens with #mission=id, so the browser Back button works) ========== */
+function listHTML(items,todo){
+  return items&&items.length?'<ul>'+items.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':'<p class="todo">'+todo+'</p>';
+}
+
+function renderDetail(m){
+  const gallery=m.gallery.length
+    ? m.gallery.map((u,i)=>'<img src="'+esc(u)+'" alt="'+esc(m.name)+' image" loading="lazy" data-i="'+i+'" tabindex="0">').join('')
     : '<div class="ph">No images available yet</div>';
-  const videos = m.videos.length
-    ? '<div class="videos">' + m.videos.map(function (v) {
-        return '<figure><video controls preload="none"' + (v.poster ? ' poster="' + esc(v.poster) + '"' : '') + ' src="' + esc(v.url) + '"></video>' +
-               (v.title ? "<figcaption>" + esc(v.title) + "</figcaption>" : "") + "</figure>";
-      }).join("") + "</div>"
+  const videos=m.videos.length
+    ? '<div class="videos">'+m.videos.map(v=>'<figure><video controls preload="none"'+(v.poster?' poster="'+esc(v.poster)+'"':'')+' src="'+esc(v.url)+'"></video>'+(v.title?'<figcaption>'+esc(v.title)+'</figcaption>':'')+'</figure>').join('')+'</div>'
     : '<p class="todo">No video available yet.</p>';
-  const source = m.sourceUrl
-    ? '<a href="' + esc(m.sourceUrl) + '" target="_blank" rel="noopener">' + esc(m.source) + " source page</a>"
-    : '<span class="todo">Source: ' + esc(m.source) + '</span>';
-  const related = missions.filter(function (x) { return x.destination === m.destination && x.id !== m.id; }).slice(0, 4)
-    .map(function (x) { return '<button class="chip" type="button" data-id="' + esc(x.id) + '">' + esc(x.name) + "</button>"; }).join("");
+  const source=m.sourceUrl
+    ? '<a href="'+esc(m.sourceUrl)+'" target="_blank" rel="noopener">'+esc(m.source)+' source page</a>'
+    : '<span class="todo">Source: '+esc(m.source)+'</span>';
+  const related=missions.filter(x=>x.destination===m.destination&&x.id!==m.id).slice(0,4)
+    .map(x=>'<button class="chip" type="button" data-id="'+esc(x.id)+'">'+esc(x.name)+'</button>').join('');
+  const fact=(k,v)=>'<div class="fact"><small>'+k+'</small><span>'+esc(v)+'</span></div>';
+
   // 3D model: "model" is either a full https:// link, or a file name inside backend/models (e.g. "spirit.glb")
-  const modelSrc = !m.model ? "" : (/^https?:\/\//i.test(m.model) ? m.model : API_BASE + "/models/" + m.model.replace(/^\/?models\//, ""));
-  const modelPanel = modelSrc
-    ? '<div class="panel"><h2>3D model</h2><div class="model-box"><model-viewer src="' + esc(modelSrc) + '" alt="3D model of ' + esc(m.name) + '" camera-controls auto-rotate touch-action="pan-y" shadow-intensity="1" loading="lazy"></model-viewer></div>' +
-      '<p class="model-hint">Drag to rotate \u2022 scroll or pinch to zoom' + (m.modelCredit ? ' \u2022 ' + esc(m.modelCredit) : '') + '</p></div>'
+  const modelSrc=!m.model?'':(/^https?:\/\//i.test(m.model)?m.model:API_BASE+'/models/'+m.model.replace(/^\/?models\//,''));
+  const modelPanel=modelSrc
+    ? '<div class="panel"><h2>3D model</h2><div class="model-box"><model-viewer src="'+esc(modelSrc)+'" alt="3D model of '+esc(m.name)+'" camera-controls auto-rotate touch-action="pan-y" shadow-intensity="1" loading="lazy"></model-viewer></div>'+
+      '<p class="model-hint">Drag to rotate • scroll or pinch to zoom'+(m.modelCredit?' • '+esc(m.modelCredit):'')+'</p></div>'
     : '';
-  const fact = function (k, v) { return '<div class="fact"><small>' + k + "</small><span>" + esc(v) + "</span></div>"; };
 
-  const view = document.getElementById("detailView");
-  view.innerHTML =
-    '<div class="detail ' + esc(m.destination) + '">' +
-    '<button class="back" type="button" id="backBtn">\u2190 Back to Explore</button>' +
-    '<div class="badges"><span class="dest"><span class="dot"></span>' + esc(m.destination) + '</span><span class="type">' + esc(m.type) + "</span></div>" +
-    "<h1>" + esc(m.name) + "</h1>" +
-    '<p class="lead">' + esc(m.description) + "</p>" +
-    '<div class="facts">' + fact("Mission", m.mission) + fact("Launch date", m.launch) + fact("Arrival date", m.arrival) +
-      fact("Location", m.location) + fact("Type", m.type) + fact("Status", m.status) + "</div>" +
-    '<div class="panel"><h2>Spacecraft information</h2><p>' + esc(m.spacecraft) + "</p></div>" +
-    '<div class="panel"><h2>Scientific objectives</h2>' + listHTML(m.objectives, "Objectives coming soon.") + "</div>" +
-    '<div class="panel"><h2>Key discoveries</h2>' + listHTML(m.discoveries, "Key discoveries coming soon.") + "</div>" +
-    modelPanel +
-    '<div class="panel"><h2>Images</h2><div class="gallery">' + gallery + "</div></div>" +
-    '<div class="panel"><h2>Videos</h2>' + videos + "</div>" +
-    '<div class="panel"><h2>Source</h2><p>' + source + "</p></div>" +
-    '<div class="panel"><h2>Related missions</h2><div class="chips">' + related + "</div></div>" +
-    "</div>";
+  detailEl.innerHTML=
+    '<div class="detail '+esc(m.destination)+'">'+
+    '<button class="back" type="button" id="backBtn">← Back to Explore</button>'+
+    '<div class="badges"><span class="dest"><span class="dot"></span>'+esc(m.destination)+'</span><span class="type">'+esc(m.type)+'</span></div>'+
+    '<h1>'+esc(m.name)+'</h1>'+
+    '<p class="lead">'+esc(m.description)+'</p>'+
+    '<div class="facts">'+fact('Mission',m.mission)+fact('Launch date',m.launch)+fact('Arrival date',m.arrival)+fact('Location',m.location)+fact('Type',m.type)+fact('Status',m.status)+'</div>'+
+    '<div class="panel"><h2>Spacecraft information</h2><p>'+esc(m.spacecraft)+'</p></div>'+
+    '<div class="panel"><h2>Scientific objectives</h2>'+listHTML(m.objectives,'Objectives coming soon.')+'</div>'+
+    '<div class="panel"><h2>Key discoveries</h2>'+listHTML(m.discoveries,'Key discoveries coming soon.')+'</div>'+
+    modelPanel+
+    '<div class="panel"><h2>Images</h2><div class="gallery">'+gallery+'</div></div>'+
+    '<div class="panel"><h2>Videos</h2>'+videos+'</div>'+
+    '<div class="panel"><h2>Source</h2><p>'+source+'</p></div>'+
+    '<div class="panel"><h2>Related missions</h2><div class="chips">'+related+'</div></div>'+
+    '</div>';
 
-  document.getElementById("backBtn").addEventListener("click", function () { location.hash = ""; });
-  const mv = view.querySelector("model-viewer");
-  if (mv) mv.addEventListener("error", function () {
-    mv.parentNode.innerHTML = '<div class="model-fail">Could not load this 3D model.<br>Check the file name in the model field.</div>';
+  document.getElementById('backBtn').addEventListener('click',()=>{ location.hash=''; });
+  const mv=detailEl.querySelector('model-viewer');
+  if(mv) mv.addEventListener('error',()=>{
+    mv.parentNode.innerHTML='<div class="model-fail">Could not load this 3D model.<br>Check the file name in the model field.</div>';
   });
-  view.querySelectorAll(".chip").forEach(function (c) {
-    c.addEventListener("click", function () { location.hash = "mission=" + c.dataset.id; });
+  detailEl.querySelectorAll('.gallery img').forEach(im=>{
+    im.addEventListener('click',()=>openLightbox(m.gallery,+im.dataset.i,m.name));
+    im.addEventListener('keydown',e=>{ if(e.key==='Enter'){ openLightbox(m.gallery,+im.dataset.i,m.name); } });
   });
+  detailEl.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{ location.hash='mission='+c.dataset.id; }));
 }
 
-// Show the list or a mission, depending on the URL hash
-function route() {
-  const id = location.hash.replace("#mission=", "");
-  const m = missions.find(function (x) { return x.id === id; });
-  document.getElementById("listView").hidden = !!m;
-  document.getElementById("detailView").hidden = !m;
-  if (m) { renderDetail(m); window.scrollTo(0, 0); }
+/* ========== I2. Big picture viewer (lightbox) ========== */
+const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCount=document.getElementById('lbCount');
+let lbList=[], lbIdx=0, lbName='';
+function lbShow(){
+  lbImg.src=lbList[lbIdx]; lbImg.alt=lbName+' image '+(lbIdx+1);
+  lbCount.textContent=(lbIdx+1)+' / '+lbList.length;
+  const many=lbList.length>1;
+  document.getElementById('lbPrev').style.display=many?'':'none';
+  document.getElementById('lbNext').style.display=many?'':'none';
 }
-window.addEventListener("hashchange", route);
+function openLightbox(list,i,name){ lbList=list; lbIdx=i; lbName=name; lbShow(); lb.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLightbox(){ lb.classList.remove('open'); lbImg.removeAttribute('src'); document.body.style.overflow=''; }
+function lbStep(d){ lbIdx=mod(lbIdx+d,lbList.length); lbShow(); }
+document.getElementById('lbClose').onclick=closeLightbox;
+document.getElementById('lbPrev').onclick=()=>lbStep(-1);
+document.getElementById('lbNext').onclick=()=>lbStep(1);
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLightbox(); });   // click the dark area to close
+addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowLeft')lbStep(-1);
+  if(e.key==='ArrowRight')lbStep(1);
+});
 
-syncButtons();
-loadMissions();
+/* ========== J. Routing: show the carousel or one mission, depending on the URL hash ========== */
+function route(){
+  const id=location.hash.replace('#mission=','');
+  const m=missions.find(x=>x.id===id);
+  closeLightbox();
+  document.body.classList.toggle('list-mode',!m);   // list page = fits the screen, detail page = scrolls
+  listEl.hidden=!!m;
+  detailEl.hidden=!m;
+  if(m){ renderDetail(m); window.scrollTo(0,0); }
+  else {
+    layout();
+    // coming back from a detail page: rotate to the mission you just viewed
+    const i=missions.findIndex(x=>x.id===lastViewed);
+    if(i>=0&&N){ target=current=Math.round(target)+(mod(i-sel()+N/2,N)-N/2); }
+  }
+  lastViewed=m?m.id:lastViewed;
+}
+let lastViewed=null;
+addEventListener('hashchange',route);
+
+restartTimer(); requestAnimationFrame(frame); loadMissions();
 </script>
 </body>
 </html>

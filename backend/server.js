@@ -102,6 +102,12 @@ async function refreshMedia(force) {
   refreshing = false;
 }
 
+// ---------- short one-line text for the carousel cards ----------
+function shortLine(text) {
+  const first = String(text || "").split(/(?<=[.!?])\s/)[0];
+  return first.length > 90 ? first.slice(0, 87).trim() + "..." : first;
+}
+
 // ---------- build the response for one mission ----------
 function build(m) {
   const over = (readJSON(OVERRIDES_FILE, {}))[m.id] || {};
@@ -124,6 +130,7 @@ function build(m) {
     gallery: gallery,
     videos: videos,
     sourceUrl: sourceUrl,
+    tagline: m.tagline || shortLine(m.description),
     model: over.model || m.model || "",
     modelCredit: over.modelCredit || m.modelCredit || "",
     discoveries: (over.discoveries && over.discoveries.length) ? over.discoveries : m.discoveries
