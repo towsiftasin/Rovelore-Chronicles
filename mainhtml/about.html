@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rovelore Chronicles — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   About page – same look as Stories / Explore
+   (header copied from the home page, same background image)
+   ========================================================= */
+:root {
+  --bg: #0A1230;
+  --blue: #3AA9E0;
+  --yellow: #FFC928;
+  --text: #ffffff;
+  --text-soft: #c9d3f0;
+  --mars: #ff8a5c;
+  --moon: #8fc8ff;
+  --line: rgba(255, 255, 255, 0.16);
+  --heading: "Baloo 2", "Trebuchet MS", sans-serif;
+  --hand: "Patrick Hand", "Comic Sans MS", cursive;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* BACKGROUND IMAGE: same picture as Stories and Explore (change the file name here if needed) */
+body { font-family: var(--heading); color: var(--text); background: var(--bg); line-height: 1.5;
+  min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }   /* the whole page scrolls */
+/* the picture stays still behind the page while you scroll */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  /* dark shade on top of the picture (same as the Explore page) so the writing stays easy to read */
+  background: linear-gradient(rgba(2,4,14,.35), rgba(2,4,14,.65)), url("../images/2nd.png") center / cover no-repeat; }
+
+/* ---- Header: identical to the home page ---- */
+.topbar { display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px 0; flex-wrap: wrap; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #FFFFFF; }
+.mainnav { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.nav-link { background: none; border: none; color: #FFFFFF; font-family: inherit; font-size: 1rem; font-weight: 600;
+  cursor: pointer; padding: 4px 0; position: relative; }
+.nav-link.active { color: #FFC928; }
+.nav-link.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+  border-radius: 2px; background: #FFC928; }
+.nav-link:hover:not(.active) { color: #FFC928; opacity: 0.85; }
+.nav-link:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (max-width: 600px) { .mainnav { font-size: 0.95rem; } }
+@media (max-width: 640px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 20px 0; }
+  .mainnav { gap: 12px; }
+}
+
+main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px 40px; flex: 1; }
+
+/* ---- Title ---- */
+.hero { text-align: center; padding: 22px 0 20px; }
+.hero-title { font-size: clamp(40px, 7vw, 68px); font-weight: 800; line-height: 1.1;
+  display: inline-flex; align-items: flex-start; gap: 8px; }
+.hero-title svg { margin-top: 6px; animation: spin 8s linear infinite; }
+@keyframes spin { 50% { transform: rotate(20deg) scale(1.15); } }
+.swoop { display: block; margin: 0 auto; }
+.subtitle { margin-top: 6px; font-family: var(--hand); font-size: clamp(20px, 3vw, 28px); color: var(--text-soft); }
+
+/* ---- Scrolling box ---- */
+.about-box { padding: 8px 22px 0; display: flex; flex-direction: column; gap: 34px; }   /* no box: the writing sits straight on the background */
+
+.panel { padding: 0 4px; text-shadow: 0 2px 10px rgba(0, 0, 0, .85);
+  opacity: 0; animation: rise .6s ease forwards; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.panel h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; line-height: 1.2; }
+.panel h2::after { content: ""; display: block; width: 54px; height: 4px; margin: 6px 0 12px; border-radius: 4px; background: var(--yellow); }
+.panel p { font-family: var(--hand); font-size: 21px; line-height: 1.45; color: var(--text-soft); }
+.panel p + p { margin-top: 12px; }
+.panel.intro .challenge { margin-top: 12px; font-family: var(--heading); font-weight: 600; font-size: 0.95rem; color: var(--moon); }
+
+/* small cards inside a panel */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+.mini { padding: 4px 4px 4px 0; }
+.mini h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.25; }
+.mini h3 i { flex-shrink: 0; width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--yellow) 60%, #c99500); }
+.mini p { margin-top: 6px; font-size: 19px; }
+
+.closing { text-align: center; padding: 10px 0 6px; }
+.closing .line { font-size: 1.15rem; font-weight: 700; color: #fff; }
+.closing .tag { margin-top: 4px; font-family: var(--hand); font-size: 22px; color: var(--yellow); }
+.closing .small { margin-top: 12px; font-family: var(--hand); font-size: 17px; color: var(--text-soft); }
+
+@media (max-width: 640px) {
+  main { padding: 0 12px 28px; }
+  .about-box { padding: 4px 8px 0; gap: 28px; }
+  .panel p { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+
+  <!-- HEADER (same as the home page; "About" is the active link) -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 48 40" width="36" height="30">
+          <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
+          <circle cx="22" cy="20" r="10" fill="#3AA9E0"/>
+          <circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity="0.35"/>
+          <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
+          <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+        </svg>
+      </span>
+      <span class="brand-name">Rovelore Chronicles</span>
+    </div>
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="nav-link" data-nav="home">Home</button>
+      <button class="nav-link" data-nav="start">Start the Journey</button>
+      <button class="nav-link" data-nav="stories">Stories</button>
+      <button class="nav-link" data-nav="explore">Explore</button>
+      <button class="nav-link active" data-nav="about" aria-current="page">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="hero-title">About
+        <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true">
+          <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#FFC928"/>
+        </svg>
+      </h1>
+      <svg class="swoop" viewBox="0 0 80 24" width="90" height="20" aria-hidden="true">
+        <path d="M2 20 C 24 2, 56 2, 78 14" fill="none" stroke="#FFC928" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <p class="subtitle">Every Explorer Has a Story Worth Remembering.</p>
+    </section>
+
+    <!-- Only this box scrolls -->
+    <section class="about-box" aria-label="About Rovelore Chronicles">
+
+      <article class="panel intro" style="animation-delay:.05s">
+        <h2>Rovelore Chronicles</h2>
+        <p>Rovelore Chronicles is an interactive educational web application developed for the NASA Space Apps Challenge 2026, inspired by the challenge &ldquo;Abandoned but Not Forgotten: Storytelling about NASA's Discarded Equipment on the Moon and Mars.&rdquo;</p>
+        <p>Our project brings the stories of abandoned and forgotten space exploration equipment to life through interactive storytelling. From Mars rovers to lunar instruments, every piece of equipment has a unique journey filled with scientific discoveries, engineering achievements, and challenges.</p>
+        <p>Through an engaging and child-friendly experience, Rovelore Chronicles allows young explorers to discover these machines, learn about their scientific contributions, and understand why they were left behind.</p>
+      </article>
+
+      <article class="panel" style="animation-delay:.12s">
+        <h2>What Can You Explore?</h2>
+        <div class="cards">
+          <div class="mini"><h3><i></i>Interactive Planet Exploration</h3><p>Discover Mars and the Moon through interactive environments filled with exploration markers.</p></div>
+          <div class="mini"><h3><i></i>Forgotten Equipment Stories</h3><p>Select different abandoned NASA equipment and uncover the stories behind their missions.</p></div>
+          <div class="mini"><h3><i></i>Scientific Discoveries</h3><p>Learn about their hardware, objectives, achievements, and contributions to space exploration.</p></div>
+          <div class="mini"><h3><i></i>Educational Storytelling</h3><p>Understand complex space exploration missions through simple, engaging, and child-friendly explanations.</p></div>
+        </div>
+      </article>
+
+      <article class="panel" style="animation-delay:.19s">
+        <h2>Our Mission</h2>
+        <p>Our mission is to make space exploration history more accessible, interesting, and meaningful for young learners.</p>
+        <p>Instead of presenting forgotten equipment as outdated machines, we want children to see them as explorers that helped humanity take another step toward understanding the universe.</p>
+        <p>By combining interactive technology with educational storytelling, we hope to turn curiosity into knowledge and knowledge into inspiration.</p>
+      </article>
+
+      <article class="panel" style="animation-delay:.26s">
+        <h2>Our Vision</h2>
+        <p>We believe that an explorer does not become insignificant simply because its mission has ended.</p>
+        <p>The machines left behind on Mars and the Moon represent years of human innovation, scientific ambition, and curiosity. Although their missions may be over, their contributions remain an important part of space exploration history.</p>
+        <p>Our vision is to transform these forgotten machines into meaningful stories that preserve their scientific legacy, connect younger generations with the history of space exploration, and inspire future scientists, engineers, and explorers around the world.</p>
+      </article>
+
+      <article class="panel" style="animation-delay:.33s">
+        <h2>Beyond the Web Experience</h2>
+        <p>Rovelore Chronicles has the potential to become more than an educational website. We envision using this platform as a bridge between space exploration history and interactive learning experiences worldwide.</p>
+        <div class="cards">
+          <div class="mini"><h3><i></i>Planetarium Integration</h3><p>Introduce Rovelore Chronicles into planetariums and educational institutions, allowing children to experience the stories of forgotten space explorers through immersive presentations and audio storytelling.</p></div>
+          <div class="mini"><h3><i></i>Global Reach</h3><p>Make these stories accessible to children worldwide, connecting students from different countries with NASA's space exploration history through an engaging educational platform.</p></div>
+          <div class="mini"><h3><i></i>Multimedia Learning Experiences</h3><p>Expand the platform through audio, visual presentations, and interactive content to help children connect more deeply with the journeys, discoveries, and scientific contributions of abandoned space equipment.</p></div>
+        </div>
+        <p style="margin-top:16px">Through these possibilities, we hope to turn forgotten space exploration history into a shared learning experience that reaches beyond borders and inspires the next generation of explorers.</p>
+      </article>
+
+      <footer class="closing">
+        <div class="line">Rovelore Chronicles &mdash; Exploring the stories left behind on other worlds.</div>
+        <div class="tag">Forgotten by time, Remembered through discovery.</div>
+        <div class="small">&copy; 2026 Rovelore Chronicles. All Rights Reserved.<br>Developed by Team Event Horizon.</div>
+      </footer>
+
+    </section>
+  </main>
+
+<script>
+// Header navigation – same routes as the Stories page
+document.addEventListener('DOMContentLoaded', () => {
+  const routes = {
+    home: '../index.html',
+    start: 'index3.html',
+    stories: 'stories.html',
+    explore: 'explore.html',
+    about: 'about.html'
+  };
+  document.querySelectorAll('[data-nav]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const dest = routes[el.getAttribute('data-nav')];
+      if (dest) window.location.href = dest;
+    });
+  });
+});
+</script>
+</body>
+</html>

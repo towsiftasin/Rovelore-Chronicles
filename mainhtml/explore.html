@@ -30,10 +30,13 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 button,a{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.arrow:focus:not(:focus-visible),.card:focus:not(:focus-visible),.back:focus:not(:focus-visible){outline:none}
+.arrow:focus,.card:focus{outline:none}   /* no yellow ring on the round arrows or cards */
+.arrow:focus-visible,.card:focus-visible{outline:none}
 
 /* ========== 2. Header ========== */
 header,h1,.sub,.scene{position:relative;z-index:1}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:clamp(10px,2.5vh,24px) 48px clamp(6px,1.5vh,14px)}
+header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 48px 0}   /* same as the Stories page */
 .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
 .brand-name{font-size:1.25rem;font-weight:700;color:#fff}
 .mainnav{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
@@ -41,8 +44,11 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;fl
 .nav-link.active{color:#FFC928}
 .nav-link.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;border-radius:2px;background:#FFC928}
 .nav-link:hover:not(.active){color:#FFC928;opacity:.85}
-@media(max-width:760px){header{flex-direction:column;align-items:flex-start;padding:20px 24px 12px}.mainnav{gap:16px;font-size:.95rem}}
-h1{text-align:center;font-size:clamp(1.5rem,3.6vw,2.3rem);margin:6px 0 2px;letter-spacing:-.02em;text-shadow:0 2px 12px rgba(0,0,0,.75)}
+/* phone layout: same as the home page */
+@media(max-width:600px){.mainnav{font-size:.95rem}}
+@media(max-width:640px){header{flex-direction:column;align-items:flex-start;gap:12px;padding:16px 20px 0}.mainnav{gap:12px}}
+.nav-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+h1{text-align:center;font-size:clamp(1.5rem,3.6vw,2.3rem);margin:clamp(8px,2vh,22px) 0 2px;letter-spacing:-.02em;text-shadow:0 2px 12px rgba(0,0,0,.75)}
 h1 span{color:var(--gold)}
 .sub{text-align:center;color:var(--text);text-shadow:0 2px 10px rgba(0,0,0,.8);margin:0 4vw;font-family:var(--hand);font-size:clamp(1.2rem,2.4vw,1.7rem)}
 
@@ -111,6 +117,14 @@ body.list-mode{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-dire
 .panel ul{padding-left:22px;margin:0}
 .panel a{color:var(--yellow)}
 .todo{font-style:italic;opacity:.7}
+.panel p+p{margin-top:10px}
+.hw{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.hw div{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.hw b{display:block;font-family:var(--heading);font-weight:700;font-size:16px;color:#fff;margin-bottom:3px}
+.hw span{font-family:var(--hand);font-size:18px;color:var(--text-soft);line-height:1.3}
+.panel.warn li::marker{color:var(--mars)}
+.panel.end{border-color:rgba(255,201,40,.35)}
+.panel.legacy{background:linear-gradient(135deg,rgba(14,21,56,.85),rgba(40,28,60,.8));border-color:rgba(255,201,40,.45)}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .gallery img,.gallery .ph{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px}
 .gallery .ph{display:grid;place-items:center;text-align:center;padding:8px;font-family:var(--hand);color:var(--text-soft);border:2px dashed var(--line);background:rgba(255,255,255,.03)}
@@ -153,11 +167,12 @@ body.list-mode{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-dire
 <body class="list-mode">
 <header class="topbar">
   <div class="brand" data-nav="home">
-    <svg viewBox="0 0 48 40" width="36" height="30" aria-hidden="true">
+    <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 48 40" width="36" height="30">
       <ellipse cx="22" cy="22" rx="19" ry="6.5" fill="none" stroke="#FFC928" stroke-width="2.5" transform="rotate(-18 22 22)"/>
       <circle cx="22" cy="20" r="10" fill="#3AA9E0"/><circle cx="18" cy="16" r="2.6" fill="#0A1230" opacity=".35"/>
       <path d="M40 6 L41.4 9.6 L45 11 L41.4 12.4 L40 16 L38.6 12.4 L35 11 L38.6 9.6 Z" fill="#FFC928"/>
-    </svg>
+      <path d="M6 26 L6.8 28 L8.8 28.8 L6.8 29.6 L6 31.6 L5.2 29.6 L3.2 28.8 L5.2 28 Z" fill="#FFC928"/>
+    </svg></span>
     <span class="brand-name">Rovelore Chronicles</span>
   </div>
   <nav class="mainnav" aria-label="Main navigation">
@@ -375,7 +390,14 @@ function renderDetail(m){
     : '<span class="todo">Source: '+esc(m.source)+'</span>';
   const related=missions.filter(x=>x.destination===m.destination&&x.id!==m.id).slice(0,4)
     .map(x=>'<button class="chip" type="button" data-id="'+esc(x.id)+'">'+esc(x.name)+'</button>').join('');
-  const fact=(k,v)=>'<div class="fact"><small>'+k+'</small><span>'+esc(v)+'</span></div>';
+  const fact=(k,v)=>v?'<div class="fact"><small>'+k+'</small><span>'+esc(v)+'</span></div>':'';
+  const has=a=>a&&a.length;
+  const hwPanel=has(m.hardware)
+    ? '<div class="panel"><h2>Hardware &amp; technology</h2><div class="hw">'+m.hardware.map(h=>'<div><b>'+esc(h.name)+'</b><span>'+esc(h.text)+'</span></div>').join('')+'</div></div>':'';
+  const challengePanel=has(m.challenges)
+    ? '<div class="panel warn"><h2>Challenges</h2>'+listHTML(m.challenges,'')+'</div>':'';
+  const endPanel=m.missionEnd?'<div class="panel end"><h2>Mission end</h2><p>'+esc(m.missionEnd)+'</p>'+(has(m.missionEndList)?'<ul style="margin-top:10px">'+m.missionEndList.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>':'')+(m.missionEndAfter?'<p>'+esc(m.missionEndAfter)+'</p>':'')+'</div>':'';
+  const legacyPanel=m.legacy?'<div class="panel legacy"><h2>Legacy &amp; impact</h2><p>'+esc(m.legacy)+'</p></div>':'';
 
   // 3D model: "model" is either a full https:// link, or a file name inside backend/models (e.g. "spirit.glb")
   const modelSrc=!m.model?'':(/^https?:\/\//i.test(m.model)?m.model:API_BASE+'/models/'+m.model.replace(/^\/?models\//,''));
@@ -390,10 +412,12 @@ function renderDetail(m){
     '<div class="badges"><span class="dest"><span class="dot"></span>'+esc(m.destination)+'</span><span class="type">'+esc(m.type)+'</span></div>'+
     '<h1>'+esc(m.name)+'</h1>'+
     '<p class="lead">'+esc(m.description)+'</p>'+
-    '<div class="facts">'+fact('Mission',m.mission)+fact('Launch date',m.launch)+fact('Arrival date',m.arrival)+fact('Location',m.location)+fact('Type',m.type)+fact('Status',m.status)+'</div>'+
-    '<div class="panel"><h2>Spacecraft information</h2><p>'+esc(m.spacecraft)+'</p></div>'+
-    '<div class="panel"><h2>Scientific objectives</h2>'+listHTML(m.objectives,'Objectives coming soon.')+'</div>'+
-    '<div class="panel"><h2>Key discoveries</h2>'+listHTML(m.discoveries,'Key discoveries coming soon.')+'</div>'+
+    '<div class="facts">'+fact('Mission',m.mission)+fact(m.launchLabel||'Launch date',m.launch)+fact(m.arrivalLabel||'Landing date',m.arrival)+fact('Launch vehicle',m.launchVehicle)+fact('Launch site',m.launchSite)+fact(m.landingLabel||'Landing site',m.landingSite||m.location)+fact('Type',m.type)+fact('Status',m.status)+'</div>'+
+    '<div class="panel"><h2>'+(m.overview?'Equipment overview':'Spacecraft information')+'</h2><p>'+esc(m.overview||m.spacecraft)+'</p></div>'+
+    hwPanel+
+    '<div class="panel"><h2>Mission objective</h2>'+listHTML(m.objectives,'Objectives coming soon.')+'</div>'+
+    '<div class="panel"><h2>Discoveries &amp; achievements</h2>'+listHTML(m.discoveries,'Key discoveries coming soon.')+'</div>'+
+    challengePanel+endPanel+legacyPanel+
     modelPanel+
     '<div class="panel"><h2>Images</h2><div class="gallery">'+gallery+'</div></div>'+
     '<div class="panel"><h2>Videos</h2>'+videos+'</div>'+
@@ -442,6 +466,7 @@ function route(){
   const id=location.hash.replace('#mission=','');
   const m=missions.find(x=>x.id===id);
   closeLightbox();
+  if(document.activeElement&&document.activeElement!==document.body) document.activeElement.blur();   // nothing stays highlighted after Back
   document.body.classList.toggle('list-mode',!m);   // list page = fits the screen, detail page = scrolls
   listEl.hidden=!!m;
   detailEl.hidden=!m;

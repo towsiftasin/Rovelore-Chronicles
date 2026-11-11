@@ -11,19 +11,66 @@
     "source": "NASA",
     "sourceUrl": "",
     "launch": "Dec 4, 1996",
-    "arrival": "Jul 4, 1997 (Pathfinder landing)",
+    "arrival": "Jul 4, 1997",
     "description": "Explore the story of Sojourner, the first successful Mars rover, which explored the surface of Ares Vallis and studied Martian rocks and soil.",
     "spacecraft": "Six-wheeled microrover carried to the surface by the Pathfinder lander.",
     "objectives": [
-      "Demonstrate a low-cost way to reach Mars and operate a small rover.",
-      "Study Martian rocks and soil."
+      "Demonstrate robotic mobility on Mars while investigating the composition of Martian rocks and soil.",
+      "Test new technologies for future planetary exploration."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Analyzed rocks such as Barnacle Bill and Yogi.",
+      "Investigated Martian soil composition.",
+      "Captured over 550 images.",
+      "First successful wheeled rover on another planet.",
+      "Operated for approximately 83 days instead of its planned 7 days."
+    ],
     "tagline": "The first rover to drive on Mars, in 1997.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Sojourner rover Mars Pathfinder",
-    "nasaVideoQuery": "Mars Pathfinder Sojourner"
+    "nasaVideoQuery": "Mars Pathfinder Sojourner",
+    "overview": "Sojourner was NASA's first successful Mars rover, designed to explore the Martian surface, investigate rocks and soil, and collect scientific data.",
+    "launchVehicle": "Delta II 7925",
+    "landingSite": "Ares Vallis, Mars",
+    "hardware": [
+      {
+        "name": "Six Wheels",
+        "text": "Enabled Sojourner to move across rocky and uneven Martian terrain."
+      },
+      {
+        "name": "Three Cameras",
+        "text": "Captured images of rocks, soil and the surrounding Martian landscape."
+      },
+      {
+        "name": "APXS Instrument",
+        "text": "Analyzed the chemical composition of Martian rocks and soil."
+      },
+      {
+        "name": "Solar Panels",
+        "text": "Converted sunlight into electrical energy to power the rover."
+      },
+      {
+        "name": "Rechargeable Battery",
+        "text": "Stored electrical energy for operating the rover."
+      },
+      {
+        "name": "Laser Stripe System",
+        "text": "Helped detect nearby obstacles and assess surrounding terrain."
+      },
+      {
+        "name": "Communication System",
+        "text": "Transmitted scientific data and images to Earth through the Pathfinder lander."
+      }
+    ],
+    "challenges": [
+      "Rocky and uneven Martian terrain",
+      "Limited solar power",
+      "Communication dependency on the Pathfinder lander",
+      "Harsh Martian environmental conditions"
+    ],
+    "missionEnd": "Communication was lost on September 27, 1997. NASA officially terminated the mission on March 10, 1998, after unsuccessful recovery attempts.",
+    "legacy": "Sojourner demonstrated the potential of robotic exploration on Mars and helped establish the foundation for future rovers, including Spirit, Opportunity, Curiosity and Perseverance."
   },
   {
     "id": "opportunity",
@@ -37,18 +84,84 @@
     "source": "NASA",
     "sourceUrl": "",
     "launch": "Jul 7, 2003",
-    "arrival": "Jan 25, 2004",
+    "arrival": "Jan 25, 2004 (UTC)",
     "description": "The rover that outlasted its planned 90-day mission by nearly 15 years.",
     "spacecraft": "Solar-powered rover, twin of the Spirit rover.",
     "objectives": [
-      "Search for evidence of past water on Mars."
+      "Investigate Martian rocks and soil for geological evidence of past water activity.",
+      "Determine whether ancient Mars had environmental conditions that could have supported microbial life.",
+      "Test technologies for long-duration robotic exploration on Mars."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Discovered evidence that liquid water once existed on ancient Mars.",
+      "Found sulfate-rich rocks and minerals that indicated past interaction with water.",
+      "Analyzed important geological targets, including Barnacle Bill, Eagle Crater and Endurance Crater.",
+      "Discovered Heat Shield Rock, an iron-nickel meteorite, in 2005.",
+      "Captured more than 217,000 images throughout its mission.",
+      "Became the first rover to travel a marathon distance (42.195 kilometers) on another world.",
+      "Traveled approximately 45.16 kilometers (28.06 miles) across the Martian surface.",
+      "Operated for nearly 15 years instead of its planned 90 Martian days."
+    ],
     "tagline": "Planned for 90 days, it lasted nearly 15 years.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Opportunity rover Mars",
-    "nasaVideoQuery": "Opportunity rover Mars"
+    "nasaVideoQuery": "Opportunity rover Mars",
+    "overview": "Opportunity was a robotic planetary explorer developed to study the geological features of Mars. Its mission focused on examining ancient rocks, identifying mineral formations and uncovering clues about the planet's watery past.",
+    "launchVehicle": "Delta II 7925H (Delta II Heavy)",
+    "landingSite": "Meridiani Planum, Mars",
+    "hardware": [
+      {
+        "name": "Six Wheels",
+        "text": "Enabled Opportunity to travel across rocky surfaces, sandy terrain and Martian craters."
+      },
+      {
+        "name": "Panoramic Cameras (Pancam)",
+        "text": "Captured detailed, high-resolution images of rocks, soil and the surrounding landscape."
+      },
+      {
+        "name": "Navigation & Hazard Avoidance Cameras",
+        "text": "Helped the rover navigate its surroundings, identify obstacles and avoid dangerous terrain."
+      },
+      {
+        "name": "APXS Instrument",
+        "text": "Analyzed the chemical composition of Martian rocks and soil."
+      },
+      {
+        "name": "Mössbauer Spectrometer",
+        "text": "Identified iron-bearing minerals and helped scientists understand the geological history of rocks."
+      },
+      {
+        "name": "Mini-TES Instrument",
+        "text": "Studied the mineral composition of rocks and soil by analyzing infrared radiation."
+      },
+      {
+        "name": "Rock Abrasion Tool (RAT)",
+        "text": "Ground away the outer surface of rocks to expose fresh material for scientific analysis."
+      },
+      {
+        "name": "Microscopic Imager",
+        "text": "Captured close-up images of rock and soil textures."
+      },
+      {
+        "name": "Solar Panels & Rechargeable Batteries",
+        "text": "Solar panels converted sunlight into electrical energy, while rechargeable batteries stored energy for rover operations."
+      },
+      {
+        "name": "Communication System",
+        "text": "Transmitted scientific data and images to Earth through Mars orbiters and the Deep Space Network."
+      }
+    ],
+    "challenges": [
+      "Rocky, sandy and uneven Martian terrain",
+      "Massive dust storms that reduced sunlight reaching its solar panels",
+      "Mechanical problems, including wheel and steering issues",
+      "Limited electrical power during periods of reduced sunlight",
+      "Communication difficulties and the long distance between Earth and Mars",
+      "Harsh Martian environmental conditions and extreme temperature variations"
+    ],
+    "missionEnd": "Opportunity's final communication with Earth was received on June 10, 2018, after a massive planet-wide dust storm covered its location and blocked sunlight from reaching its solar panels. NASA made more than 1,000 attempts to restore communication with the rover. After unsuccessful recovery efforts, NASA officially declared the mission over on February 13, 2019.",
+    "legacy": "Opportunity provided strong evidence of ancient water activity on Mars, transforming our understanding of its geological history. Its nearly 15-year mission demonstrated the potential of long-term robotic exploration and helped guide future Mars missions."
   },
   {
     "id": "spirit",
@@ -62,19 +175,72 @@
     "source": "NASA",
     "sourceUrl": "",
     "launch": "Jun 10, 2003",
-    "arrival": "Jan 4, 2004",
+    "arrival": "Jan 3, 2004",
     "description": "The rover that searched Gusev Crater for signs of past water and kept exploring for years beyond its planned mission.",
     "spacecraft": "Solar-powered rover, twin of the Opportunity rover.",
     "objectives": [
-      "Search for evidence of past water on Mars.",
-      "Study the geology of Gusev Crater."
+      "Investigate the geological history of Gusev Crater and examine the formation and composition of its rocks and soil.",
+      "Evaluate whether environmental conditions on early Mars could have been suitable for microbial life."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Discovered strong evidence of ancient water activity on Mars.",
+      "Found nearly pure silica deposits, suggesting past hot spring or steam vent activity.",
+      "Investigated rocks and geological formations across Columbia Hills.",
+      "Captured thousands of images of the Martian surface.",
+      "Climbed Husband Hill and explored its surrounding terrain.",
+      "Operated for over six years, far exceeding its planned 90-Martian-day mission."
+    ],
     "tagline": "Explored Gusev Crater far beyond its 90-day plan.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Spirit rover Mars Gusev Crater",
-    "nasaVideoQuery": "Spirit rover Mars"
+    "nasaVideoQuery": "Spirit rover Mars",
+    "overview": "Spirit was one of NASA's twin Mars Exploration Rovers, designed to explore the Martian surface, study rocks and soil, and investigate geological evidence of ancient water. It played a major role in understanding Mars' past environment.",
+    "launchVehicle": "Delta II 7925",
+    "landingSite": "Gusev Crater, Mars",
+    "hardware": [
+      {
+        "name": "Six Wheels",
+        "text": "Enabled Spirit to travel across rocky terrain and climb Martian hills."
+      },
+      {
+        "name": "Panoramic Cameras (Pancam)",
+        "text": "Captured detailed, high-resolution color and stereo images of the Martian landscape."
+      },
+      {
+        "name": "Navigation Cameras",
+        "text": "Helped the rover observe its surroundings and plan safe movements."
+      },
+      {
+        "name": "APXS Instrument",
+        "text": "Analyzed the chemical elements present in Martian rocks and soil."
+      },
+      {
+        "name": "Mössbauer Spectrometer",
+        "text": "Identified iron-bearing minerals to study the geological history of Mars."
+      },
+      {
+        "name": "Rock Abrasion Tool (RAT)",
+        "text": "Ground away rock surfaces to expose fresh material for scientific analysis."
+      },
+      {
+        "name": "Solar Panels",
+        "text": "Converted sunlight into electrical energy to operate the rover and recharge its batteries."
+      },
+      {
+        "name": "Mini-TES",
+        "text": "Studied the thermal properties and mineral composition of Martian rocks and soil."
+      }
+    ],
+    "challenges": [
+      "Became trapped in soft Martian soil in May 2009",
+      "Lost the use of one of its six wheels",
+      "Decreasing solar power during Martian winters",
+      "Extremely cold environmental conditions",
+      "Eventually lost communication with Earth"
+    ],
+    "missionEnd": "Spirit sent its final communication to Earth on March 22, 2010, after becoming trapped in soft soil and experiencing power-related difficulties. NASA made more than 1,400 attempts to re-establish contact but received no response. On May 25, 2011, NASA officially declared the mission complete.",
+    "legacy": "Spirit demonstrated the long-term potential of robotic exploration on Mars and showed how detailed surface investigations could reveal the planet's geological evolution. Its discoveries helped scientists better understand Mars and contributed valuable knowledge to the development of future Mars exploration missions."
   },
   {
     "id": "insight",
@@ -92,15 +258,65 @@
     "description": "The lander that listened for marsquakes to reveal what the inside of Mars is like.",
     "spacecraft": "Stationary lander carrying a seismometer, a heat probe and a radio science experiment.",
     "objectives": [
-      "Study the deep interior of Mars.",
-      "Measure marsquakes and the planet's heat flow."
+      "Uncover what lies beneath the Martian surface by studying marsquakes, underground heat flow and the planet's internal structure.",
+      "Help scientists understand how rocky planets, including Earth, formed and evolved."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Detected more than 1,300 seismic events, including marsquakes and meteorite impacts.",
+      "Provided the first detailed measurements of seismic activity on Mars.",
+      "Helped scientists identify the structure of the Martian crust, mantle and core.",
+      "Detected meteorite impacts through seismic observations.",
+      "Revealed important information about the size and characteristics of Mars' liquid metal core.",
+      "Recorded valuable atmospheric and geological data throughout its mission."
+    ],
     "tagline": "Listened for marsquakes to study Mars' interior.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "InSight lander Mars Elysium Planitia",
-    "nasaVideoQuery": "InSight lander Mars"
+    "nasaVideoQuery": "InSight lander Mars",
+    "overview": "InSight (Interior Exploration using Seismic Investigations, Geodesy and Heat Transport) was a stationary NASA lander designed to study the internal structure and geological activity of Mars. Unlike traditional Mars rovers, it remained at one location and investigated the planet's interior through seismic waves, underground heat measurements and rotational studies.",
+    "launchVehicle": "Atlas V 401",
+    "landingSite": "Elysium Planitia, Mars",
+    "hardware": [
+      {
+        "name": "SEIS (Seismic Experiment for Interior Structure)",
+        "text": "Detected seismic waves from marsquakes and helped scientists investigate the planet's internal structure."
+      },
+      {
+        "name": "HP³ (Heat Flow and Physical Properties Package)",
+        "text": "Designed to measure heat flowing from beneath the Martian surface using a self-hammering probe called the Mole."
+      },
+      {
+        "name": "RISE (Rotation and Interior Structure Experiment)",
+        "text": "Used radio signals to track tiny changes in Mars' rotation, helping scientists understand its core."
+      },
+      {
+        "name": "Solar Panels",
+        "text": "Supplied electrical power by converting sunlight into energy."
+      },
+      {
+        "name": "Robotic Arm",
+        "text": "Placed scientific instruments on the Martian surface and helped position the SEIS instrument."
+      },
+      {
+        "name": "Weather Sensors",
+        "text": "Recorded atmospheric conditions, including temperature, wind speed and air pressure."
+      },
+      {
+        "name": "Communication System",
+        "text": "Sent scientific measurements and mission data to Earth through NASA's spacecraft communication network."
+      }
+    ],
+    "challenges": [
+      "HP³ probe deployment failure",
+      "Unexpected Martian soil properties",
+      "Limited solar power",
+      "Dust accumulation on solar panels",
+      "Harsh Martian environmental conditions",
+      "Reduced power during Martian winter"
+    ],
+    "missionEnd": "InSight's mission gradually came to an end as dust accumulation reduced the power generated by its solar panels. NASA received its final communication on December 15, 2022. After two unsuccessful attempts to re-establish contact, NASA officially declared the mission over on December 21, 2022.",
+    "legacy": "InSight transformed our understanding of Mars by providing the first detailed insights into its internal structure and seismic activity. Its findings helped scientists understand the formation and evolution of rocky planets and provided valuable knowledge about the geological history of Mars."
   },
   {
     "id": "lrv",
@@ -113,20 +329,77 @@
     "status": "Completed",
     "source": "NASA",
     "sourceUrl": "",
-    "launch": "Jul 26, 1971",
-    "arrival": "Jul 30, 1971",
+    "launch": "Jul 30, 1971",
+    "arrival": "",
     "description": "The electric rover that let astronauts travel far beyond their landing sites on the Moon.",
     "spacecraft": "Folding, battery-powered two-seat rover carried to the Moon on the Lunar Module.",
     "objectives": [
-      "Carry astronauts and equipment across the lunar surface.",
-      "Extend the range of surface exploration."
+      "Extend astronauts' exploration range beyond their lunar landing sites.",
+      "Transport astronauts, scientific equipment and lunar samples, allowing them to investigate larger areas of the Moon."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Enabled astronauts to explore previously unreachable areas of the lunar surface.",
+      "Covered approximately 90.4 kilometres across three Apollo missions.",
+      "Supported the collection of valuable lunar rock and soil samples.",
+      "Helped investigate lunar mountains, valleys and geological formations.",
+      "Became the first crew-operated vehicle to travel on another celestial body.",
+      "Increased the scientific productivity of Apollo lunar missions."
+    ],
     "tagline": "Carried Apollo astronauts far beyond their landing sites.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Lunar Roving Vehicle",
-    "nasaVideoQuery": "Apollo 15 lunar rover"
+    "nasaVideoQuery": "Apollo 15 lunar rover",
+    "overview": "The Lunar Roving Vehicle (LRV), also known as the Moon Buggy, was a battery-powered vehicle developed by NASA to help Apollo astronauts explore the lunar surface. It allowed astronauts to travel farther from their landing sites, collect lunar samples, and conduct scientific investigations.",
+    "launchLabel": "First deployment",
+    "launchVehicle": "",
+    "landingSite": "Hadley–Apennine, Descartes Highlands and Taurus–Littrow Valley",
+    "landingLabel": "Landing sites",
+    "hardware": [
+      {
+        "name": "Four Wire-Mesh Wheels",
+        "text": "Provided traction and mobility across the Moon's rocky and dusty surface."
+      },
+      {
+        "name": "Electric Motors",
+        "text": "Powered each wheel independently for effective movement."
+      },
+      {
+        "name": "Rechargeable Batteries",
+        "text": "Supplied electrical energy to operate the vehicle."
+      },
+      {
+        "name": "Steering System",
+        "text": "Allowed astronauts to control the vehicle's direction."
+      },
+      {
+        "name": "Navigation System",
+        "text": "Used a directional gyro and odometer to track direction and distance."
+      },
+      {
+        "name": "Communication System",
+        "text": "Enabled voice communication between astronauts and Earth."
+      },
+      {
+        "name": "Television Camera",
+        "text": "Captured and transmitted video footage of lunar exploration."
+      }
+    ],
+    "challenges": [
+      "Extreme lunar temperatures affected operating conditions",
+      "Fine lunar dust created difficulties for mechanical components",
+      "Rocky surfaces, slopes and craters made navigation challenging",
+      "Limited battery capacity restricted operating time and travel distance",
+      "Communication depended on onboard systems and mission equipment"
+    ],
+    "missionEnd": "The Lunar Roving Vehicle was not designed to return to Earth. After completing their exploration activities, astronauts left the vehicles on the lunar surface before returning home.",
+    "missionEndList": [
+      "Apollo 15 LRV: Left on the Moon in 1971.",
+      "Apollo 16 LRV: Left on the Moon in 1972.",
+      "Apollo 17 LRV: Left on the Moon in December 1972."
+    ],
+    "missionEndAfter": "All three vehicles remain on the lunar surface, serving as historical evidence of humanity's first successful lunar transportation system.",
+    "legacy": "The Lunar Roving Vehicle transformed lunar exploration by allowing astronauts to travel greater distances and conduct more extensive scientific research. Its successful operation demonstrated the importance of mobile transportation in space exploration and helped establish the foundation for future lunar and planetary exploration vehicles."
   },
   {
     "id": "sws",
@@ -144,14 +417,54 @@
     "description": "The instrument that measured the particles of the solar wind reaching the Moon.",
     "spacecraft": "Part of the Apollo Lunar Surface Experiments Package set up by astronauts.",
     "objectives": [
-      "Measure the energy and flow of the solar wind at the lunar surface."
+      "Investigate how solar wind particles behave when they reach the Moon.",
+      "Measure their energy, density and direction while studying how the Moon and Earth's magnetic tail influence these particles."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Measured the energy and directional movement of solar wind electrons and protons.",
+      "Studied how solar wind interacts with the lunar environment.",
+      "Observed changes in solar wind properties as the Moon passed through Earth's magnetotail.",
+      "Collected scientific measurements at approximately 28-second intervals.",
+      "Provided valuable information about plasma behavior near the lunar surface."
+    ],
     "tagline": "Measured the solar wind reaching the Moon.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Apollo Solar Wind Spectrometer",
-    "nasaVideoQuery": "Apollo 12"
+    "nasaVideoQuery": "Apollo 12",
+    "overview": "The Solar Wind Spectrometer was a scientific instrument deployed during NASA's Apollo 12 mission in 1969. It was designed to study the solar wind — a continuous stream of electrically charged particles released by the Sun — directly from the lunar surface.",
+    "launchVehicle": "Saturn V",
+    "landingSite": "Ocean of Storms (Oceanus Procellarum), Moon",
+    "hardware": [
+      {
+        "name": "Seven Faraday Cups",
+        "text": "Detected charged particles arriving from different directions."
+      },
+      {
+        "name": "Electrostatic Analyzers",
+        "text": "Helped measure the energy of incoming solar wind particles."
+      },
+      {
+        "name": "Particle Detection System",
+        "text": "Collected data about the movement and properties of solar wind ions."
+      },
+      {
+        "name": "Electronic Control System",
+        "text": "Processed measurements and prepared scientific data for transmission."
+      },
+      {
+        "name": "Communication System",
+        "text": "Sent collected observations to Earth through the Apollo Lunar Surface Experiments Package (ALSEP)."
+      }
+    ],
+    "challenges": [
+      "Exposure to the harsh lunar environment",
+      "Maintaining accurate particle measurements over extended periods",
+      "Technical problems developed in two spectral energy levels in November 1971",
+      "Gradual instrument degradation affected its ability to collect complete measurements"
+    ],
+    "missionEnd": "The Solar Wind Spectrometer continued collecting useful scientific data for several years after its deployment. Its archived high-resolution observations extend through March 25, 1976. The Apollo Lunar Surface Experiments Package (ALSEP) was officially shut down on September 30, 1977, ending the experiment's operational mission.",
+    "legacy": "The Solar Wind Spectrometer provided important insights into the behavior of charged particles near the Moon. Its observations helped scientists better understand solar wind, lunar plasma interactions and Earth's magnetic tail, contributing to future space plasma research."
   },
   {
     "id": "surveyor1",
@@ -169,15 +482,58 @@
     "description": "NASA's first soft landing on the Moon, sending back thousands of images of the lunar surface.",
     "spacecraft": "Uncrewed lander with a television camera and surface-sampling instruments.",
     "objectives": [
-      "Demonstrate a soft landing on the Moon.",
-      "Photograph the lunar surface in preparation for Apollo."
+      "Demonstrate that a spacecraft could safely land on the Moon and operate on its surface.",
+      "Investigate lunar soil conditions and gather essential information to support NASA's future Apollo missions."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Captured and transmitted more than 11,000 images of the lunar surface.",
+      "Confirmed that the lunar soil could support the weight of a landing spacecraft.",
+      "Collected valuable information about lunar surface strength, temperature and radar reflectivity.",
+      "Became the first American spacecraft to achieve a successful soft landing on the Moon.",
+      "Successfully operated beyond its initial mission expectations."
+    ],
     "tagline": "NASA's first soft landing on the Moon.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Surveyor 1 lunar lander",
-    "nasaVideoQuery": "Surveyor 1"
+    "nasaVideoQuery": "Surveyor 1",
+    "overview": "Surveyor 1 was NASA's first successful soft-landing spacecraft on the Moon. It was designed to study the lunar surface, analyze its soil properties, and capture images to help prepare for future human exploration.",
+    "launchVehicle": "Atlas-Centaur",
+    "landingSite": "Oceanus Procellarum (Ocean of Storms), Moon",
+    "hardware": [
+      {
+        "name": "Three Landing Legs",
+        "text": "Provided stability and absorbed the impact during touchdown on the lunar surface."
+      },
+      {
+        "name": "Television Camera",
+        "text": "Captured detailed images of the lunar landscape, rocks and landing area."
+      },
+      {
+        "name": "Solar Panels",
+        "text": "Generated electrical power from sunlight to operate the spacecraft."
+      },
+      {
+        "name": "Communication Antennas",
+        "text": "Transmitted images and scientific information back to Earth."
+      },
+      {
+        "name": "Radar System",
+        "text": "Helped measure the spacecraft's altitude and control its descent toward the Moon."
+      },
+      {
+        "name": "Landing Sensors",
+        "text": "Collected information about the lunar surface and the spacecraft's landing impact."
+      }
+    ],
+    "challenges": [
+      "Extreme temperature variations between lunar day and night",
+      "Limited electrical power during periods without sunlight",
+      "Maintaining communication with Earth across the vast distance",
+      "Surviving the harsh and unfamiliar lunar environment"
+    ],
+    "missionEnd": "Surveyor 1 completed its primary mission in July 1966 after successfully transmitting thousands of images and scientific data. NASA continued communicating with the spacecraft until January 7, 1967, when contact was permanently lost.",
+    "legacy": "Surveyor 1 proved that controlled soft landings on the Moon were achievable. Its photographs and surface measurements helped NASA evaluate potential lunar landing sites and provided valuable engineering knowledge for the Apollo program, which eventually carried astronauts to the Moon."
   },
   {
     "id": "ranger7",
@@ -195,14 +551,56 @@
     "description": "The first U.S. spacecraft to send back close-up images of the Moon before it crashed into the surface.",
     "spacecraft": "Uncrewed spacecraft with six television cameras that sent pictures until it impacted the Moon.",
     "objectives": [
-      "Take close-up pictures of the lunar surface before impact.",
-      "Help scout landing sites for later Apollo missions."
+      "Photograph the lunar surface at increasingly closer distances before impacting the Moon.",
+      "Help scientists understand lunar terrain and identify suitable landing areas for future Apollo missions."
     ],
-    "discoveries": [],
+    "discoveries": [
+      "Captured 4,316 photographs of the lunar surface.",
+      "Returned the first successful close-up images of the Moon from an American lunar spacecraft.",
+      "Revealed detailed features of lunar craters and surface structures.",
+      "Provided valuable information about the Moon's terrain.",
+      "Helped scientists identify potential landing areas for future Apollo missions."
+    ],
     "tagline": "First U.S. close-up pictures of the Moon.",
     "model": "",
     "modelCredit": "",
     "nasaQuery": "Ranger 7 lunar impact",
-    "nasaVideoQuery": "Ranger 7"
+    "nasaVideoQuery": "Ranger 7",
+    "overview": "Ranger 7 was an unmanned NASA lunar spacecraft designed to capture detailed close-up photographs of the Moon before deliberately impacting its surface. It was the first fully successful mission in NASA's Ranger program.",
+    "arrivalLabel": "Impact date",
+    "launchVehicle": "Atlas-Agena B",
+    "launchSite": "Cape Canaveral, Florida, USA",
+    "landingSite": "Mare Cognitum, Moon",
+    "landingLabel": "Impact site",
+    "hardware": [
+      {
+        "name": "Six Television Cameras",
+        "text": "Captured detailed photographs of the lunar surface from different angles and distances."
+      },
+      {
+        "name": "Wide-Angle Cameras",
+        "text": "Provided broader views of the lunar landscape and identified surface features."
+      },
+      {
+        "name": "Narrow-Angle Cameras",
+        "text": "Captured detailed images of craters and smaller surface features."
+      },
+      {
+        "name": "Communication System",
+        "text": "Transmitted photographs and scientific data back to Earth."
+      },
+      {
+        "name": "Power System",
+        "text": "Supplied electrical power to operate the spacecraft's instruments and systems."
+      }
+    ],
+    "challenges": [
+      "Previous Ranger missions had experienced repeated technical failures",
+      "Maintaining accurate navigation toward the lunar target",
+      "Ensuring the cameras operated successfully during the final minutes",
+      "Transmitting images to Earth before lunar impact"
+    ],
+    "missionEnd": "Ranger 7 completed its mission on July 31, 1964, when it deliberately impacted Mare Cognitum on the Moon. Before impact, it successfully transmitted its final photographs, with the last image arriving approximately 2.3 seconds before contact with the lunar surface.",
+    "legacy": "Ranger 7 marked a major breakthrough in NASA's lunar exploration program. Its photographs helped scientists understand the Moon's surface and prepare for future Apollo landing missions. Its success also paved the way for subsequent missions, including Ranger 8 and Ranger 9."
   }
 ]

@@ -101,6 +101,42 @@ main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px 24px;
 .read-btn:hover span { transform: translateX(4px); }
 .read-btn:focus-visible, .nav-link:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
+/* ---- STORY POP-UP (opens when "Read Story" is clicked) ---- */
+.story-modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
+  padding: 20px; background: rgba(0, 0, 0, 0.7); }
+.story-modal.open { display: flex; }
+
+.story-card { --accent: var(--mars); position: relative; width: 100%; max-width: 760px; max-height: 88vh;
+  display: flex; flex-direction: column; background: #0d1a4a; border: 3px solid var(--accent); border-radius: 26px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5); animation: pop .25s ease; }
+.story-card.moon { --accent: var(--moon); }
+@keyframes pop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }
+
+.story-card-head { flex-shrink: 0; padding: 22px 64px 14px 28px; border-bottom: 2px solid var(--line); }
+.story-card-head h2 { font-size: clamp(22px, 3.2vw, 32px); font-weight: 800; line-height: 1.2; }
+.story-card-head .meta { margin-top: 4px; }
+
+.modal-close { position: absolute; top: 14px; right: 18px; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1); border: none; color: #fff; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+.modal-close:hover { background: var(--yellow); color: #1a1400; }
+.modal-close:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.story-card-body { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 28px 28px; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--yellow) transparent; }
+.story-card-body::-webkit-scrollbar { width: 8px; }
+.story-card-body::-webkit-scrollbar-thumb { background: var(--yellow); border-radius: 8px; }
+
+.story-section + .story-section { margin-top: 22px; }
+.story-section h3 { font-size: 1.25rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+.story-section p, .story-section li { font-family: var(--hand); font-size: 20px; line-height: 1.45; color: var(--text-soft); }
+.story-section ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.story-section li { position: relative; padding-left: 22px; }
+.story-section li::before { content: ""; position: absolute; left: 2px; top: 0.6em; width: 9px; height: 9px;
+  border-radius: 50%; background: var(--yellow); }
+.story-section li b { color: #fff; font-family: var(--heading); font-weight: 700; font-size: 0.92em; }
+
+.coming-soon { font-family: var(--hand); font-size: 22px; color: var(--text-soft); text-align: center; padding: 28px 0; }
+
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
   .topbar { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px 24px 12px; }
@@ -110,6 +146,9 @@ main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px 24px;
   .story { grid-template-columns: 44px 1fr; padding: 20px 16px; gap: 6px 14px; }
   .story-num { width: 42px; height: 42px; font-size: 21px; }
   .story .read-btn { grid-column: 2; justify-self: start; margin-top: 8px; }
+  .story-modal { padding: 10px; }
+  .story-card-head { padding: 18px 56px 12px 18px; }
+  .story-card-body { padding: 16px 18px 22px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
@@ -159,14 +198,25 @@ main { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 24px 24px;
     </section>
   </main>
 
+  <!-- STORY POP-UP (filled by the script when "Read Story" is clicked) -->
+  <div class="story-modal" id="storyModal">
+    <div class="story-card" id="storyCard" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
+      <button class="modal-close" id="storyClose" type="button" aria-label="Close">&times;</button>
+      <div class="story-card-head">
+        <h2 id="storyTitle">Story</h2>
+        <div class="meta" id="storyMeta"></div>
+      </div>
+      <div class="story-card-body" id="storyBody"></div>
+    </div>
+  </div>
+
 <script>
 /* =========================================================
    Stories page – JavaScript
-   1) Header navigation  2) Build the story list  3) Open a story
+   1) Header navigation  2) Missions + stories  3) Build the list  4) Story pop-up
    ========================================================= */
 
 // 1) Header navigation – same procedure as the home page: a routes object + data-nav buttons.
-//    These pages sit in the mainhtml folder, so the home page is one level up ("../index.html").
 document.addEventListener('DOMContentLoaded', () => {
   const routes = {
     home: '../index.html',
@@ -187,24 +237,99 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// 2) Where a story opens. The mission key is added to the end, e.g. story.html?mission=sojourner
-const STORY_PAGE = "story.html?mission=";
-
-/* The missions object. If your site already has one, delete this copy and load yours first.
+/* 2) The missions object (same missions as the Mars and Moon pages).
    Each entry needs: name, world ("mars" or "moon"), location, mission.
-   "description" is optional – if missing, no description line is shown. */
+   "description" is optional.
+   "story" is optional: add one to show a full story in the pop-up.
+   A story is { title, sections: [ { h: "heading", p: "paragraph" }  or  { h: "heading", list: [ ... ] } ] }
+   Entries without a "story" show a "coming soon" message. */
 const missions = {
-  sojourner:    { name: "Sojourner Rover",    world: "mars", location: "Ares Vallis",                mission: "Mars Pathfinder (1997)" },
-  perseverance: { name: "Perseverance Rover", world: "mars", location: "Jezero Crater",              mission: "Mars 2020" },
-  curiosity:    { name: "Curiosity Rover",    world: "mars", location: "Gale Crater",                mission: "Mars Science Laboratory (2012)" },
-  opportunity:  { name: "Opportunity Rover",  world: "mars", location: "Endeavour Crater",           mission: "Mars Exploration Rover (2004)" },
-  apollo17:     { name: "Apollo 17",          world: "moon", location: "Taurus\u2013Littrow Valley", mission: "Apollo 17" },
-  lunarmodule:  { name: "Lunar Module",       world: "moon", location: "Oceanus Procellarum",        mission: "Chang'e 5" },
-  apollo15:     { name: "Apollo 15",          world: "moon", location: "Hadley\u2013Apennine",       mission: "Apollo 15" },
-  lro:          { name: "LRO",                world: "moon", location: "Lunar Orbit",                mission: "Lunar Reconnaissance Orbiter" },
-  chandrayaan3: { name: "Chandrayaan-3",      world: "moon", location: "Lunar South Pole",           mission: "Chandrayaan-3" }
+  /* ---------- MARS ---------- */
+  sojourner: {
+    name: "Sojourner Rover", world: "mars", location: "Ares Vallis", mission: "Mars Pathfinder (1997)",
+    story: {
+      title: "Sojourner Rover \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "Sojourner was NASA's first successful Mars rover, launched on December 4, 1996, as part of the Mars Pathfinder mission. It landed in Ares Vallis on July 4, 1997, to explore Martian rocks and soil and test robotic mobility. Equipped with six wheels, cameras and the APXS instrument, it collected valuable scientific data and captured over 550 images. Although designed for a seven-day mission, Sojourner operated for approximately 83 days. Its achievements laid the foundation for future Mars rover missions and opened a new chapter in robotic planetary exploration." }
+      ]
+    }
+  },
+  opportunity: {
+    name: "Opportunity Rover", world: "mars", location: "Endeavour Crater", mission: "Mars Exploration Rover (2004)",
+    story: {
+      title: "Opportunity Rover \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "Opportunity was NASA's second Mars Exploration Rover, launched in 2003 and landed on Mars in January 2004. Its primary mission was to investigate Martian rocks and search for evidence of ancient water. It discovered important geological clues, including sulfate-rich rocks and an iron-nickel meteorite. Originally designed for 90 Martian days, Opportunity operated for nearly 15 years and traveled approximately 45.16 kilometers. Its mission ended in February 2019 after a massive dust storm disrupted its power supply. Its discoveries greatly improved our understanding of Mars' ancient environment and geological history." }
+      ]
+    }
+  },
+  spirit: {
+    name: "Spirit Rover", world: "mars", location: "Gusev Crater", mission: "Mars Exploration Rover (2004)",
+    story: {
+      title: "Spirit Rover \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "Spirit was one of NASA's twin Mars Exploration Rovers, launched in 2003 to investigate the Martian surface. It explored Gusev Crater, analyzed rocks and minerals, and uncovered important clues about Mars' geological past. Despite facing difficult terrain, mechanical failures, and harsh environmental conditions, Spirit operated for over six years, far beyond its planned mission lifetime. Its remarkable discoveries and achievements helped advance robotic exploration and shaped the future of Mars missions." }
+      ]
+    }
+  },
+  insight: {
+    name: "InSight Lander", world: "mars", location: "Elysium Planitia", mission: "InSight (2018)",
+    story: {
+      title: "InSight Lander \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "NASA's InSight lander arrived on Mars on November 26, 2018, to explore the planet's internal structure and geological activity. Using advanced instruments like SEIS and RISE, it studied marsquakes, the Martian core and underground processes. Despite challenges with its HP\u00b3 probe and declining solar power, InSight delivered groundbreaking scientific data. It detected over 1,300 seismic events and provided valuable insights into Mars' interior. The mission officially ended on December 21, 2022, leaving a lasting contribution to planetary science." }
+      ]
+    }
+  },
+
+  /* ---------- MOON ---------- */
+  lrv: {
+    name: "Lunar Roving Vehicle", world: "moon", location: "Apollo 15, 16 and 17 landing sites", mission: "Apollo 15, 16 and 17",
+    story: {
+      title: "Lunar Roving Vehicle \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "The Lunar Roving Vehicle (LRV), also known as the Moon Buggy, was developed by NASA to help astronauts explore the lunar surface. It was used during Apollo 15, 16 and 17, allowing astronauts to travel greater distances and collect valuable lunar samples. Equipped with electric motors, rechargeable batteries and navigation systems, it covered approximately 90.4 kilometres across three missions. After completing its missions, all three vehicles were left on the Moon. The LRV became a major milestone in lunar exploration and paved the way for future planetary rovers." }
+      ]
+    }
+  },
+  sws: {
+    name: "Solar Wind Spectrometer", world: "moon", location: "Apollo 12 and 15 landing sites", mission: "Apollo 12 and Apollo 15",
+    story: {
+      title: "Solar Wind Spectrometer \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "The Solar Wind Spectrometer was deployed during NASA's Apollo 12 mission in 1969 to study charged particles released by the Sun. Equipped with seven Faraday cups, it measured the energy, direction and properties of solar wind particles. Its observations helped scientists understand how solar wind interacts with the Moon and Earth's magnetic field. The instrument continued collecting valuable scientific data until its operational mission ended in 1977. Its findings contributed significantly to our understanding of space plasma and the lunar environment." }
+      ]
+    }
+  },
+  surveyor1: {
+    name: "Surveyor 1", world: "moon", location: "Oceanus Procellarum", mission: "Surveyor 1 (1966)",
+    story: {
+      title: "Surveyor 1 \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "Surveyor 1 was NASA's first successful American spacecraft to soft-land on the Moon, arriving on June 2, 1966. It captured more than 11,000 images and studied the lunar surface to understand its soil properties and landing conditions. Its findings helped scientists confirm that the lunar surface could support spacecraft. The mission provided valuable knowledge for the Apollo program and future human lunar exploration. After months of successful operations, communication permanently ended on January 7, 1967." }
+      ]
+    }
+  },
+  ranger7: {
+    name: "Ranger 7", world: "moon", location: "Mare Cognitum", mission: "Ranger 7 (1964)",
+    story: {
+      title: "Ranger 7 \u2013 Mission Summary",
+      sections: [
+        { h: "Summary",
+          p: "Ranger 7 was NASA's first successful spacecraft to capture close-up images of the Moon. Launched on July 28, 1964, it transmitted 4,316 photographs before impacting Mare Cognitum on July 31, 1964. Its images revealed previously unseen details of the lunar surface and craters. The mission provided valuable information for identifying safe landing areas for future Apollo missions. Ranger 7 marked a major milestone in lunar exploration and paved the way for later missions." }
+      ]
+    }
+  }
 };
 
+// 3) Build one row of the story list
 function createRow(key, m, number, delay) {
   const row = document.createElement("li");
   row.className = "story " + m.world;           // "mars" or "moon" sets the accent colour
@@ -226,9 +351,9 @@ function createRow(key, m, number, delay) {
   const desc = row.querySelector("p");
   if (m.description) { desc.textContent = m.description; } else { desc.remove(); }
 
-  // 3) Open the matching story page
+  // 4) Open the story pop-up
   row.querySelector(".read-btn").addEventListener("click", function () {
-    window.location.href = STORY_PAGE + encodeURIComponent(key);
+    openStory(key);
   });
   return row;
 }
@@ -236,6 +361,86 @@ function createRow(key, m, number, delay) {
 const list = document.getElementById("storyList");
 Object.keys(missions).forEach(function (key, i) {
   list.appendChild(createRow(key, missions[key], i + 1, i * 0.08));
+});
+
+/* =========================================================
+   4) STORY POP-UP
+   ========================================================= */
+const modal    = document.getElementById("storyModal");
+const card     = document.getElementById("storyCard");
+const closeBtn = document.getElementById("storyClose");
+const titleEl  = document.getElementById("storyTitle");
+const metaEl   = document.getElementById("storyMeta");
+const bodyEl   = document.getElementById("storyBody");
+let lastButton = null;   // so focus goes back to the button that opened the story
+
+// "Launch Date: December 4, 1996"  ->  bold label + text
+function addListItem(ul, text) {
+  const li = document.createElement("li");
+  const i = text.indexOf(": ");
+  if (i > 0 && i < 30) {
+    const b = document.createElement("b");
+    b.textContent = text.slice(0, i + 1);
+    li.appendChild(b);
+    li.appendChild(document.createTextNode(" " + text.slice(i + 2)));
+  } else {
+    li.textContent = text;
+  }
+  ul.appendChild(li);
+}
+
+function openStory(key) {
+  const m = missions[key];
+  if (!m) return;
+
+  lastButton = document.activeElement;
+  card.className = "story-card " + m.world;
+  titleEl.textContent = (m.story && m.story.title) ? m.story.title : m.name;
+  metaEl.textContent = m.location + "  \u00b7  " + m.mission;
+  bodyEl.textContent = "";
+  bodyEl.scrollTop = 0;
+
+  if (m.story && m.story.sections) {
+    m.story.sections.forEach(function (s) {
+      const sec = document.createElement("section");
+      sec.className = "story-section";
+
+      const h = document.createElement("h3");
+      h.textContent = s.h;
+      sec.appendChild(h);
+
+      if (s.p) {
+        const p = document.createElement("p");
+        p.textContent = s.p;
+        sec.appendChild(p);
+      }
+      if (s.list) {
+        const ul = document.createElement("ul");
+        s.list.forEach(function (t) { addListItem(ul, t); });
+        sec.appendChild(ul);
+      }
+      bodyEl.appendChild(sec);
+    });
+  } else {
+    const soon = document.createElement("p");
+    soon.className = "coming-soon";
+    soon.textContent = "This story is coming soon. Check back later, explorer!";
+    bodyEl.appendChild(soon);
+  }
+
+  modal.classList.add("open");
+  closeBtn.focus();
+}
+
+function closeStory() {
+  modal.classList.remove("open");
+  if (lastButton) lastButton.focus();
+}
+
+closeBtn.addEventListener("click", closeStory);
+modal.addEventListener("click", function (e) { if (e.target === modal) closeStory(); });
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && modal.classList.contains("open")) closeStory();
 });
 </script>
 </body>
