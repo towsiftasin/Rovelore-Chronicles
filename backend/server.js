@@ -146,6 +146,15 @@ app.use(cors());   // lets your HTML page (any origin / file://) call the API
 // 3D model files (.glb) in backend/models are served at http://localhost:3000/models/<file>
 app.use("/models", express.static(path.join(__dirname, "models")));
 
+// the home address of the server: shows a friendly message instead of "Cannot GET /"
+app.get("/", function (req, res) {
+  res.json({
+    name: "Rovelore Chronicles API",
+    ok: true,
+    try: ["/api/health", "/api/missions", "/api/missions/sojourner"]
+  });
+});
+
 app.get("/api/health", function (req, res) {
   res.json({ ok: true, mediaReady: Object.keys(mediaCache).length, refreshing: refreshing });
 });
