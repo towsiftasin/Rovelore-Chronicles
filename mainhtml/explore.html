@@ -231,7 +231,9 @@ document.querySelectorAll('[data-nav]').forEach(el=>el.addEventListener('click',
 /* ========== B. Mission data: loaded from the backend (backend/server.js) ==========
    Change API_BASE to your deployed backend URL when you publish the site.
    Each mission comes with: name, tagline, destination, image, gallery, videos, model ... */
-const API_BASE='http://localhost:3000';
+// On your own computer it talks to the local backend; on the live website it talks to Render.
+const LIVE_API='https://rovelore-chronicles.onrender.com';
+const API_BASE=(location.protocol==='file:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname))?'http://localhost:3000':LIVE_API;
 let missions=[];
 
 const listEl=document.getElementById('listView');
@@ -246,15 +248,24 @@ const nextBtn=document.getElementById('next');
 function showStatus(html){ statusEl.innerHTML=html; statusEl.classList.add('show'); }
 function hideStatus(){ statusEl.classList.remove('show'); statusEl.innerHTML=''; }
 
+let tries=0, retryTimer=null;
 function loadMissions(){
-  showStatus('Loading missions…');
+  clearTimeout(retryTimer);
+  showStatus(tries?'Waking up the mission server…<br>This can take up to a minute the first time.':'Loading missions…');
   return fetch(API_BASE+'/api/missions')
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-    .then(data=>{ missions=data; buildCards(); })
+    .then(data=>{ tries=0; missions=data; buildCards(); })
     .catch(()=>{
       missions=[]; buildCards();
-      showStatus('Could not reach the mission server.<br>Make sure the backend is running (npm start), then try again.<br><button class="retry" type="button" id="retry">Try again</button>');
-      document.getElementById('retry').addEventListener('click',loadMissions);
+      tries++;
+      if(tries<=6){            // the free Render server sleeps when nobody uses it: keep trying for a while
+        showStatus('Waking up the mission server…<br>This can take up to a minute the first time.');
+        retryTimer=setTimeout(loadMissions,8000);
+      } else {
+        tries=0;
+        showStatus('Could not reach the mission server.<br>Please check your internet and try again.<br><button class="retry" type="button" id="retry">Try again</button>');
+        document.getElementById('retry').addEventListener('click',loadMissions);
+      }
     })
     .then(route);
 }
