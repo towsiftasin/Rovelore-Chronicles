@@ -401,7 +401,12 @@
       "Apollo 17 LRV: Left on the Moon in December 1972."
     ],
     "missionEndAfter": "All three vehicles remain on the lunar surface, serving as historical evidence of humanity's first successful lunar transportation system.",
-    "legacy": "The Lunar Roving Vehicle transformed lunar exploration by allowing astronauts to travel greater distances and conduct more extensive scientific research. Its successful operation demonstrated the importance of mobile transportation in space exploration and helped establish the foundation for future lunar and planetary exploration vehicles."
+    "legacy": "The Lunar Roving Vehicle transformed lunar exploration by allowing astronauts to travel greater distances and conduct more extensive scientific research. Its successful operation demonstrated the importance of mobile transportation in space exploration and helped establish the foundation for future lunar and planetary exploration vehicles.",
+    "viewer": "https://sketchfab.com/models/bef2062726c8448f8ebe935c690f633a/embed?autostart=1&autospin=0.15&ui_theme=dark",
+    "viewerHint": "Drag to rotate the rover and scroll or pinch to zoom.",
+    "viewerLink": "https://sketchfab.com/3d-models/apollo-lunar-rover-moon-car-bef2062726c8448f8ebe935c690f633a",
+    "viewerLinkText": "View on Sketchfab",
+    "viewerCredit": "3D model on Sketchfab"
   },
   {
     "id": "sws",

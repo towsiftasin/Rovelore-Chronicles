@@ -425,8 +425,8 @@ function renderDetail(m){
 
   // interactive 3D page: "viewer" is a file next to explore.html (e.g. "sojourner-3d.html") or a full link
   const viewerPanel=m.viewer
-    ? '<div class="panel"><h2>Interactive 3D model</h2><div class="viewer-box"><iframe src="'+esc(m.viewer)+'" title="Interactive 3D model of '+esc(m.name)+'" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>'+
-      '<div class="viewer-links"><p class="model-hint" style="margin:0">Press &ldquo;Explore Rover&rdquo;, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part'+(m.viewerCredit?' &bull; '+esc(m.viewerCredit):'')+'</p><a href="'+esc(m.viewer)+'" target="_blank" rel="noopener">Open full screen</a></div></div>'
+    ? '<div class="panel"><h2>Interactive 3D model</h2><div class="viewer-box"><iframe src="'+esc(m.viewer)+'" title="Interactive 3D model of '+esc(m.name)+'" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>'+
+      '<div class="viewer-links"><p class="model-hint" style="margin:0">'+(m.viewerHint?esc(m.viewerHint):'Press &ldquo;Explore Rover&rdquo;, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part')+(m.viewerCredit?' &bull; '+esc(m.viewerCredit):'')+'</p><a href="'+esc(m.viewerLink||m.viewer)+'" target="_blank" rel="noopener">'+esc(m.viewerLinkText||'Open full screen')+'</a></div></div>'
     : '';
 
   detailEl.innerHTML=
