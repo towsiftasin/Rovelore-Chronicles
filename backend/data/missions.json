@@ -70,7 +70,9 @@
       "Harsh Martian environmental conditions"
     ],
     "missionEnd": "Communication was lost on September 27, 1997. NASA officially terminated the mission on March 10, 1998, after unsuccessful recovery attempts.",
-    "legacy": "Sojourner demonstrated the potential of robotic exploration on Mars and helped establish the foundation for future rovers, including Spirit, Opportunity, Curiosity and Perseverance."
+    "legacy": "Sojourner demonstrated the potential of robotic exploration on Mars and helped establish the foundation for future rovers, including Spirit, Opportunity, Curiosity and Perseverance.",
+    "viewer": "sojourner-3d.html",
+    "viewerCredit": "Interactive 3D model by Team Event Horizon"
   },
   {
     "id": "opportunity",

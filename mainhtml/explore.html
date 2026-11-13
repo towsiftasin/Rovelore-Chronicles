@@ -135,6 +135,12 @@ body.list-mode{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-dire
 .chips{display:flex;gap:10px;flex-wrap:wrap}
 .chip{padding:8px 16px;font:600 15px var(--heading);color:var(--text);background:none;border:2px solid var(--line);border-radius:999px}
 .chip:hover{border-color:var(--yellow)}
+/* interactive 3D page (your own Three.js page, shown inside a frame) */
+.viewer-box{position:relative;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#05030a}
+.viewer-box iframe{display:block;width:100%;height:clamp(480px,78vh,700px);border:0}
+.viewer-links{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.viewer-links a{font-family:var(--heading);font-weight:700;font-size:15px;color:#1a1400;background:var(--yellow);border-radius:999px;padding:6px 16px;text-decoration:none;box-shadow:0 3px 0 #c99500}
+.viewer-links a:hover{transform:translateY(-1px)}
 /* 3D model viewer */
 .model-box{border-radius:16px;overflow:hidden;border:2px solid var(--line);background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.10),rgba(5,8,25,.65))}
 .model-box model-viewer{display:block;width:100%;height:420px;--poster-color:transparent}
@@ -406,6 +412,12 @@ function renderDetail(m){
       '<p class="model-hint">Drag to rotate • scroll or pinch to zoom'+(m.modelCredit?' • '+esc(m.modelCredit):'')+'</p></div>'
     : '';
 
+  // interactive 3D page: "viewer" is a file next to explore.html (e.g. "sojourner-3d.html") or a full link
+  const viewerPanel=m.viewer
+    ? '<div class="panel"><h2>Interactive 3D model</h2><div class="viewer-box"><iframe src="'+esc(m.viewer)+'" title="Interactive 3D model of '+esc(m.name)+'" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>'+
+      '<div class="viewer-links"><p class="model-hint" style="margin:0">Press &ldquo;Explore Rover&rdquo;, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part'+(m.viewerCredit?' &bull; '+esc(m.viewerCredit):'')+'</p><a href="'+esc(m.viewer)+'" target="_blank" rel="noopener">Open full screen</a></div></div>'
+    : '';
+
   detailEl.innerHTML=
     '<div class="detail '+esc(m.destination)+'">'+
     '<button class="back" type="button" id="backBtn">← Back to Explore</button>'+
@@ -418,7 +430,7 @@ function renderDetail(m){
     '<div class="panel"><h2>Mission objective</h2>'+listHTML(m.objectives,'Objectives coming soon.')+'</div>'+
     '<div class="panel"><h2>Discoveries &amp; achievements</h2>'+listHTML(m.discoveries,'Key discoveries coming soon.')+'</div>'+
     challengePanel+endPanel+legacyPanel+
-    modelPanel+
+    viewerPanel+modelPanel+
     '<div class="panel"><h2>Images</h2><div class="gallery">'+gallery+'</div></div>'+
     '<div class="panel"><h2>Videos</h2>'+videos+'</div>'+
     '<div class="panel"><h2>Source</h2><p>'+source+'</p></div>'+
