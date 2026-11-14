@@ -528,7 +528,17 @@
     ],
     "missionEnd": "The Solar Wind Spectrometer continued collecting useful scientific data for several years after its deployment. Its archived high-resolution observations extend through March 25, 1976. The Apollo Lunar Surface Experiments Package (ALSEP) was officially shut down on September 30, 1977, ending the experiment's operational mission.",
     "legacy": "The Solar Wind Spectrometer provided important insights into the behavior of charged particles near the Moon. Its observations helped scientists better understand solar wind, lunar plasma interactions and Earth's magnetic tail, contributing to future space plasma research.",
-    "cover": "../images/cardcover/sws.jpg"
+    "cover": "../images/cardcover/sws.jpg",
+    "viewers": [
+      {
+        "src": "sws-3d.html",
+        "title": "Interactive 3D model",
+        "hint": "Press “Explore Experiment”, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part.",
+        "link": "sws-3d.html",
+        "linkText": "Open full screen",
+        "credit": "Interactive 3D model by Team Event Horizon"
+      }
+    ]
   },
   {
     "id": "surveyor1",

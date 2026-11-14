@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Event Horizon — Apollo 12 Solar Wind Spectrometer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#6fc3ff;--fg:#e6ecf2;--dim:#8a97a3;--line:rgba(111,195,255,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#020308;color:var(--fg);font-family:Rajdhani,'Segoe UI',system-ui,sans-serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.o{font-family:Orbitron,'Segoe UI',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+button{font:inherit;color:inherit;cursor:pointer}
+#hud{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 1.2s}
+#hud.on{opacity:1}#hud>*{pointer-events:auto}
+#brand{position:absolute;top:max(18px,env(safe-area-inset-top));left:22px;pointer-events:none!important}
+#brand b{font-size:15px;color:var(--ac)}#brand span{display:block;font-size:12px;color:var(--dim);letter-spacing:.14em;margin-top:4px}
+#id{position:absolute;left:22px;bottom:max(22px,env(safe-area-inset-bottom));pointer-events:none!important;border-left:2px solid var(--ac);padding-left:14px}
+#id small{font-size:11px;color:var(--dim)}#id h1{margin:2px 0;font-size:30px;font-weight:700}#id em{font:normal 600 13px Orbitron;color:var(--ac);letter-spacing:.3em}
+#nav{position:absolute;right:22px;top:90px;display:flex;flex-direction:column;gap:6px;width:210px}
+#nav button,#views button{background:rgba(6,10,16,.6);border:1px solid rgba(255,255,255,.12);padding:8px 12px;text-align:left;font-size:14px;letter-spacing:.06em;backdrop-filter:blur(6px);transition:.2s}
+#nav button b{font:600 10px Orbitron;color:var(--ac);margin-right:8px}
+#nav button:hover,#nav button.act,#views button:hover{border-color:var(--ac);background:rgba(111,195,255,.16)}
+#views{position:absolute;left:50%;transform:translateX(-50%);bottom:max(22px,env(safe-area-inset-bottom));display:flex;gap:6px}
+#views button{text-align:center;font:500 10px Orbitron;letter-spacing:.16em;padding:9px 12px}
+#panel{position:absolute;right:22px;bottom:max(22px,env(safe-area-inset-bottom));width:340px;padding:18px 20px;background:rgba(5,8,14,.8);backdrop-filter:blur(12px);border:1px solid var(--line);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);opacity:0;transform:translateY(12px);pointer-events:none!important;transition:.4s}
+#panel.on{opacity:1;transform:none;pointer-events:auto!important}
+#panel .t{font:600 10px Orbitron;color:var(--ac);letter-spacing:.25em}#panel h3{margin:6px 0 4px;font:700 18px Orbitron;letter-spacing:.1em;text-transform:uppercase}
+#panel .sp{font-size:12px;color:var(--dim);letter-spacing:.08em;margin-bottom:10px}
+#panel h4{margin:12px 0 3px;font:500 10px Orbitron;letter-spacing:.22em;color:var(--ac)}#panel p{margin:0;font-size:15px;line-height:1.35;color:#ccd5de}
+#x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:20px;color:var(--dim)}
+.hs{position:fixed;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;border:1px solid var(--ac);border-radius:50%;background:rgba(111,195,255,.14);color:#b5e1ff;font:600 10px Orbitron;display:grid;place-items:center;transition:opacity .3s,background .2s}
+.hs::after{content:'';position:absolute;inset:-6px;border:1px solid var(--line);border-radius:50%;animation:p 2.2s infinite}
+@keyframes p{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.hs.occ{opacity:.22}.hs.act,.hs:hover{background:var(--ac);color:#04101a}
+#tip{position:fixed;pointer-events:none;padding:4px 10px;font:500 10px Orbitron;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,8,14,.88);border:1px solid var(--ac);opacity:0;transition:opacity .15s;white-space:nowrap}
+#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 24px max(8vh,40px);background:linear-gradient(transparent 40%,rgba(2,3,8,.9));transition:opacity 1.2s;pointer-events:none}
+#intro.off{opacity:0}#intro>*{pointer-events:auto}
+#intro .s{font-size:11px;color:var(--ac)}#intro h2{margin:10px 0 8px;font-size:clamp(30px,8vw,72px);font-weight:700;letter-spacing:.24em}
+#intro p{max-width:520px;margin:0 0 24px;font-size:17px;color:#bcc7d2;line-height:1.4}
+#go{background:transparent;border:1px solid var(--ac);padding:14px 34px;font:600 12px Orbitron;letter-spacing:.3em;color:var(--ac);transition:.25s}#go:hover{background:var(--ac);color:#04101a}
+@media(max-width:720px){
+#nav{top:auto;right:0;left:0;bottom:max(8px,env(safe-area-inset-bottom));width:auto;flex-direction:row;overflow-x:auto;padding:0 10px;gap:6px}
+#nav button{white-space:nowrap;flex:0 0 auto}#views{display:none}
+#id{bottom:auto;top:calc(max(18px,env(safe-area-inset-top)) + 46px);left:22px}#id h1{font-size:22px}
+#panel{right:10px;left:10px;width:auto;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 56px)}#panel p{font-size:14px}}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="hud"><div id="brand" class="o"><b>Event Horizon</b><span>Lunar Exploration Archive</span></div>
+<div id="id" class="o"><small>Apollo 12 · Ocean of Storms</small><h1>SWS</h1><em>1969</em></div>
+<nav id="nav"></nav><div id="views"></div>
+<aside id="panel"><button id="x" aria-label="Close">×</button><div class="t" id="pt"></div><h3 id="pn"></h3><div class="sp" id="ps"></div><h4>What it did</h4><p id="pw"></p><h4>Why it mattered</h4><p id="py"></p></aside></div>
+<div id="tip"></div>
+<div id="intro"><div class="o s">Event Horizon · Interactive Exhibit</div><h2 class="o">Solar Wind Spectrometer</h2>
+<p>November 19, 1969. Apollo 12 astronauts set a small white instrument on the Moon to catch the solar wind, the stream of charged particles that nothing shields from the lunar surface.</p><button id="go">EXPLORE EXPERIMENT</button></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $=s=>document.querySelector(s),V=(a,b,c)=>new THREE.Vector3(a,b,c);
+const R=new THREE.WebGLRenderer({canvas:$('#c'),antialias:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=THREE.sRGBEncoding;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.1;
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x020308);
+const cam=new THREE.PerspectiveCamera(40,1,.1,900);cam.position.set(5.5,3.2,7.5);
+const ctl=new THREE.OrbitControls(cam,R.domElement);
+Object.assign(ctl,{enableDamping:true,dampingFactor:.07,minDistance:2,maxDistance:22,maxPolarAngle:Math.PI/2-.03,screenSpacePanning:true,autoRotate:true,autoRotateSpeed:.7});ctl.target.set(0,1.1,0);
+
+// procedural IBL
+(function(){const g=document.createElement('canvas');g.width=4;g.height=256;const x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);
+[['#06080f',0],['#2a2a30',.5],['#4a4844',.55],['#1c1b1a',1]].forEach(s=>gr.addColorStop(s[1],s[0]));x.fillStyle=gr;x.fillRect(0,0,4,256);
+const e=new THREE.Scene();e.add(new THREE.Mesh(new THREE.SphereGeometry(50,32,16),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(g),side:THREE.BackSide})));
+const s=new THREE.Mesh(new THREE.SphereGeometry(5,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(8,7,6)}));s.position.set(-28,12,18);e.add(s);
+scene.environment=new THREE.PMREMGenerator(R).fromScene(e).texture})();
+
+// lighting (hard lunar sun)
+const sun=new THREE.DirectionalLight(0xfff4e6,3.6);sun.position.set(-20,6.5,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:80});sun.shadow.bias=-.0004;sun.shadow.normalBias=.03;scene.add(sun);
+scene.add(new THREE.HemisphereLight(0x405070,0x2a2622,.22));
+
+// textures
+function tex(base,dust,n,scr,rep){const c=document.createElement('canvas');c.width=c.height=256;const t=c.getContext('2d');t.fillStyle=base;t.fillRect(0,0,256,256);
+for(let i=0;i<n;i++){const l=Math.random()>.5;t.fillStyle=`rgba(${l?255:0},${l?250:0},${l?240:0},${Math.random()*.3})`;t.fillRect(Math.random()*256,Math.random()*256,1+Math.random()*5,1+Math.random()*5)}
+for(let i=0;i<scr;i++){t.strokeStyle=`rgba(255,255,255,${Math.random()*.25})`;t.lineWidth=.6;t.beginPath();const a=Math.random()*256,b=Math.random()*256;t.moveTo(a,b);t.lineTo(a+Math.random()*44-22,b+Math.random()*8-4);t.stroke()}
+if(dust)for(let i=0;i<12;i++){const x=Math.random()*256,y=Math.random()*256,g=t.createRadialGradient(x,y,0,x,y,40+Math.random()*50);g.addColorStop(0,dust);g.addColorStop(1,'rgba(0,0,0,0)');t.fillStyle=g;t.fillRect(0,0,256,256)}
+const T=new THREE.CanvasTexture(c);T.wrapS=T.wrapT=THREE.RepeatWrapping;T.encoding=THREE.sRGBEncoding;T.anisotropy=4;if(rep)T.repeat.set(rep,rep);return T}
+const D='rgba(150,140,130,.2)';
+const M={white:new THREE.MeshStandardMaterial({map:tex('#e4e2dc',D,1500,60),metalness:.25,roughness:.55}),
+alu:new THREE.MeshStandardMaterial({map:tex('#b4b5b6',D,2000,160),metalness:.85,roughness:.45}),
+gun:new THREE.MeshStandardMaterial({map:tex('#4c4d52',D,1500,100),metalness:.8,roughness:.55}),
+dark:new THREE.MeshStandardMaterial({color:0x17181b,metalness:.4,roughness:.65}),
+lens:new THREE.MeshStandardMaterial({color:0x0a1226,metalness:.9,roughness:.08}),
+honey:new THREE.MeshStandardMaterial({color:0xc9a35a,metalness:.7,roughness:.5})};
+(function(){const c=document.createElement('canvas');c.width=c.height=256;const t=c.getContext('2d');t.fillStyle='#17274a';t.fillRect(0,0,256,256);
+t.strokeStyle='rgba(150,165,205,.5)';t.lineWidth=1.2;for(let i=0;i<=16;i++){t.beginPath();t.moveTo(i*16,0);t.lineTo(i*16,256);t.moveTo(0,i*16);t.lineTo(256,i*16);t.stroke()}
+const T=new THREE.CanvasTexture(c);T.encoding=THREE.sRGBEncoding;T.anisotropy=4;M.cell=new THREE.MeshStandardMaterial({map:T,metalness:.4,roughness:.3})})();
+
+// Apollo 12 Solar Wind Spectrometer (units ~ 0.3 m)
+const rover=new THREE.Group();scene.add(rover);const P={};
+const part=id=>{const g=new THREE.Group();g.userData={id,k:0};rover.add(g);return P[id]=g};
+const add=(g,geo,m,x,y,z)=>{const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;g.add(o);return o};
+const cyl=(r,h,s=16,r2=r)=>new THREE.CylinderGeometry(r,r2,h,s),sph=(r,s=16)=>new THREE.SphereGeometry(r,s,Math.ceil(s*.7));
+function tube(g,a,b,r,m){const d=b.clone().sub(a),o=new THREE.Mesh(cyl(r,d.length(),8),m);o.position.copy(a).add(b).multiplyScalar(.5);o.quaternion.setFromUnitVectors(V(0,1,0),d.normalize());o.castShadow=true;g.add(o)}
+const D2R=Math.PI/180;
+M.dome=M.white.clone();M.dome.flatShading=true;
+M.foil=new THREE.MeshStandardMaterial({color:0xc98a4a,metalness:.9,roughness:.4});
+
+// instrument box
+const B=part('base');
+add(B,new THREE.BoxGeometry(1.6,.9,1.3),M.white,0,.8,0);
+add(B,new THREE.BoxGeometry(1.7,.04,1.4),M.alu,0,1.27,0);
+add(B,new THREE.BoxGeometry(1.5,.05,1.2),M.gun,0,.35,0);
+for(let i=0;i<4;i++)add(B,new THREE.BoxGeometry(.05,.07,1.2),M.alu,-.84,.55+i*.2,0);
+add(B,new THREE.BoxGeometry(.42,.2,.01),M.foil,.35,.7,.66);
+add(B,new THREE.BoxGeometry(.2,.12,.14),M.gun,.3,.52,.7);
+const fl=add(B,new THREE.BoxGeometry(1.3,.03,.5),M.alu,-1.0,1.15,0);fl.rotation.z=.28;
+
+// legs
+const L=part('legs');
+[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(c=>{const top=V(c[0]*.7,.4,c[1]*.55),bot=V(c[0]*.95,.04,c[1]*.78);tube(L,top,bot,.03,M.alu);add(L,cyl(.1,.03,16),M.gun,bot.x,.02,bot.z)});
+
+// Faraday cup array: six tilted cups on a faceted shell
+function cup(g,pos,dir){const c=new THREE.Group();c.position.copy(pos);c.quaternion.setFromUnitVectors(V(0,1,0),dir.clone().normalize());g.add(c);
+ add(c,cyl(.17,.34,20),M.white,0,0,0);add(c,new THREE.TorusGeometry(.17,.016,8,24),M.alu,0,.17,0).rotation.x=Math.PI/2;
+ add(c,cyl(.145,.02,20),M.dark,0,.165,0);add(c,cyl(.11,.01,20),M.alu,0,.172,0)}
+const CU=part('cups');
+add(CU,new THREE.SphereGeometry(.62,6,3,0,Math.PI*2,0,Math.PI/2),M.dome,0,1.29,0);
+const tl=50*D2R;
+for(let i=0;i<6;i++){const f=i*60*D2R;cup(CU,V(Math.cos(f)*.42,1.72,Math.sin(f)*.42),V(Math.sin(tl)*Math.cos(f),Math.cos(tl),Math.sin(tl)*Math.sin(f)))}
+for(let i=0;i<10;i++){const a=i*.63+.3,ph=.9+(i%3)*.12;add(CU,sph(.022,6),M.alu,Math.sin(ph)*Math.cos(a)*.63,1.29+Math.cos(ph)*.63,Math.sin(ph)*Math.sin(a)*.63)}
+const CE=part('center');cup(CE,V(0,1.98,0),V(0,1,0));
+
+// umbilical cable to the ALSEP
+const CB=part('cable');
+add(CB,new THREE.TubeGeometry(new THREE.CatmullRomCurve3([V(.3,.5,.7),V(.45,.05,1.0),V(.9,.03,1.7),V(1.9,.03,2.1),V(3.1,.03,2.3)]),48,.024,6),M.dark,0,0,0);
+rover.traverse(o=>{if(o.material)o.material=o.material.clone()});
+
+// lunar surface
+const hY=(x,z)=>{const r=Math.hypot(x,z),k=Math.min(1,Math.max(0,(r-4)/10));let h=.4*Math.sin(x*.1)*Math.cos(z*.12)+.15*Math.sin(x*.45+z*.3)+.06*Math.sin(z*1.2-x*.8);
+ [[22,-15,9],[-30,10,12],[14,28,7],[-12,-25,6]].forEach(c=>{const d=Math.hypot(x-c[0],z-c[1])/c[2];if(d<1.5)h+=d<1?-(1-d*d)*c[2]*.12:Math.pow(1.5-d,1.5)*c[2]*.1});return k*k*(3-2*k)*h};
+const gg=new THREE.PlaneGeometry(260,260,180,180);gg.rotateX(-Math.PI/2);const gp=gg.attributes.position,col=[];
+for(let i=0;i<gp.count;i++){const x=gp.getX(i),z=gp.getZ(i);gp.setY(i,hY(x,z));const v=.8+Math.random()*.3;col.push(v,v*.95,v*.9)}
+gg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));gg.computeVertexNormals();
+const gm=new THREE.Mesh(gg,new THREE.MeshStandardMaterial({map:tex('#6c645b','rgba(40,35,30,.3)',9000,0,70),vertexColors:true,roughness:1,metalness:0,envMapIntensity:.25}));gm.receiveShadow=true;scene.add(gm);
+const rockM=new THREE.MeshStandardMaterial({map:tex('#5a534b','rgba(130,120,110,.3)',3000,0,1),roughness:.95,flatShading:true,envMapIntensity:.4});
+for(let i=0;i<90;i++){const g=new THREE.IcosahedronGeometry(1,1),p=g.attributes.position;for(let j=0;j<p.count;j++){const f=.75+Math.random()*.5;p.setXYZ(j,p.getX(j)*f,p.getY(j)*f,p.getZ(j)*f)}g.computeVertexNormals();
+ const r=new THREE.Mesh(g,rockM),a=Math.random()*6.283,n=i<16,d=n?4.5+Math.random()*6:7+Math.pow(Math.random(),.6)*70,s=(n?.07:.2)+Math.pow(Math.random(),3)*(n?.25:2.4);
+ r.position.set(Math.cos(a)*d,hY(Math.cos(a)*d,Math.sin(a)*d)+s*.25,Math.sin(a)*d);r.scale.set(s,s*.6,s*.85);r.rotation.y=Math.random()*6;r.castShadow=r.receiveShadow=true;scene.add(r)}
+// boot-print trail
+{const c=document.createElement('canvas');c.width=32;c.height=64;const x=c.getContext('2d');x.fillStyle='rgba(25,18,12,.5)';x.beginPath();x.ellipse(16,32,13,29,0,0,6.283);x.fill();
+x.strokeStyle='rgba(0,0,0,.6)';x.lineWidth=2;for(let y=8;y<60;y+=7){x.beginPath();x.moveTo(5,y);x.lineTo(27,y);x.stroke()}
+const fm=new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(c),transparent:true,roughness:1,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});
+const dx=3,dz=-2.3,l=Math.hypot(dx,dz),nx=-dz/l,nz=dx/l;
+for(let i=0;i<16;i++){const t=i/15,sd=i%2?1:-1,px=-4.6+t*3+nx*.2*sd,pz=3.8-t*2.3+nz*.2*sd;
+ const m=new THREE.Mesh(new THREE.PlaneGeometry(.24,.55),fm);m.rotation.order='YXZ';m.rotation.set(-Math.PI/2,Math.atan2(-dx,-dz),0);m.position.set(px,hY(px,pz)+.015,pz);m.receiveShadow=true;scene.add(m)}}
+// stars + Earth
+{const n=2200,p=new Float32Array(n*3);for(let i=0;i<n;i++){const u=Math.random()*6.283,y=.02+Math.random()*.98,r=Math.sqrt(1-y*y)*500;p.set([Math.cos(u)*r,y*500,Math.sin(u)*r],i*3)}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:1.5,sizeAttenuation:false,color:0xdfe6ff,fog:false,transparent:true,opacity:.9})));
+const e=new THREE.Mesh(new THREE.SphereGeometry(14,32,16),new THREE.MeshBasicMaterial({color:0x4a86c8,fog:false}));e.position.set(220,200,-300);scene.add(e)}
+
+// content
+const H=[
+{id:'cups',n:'Faraday Cup Array',a:[.28,1.9,.48],p:[2.4,2.6,3.2],t:[0,1.5,0],sp:'6 tilted cups · round apertures · charged grids',
+w:'Six metal cups, tilted outward around a ring, each caught charged particles of the solar wind through a round opening. Voltages on grids inside sorted the particles by energy.',
+y:'Because each cup looked in a different direction, the array showed how fast the solar wind blows, how dense it is and where it comes from, with no moving parts.'},
+{id:'center',n:'Central Vertical Cup',a:[0,2.25,0],p:[1.8,3.2,2.4],t:[0,1.9,0],sp:'7th cup · looks straight up',
+w:'A seventh cup at the top pointed straight at the sky, measuring solar wind arriving from overhead as the Sun crossed the lunar sky.',
+y:'The vertical cup gave a fixed reference direction, so the other six could be compared against it to work out the wind’s flow angle.'},
+{id:'base',n:'Electronics Box',a:[.5,.95,.7],p:[2.6,1.4,3.4],t:[0,.8,0],sp:'Electronics · heaters · thermal radiator',
+w:'The white box held the power supplies, the measurement electronics and heaters. Slats and a reflective finish helped it shed heat in sunlight and stay warm on cold nights.',
+y:'It turned tiny electrical currents from the cups into numbers that were sent to Earth through the Apollo 12 science station’s transmitter.'},
+{id:'legs',n:'Legs',a:[.95,.25,.78],p:[2.4,1,3.2],t:[.8,.3,.6],sp:'Four slim legs · flat footpads',
+w:'Four slim legs held the box level on the uneven soil, so each cup pointed in a known direction relative to the Sun.',
+y:'Pointing accuracy mattered: a tilted instrument would have given the wrong direction for the solar wind.'},
+{id:'cable',n:'Power & Data Cable',a:[1.9,.15,2.1],p:[3.4,1.4,4.6],t:[1.5,.1,1.8],sp:'Umbilical to the ALSEP central station',
+w:'A flat cable linked the instrument to the central station, supplying power and carrying its measurements back for transmission to Earth.',
+y:'Sharing power and radio with the rest of the science station let a small instrument keep listening to the Sun long after the astronauts had gone home.'}];
+
+// interaction
+const hud=$('#hud'),nav=$('#nav'),panel=$('#panel'),tip=$('#tip');let sel=null,hov=null,tw=null,mx=0,my=0,moved=false,fr=0,started=false;
+H.forEach((h,i)=>{h.el=document.createElement('button');h.el.className='hs';h.el.textContent='0'+(i+1);h.el.onclick=()=>select(h.id);hud.appendChild(h.el);
+ const b=document.createElement('button');b.innerHTML=`<b>0${i+1}</b>${h.n}`;b.onclick=()=>select(h.id);h.nb=b;nav.appendChild(b)});
+const VW={FRONT:[[0,1.8,8],[0,1.1,0]],SIDE:[[8,1.8,0],[0,1.1,0]],TOP:[[0,10,.5],[0,1.0,0]],REAR:[[0,1.8,-8],[0,1.1,0]],'3/4':[[5.5,3.2,6.5],[0,1.1,0]]};
+for(const k in VW){const b=document.createElement('button');b.textContent=k;b.onclick=()=>{close();fly(...VW[k])};$('#views').appendChild(b)}
+function fly(p,t){const tt=V(...t),off=V(...p).sub(tt);if(cam.aspect<.9)off.multiplyScalar(1.5);tw={p0:cam.position.clone(),t0:ctl.target.clone(),p1:tt.clone().add(off),t1:tt,s:performance.now(),d:1200};ctl.autoRotate=false}
+function select(id){const h=H.find(x=>x.id===id);sel=id;$('#pt').textContent='COMPONENT 0'+(H.indexOf(h)+1);$('#pn').textContent=h.n;$('#ps').textContent=h.sp;$('#pw').textContent=h.w;$('#py').textContent=h.y;
+ panel.classList.add('on');H.forEach(x=>{x.nb.classList.toggle('act',x===h);x.el.classList.toggle('act',x===h)});fly(h.p,h.t)}
+function close(){sel=null;panel.classList.remove('on');H.forEach(x=>{x.nb.classList.remove('act');x.el.classList.remove('act')})}
+$('#x').onclick=close;addEventListener('keydown',e=>e.key==='Escape'&&close());
+$('#go').onclick=()=>{started=true;$('#intro').classList.add('off');hud.classList.add('on');fly(...VW['3/4'])};
+ctl.addEventListener('start',()=>{tw=null;ctl.autoRotate=false});
+const rc=new THREE.Raycaster(),nd=new THREE.Vector2();
+function pick(x,y){nd.set(x/innerWidth*2-1,-(y/innerHeight)*2+1);rc.setFromCamera(nd,cam);rc.far=Infinity;const h=rc.intersectObject(rover,true)[0];if(!h)return null;let o=h.object;while(o&&!o.userData.id)o=o.parent;return o?o.userData.id:null}
+let dx=0,dy=0;const cv=R.domElement;
+cv.addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;moved=true});
+cv.addEventListener('pointerdown',e=>{dx=e.clientX;dy=e.clientY});
+cv.addEventListener('pointerup',e=>{if(started&&Math.hypot(e.clientX-dx,e.clientY-dy)<6){const id=pick(e.clientX,e.clientY);if(id)select(id)}});
+function resize(){R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}addEventListener('resize',resize);resize();
+
+// loop
+const clk=new THREE.Clock(),tv=new THREE.Vector3();
+function loop(){requestAnimationFrame(loop);const dt=Math.min(clk.getDelta(),.05);fr++;
+ if(tw){const k=Math.min(1,(performance.now()-tw.s)/tw.d),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;cam.position.lerpVectors(tw.p0,tw.p1,e);ctl.target.lerpVectors(tw.t0,tw.t1,e);if(k>=1)tw=null}
+ ctl.target.y=Math.max(.2,ctl.target.y);ctl.update();
+ if(moved&&started){moved=false;hov=pick(mx,my);const h=H.find(x=>x.id===hov);cv.style.cursor=h?'pointer':'grab';tip.style.opacity=h?1:0;if(h){tip.textContent=h.n;tip.style.left=mx+14+'px';tip.style.top=my+14+'px'}}
+ for(const id in P){const g=P[id],u=g.userData,t=id===sel?1:id===hov?.8:0;u.k+=(t-u.k)*Math.min(1,dt*10);if(Math.abs(t-u.k)>.003||u.k>.003)g.traverse(o=>{if(o.material&&o.material.emissive)o.material.emissive.setRGB(.1*u.k,.3*u.k,.5*u.k)})}
+ if(started)H.forEach(h=>{tv.set(...h.a).project(cam);const vis=tv.z<1&&tv.z>-1;h.el.style.display=vis?'':'none';h.el.style.transform=`translate(${(tv.x+1)/2*innerWidth}px,${(1-tv.y)/2*innerHeight}px)`;
+  if(vis&&fr%8===0){const p=V(...h.a),d=p.clone().sub(cam.position),Ln=d.length();rc.set(cam.position,d.normalize());rc.far=Ln-.3;h.el.classList.toggle('occ',rc.intersectObject(rover,true).length>0)}});
+ R.render(scene,cam)}loop();
+</script></body></html>
