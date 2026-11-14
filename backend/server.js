@@ -15,6 +15,7 @@ const path = require("path");
 const PORT = process.env.PORT || 3000;
 const NASA_API = "https://images-api.nasa.gov";
 const REFRESH_MS = 12 * 60 * 60 * 1000;       // re-fetch media every 12 hours
+const RETRY_MS = 5 * 60 * 1000;               // after a failed NASA request, try again after 5 minutes
 const FIRST_LOAD_WAIT_MS = 45 * 1000;          // on a cold start, wait this long for media before answering
 const MAX_IMAGES = 8;
 const MAX_VIDEOS = 3;
@@ -60,19 +61,22 @@ async function bestImageUrl(nasaId, fallback) {
   return fallback.replace(/^http:/, "https:");
 }
 
+// the sharper-picture lookups run at the same time (not one after another), so a cold start is much faster
 async function fetchImages(query) {
   if (!query) return [];
   const items = await searchNasa(query, "image");
-  const out = [];
+  const picks = [];
   for (const it of items) {
     const meta = (it.data && it.data[0]) || {};
     const link = (it.links || []).find(function (l) { return l.render === "image"; });
     if (!link || !link.href) continue;
-    const url = meta.nasa_id ? await bestImageUrl(meta.nasa_id, link.href) : link.href.replace(/^http:/, "https:");
-    out.push({ url: url, title: meta.title || "", nasaId: meta.nasa_id || "" });
-    if (out.length >= MAX_IMAGES) break;
+    picks.push({ meta: meta, link: link });
+    if (picks.length >= MAX_IMAGES) break;
   }
-  return out;
+  return Promise.all(picks.map(async function (p) {
+    const url = p.meta.nasa_id ? await bestImageUrl(p.meta.nasa_id, p.link.href) : p.link.href.replace(/^http:/, "https:");
+    return { url: url, title: p.meta.title || "", nasaId: p.meta.nasa_id || "" };
+  }));
 }
 
 // turn one NASA video id into { url, title, poster, nasaId } (null if it has no mp4)
@@ -166,6 +170,7 @@ let firstRefresh = Promise.resolve();
 async function refreshMedia(force) {
   if (refreshing) return;
   refreshing = true;
+  let needRetry = false;
   try {
     const missions = readJSON(MISSIONS_FILE, []);
     const overrides = readJSON(OVERRIDES_FILE, {});
@@ -177,29 +182,37 @@ async function refreshMedia(force) {
       if (fresh && !force) continue;
       try {
         let images = cached ? cached.images : [], videos = cached ? cached.videos : [];
+        let autoOk = true;
         try {
           images = await fetchImages(m.nasaQuery);
           videos = await fetchVideos(m.nasaVideoQuery);
-        } catch (e) { console.warn("[media] " + m.id + " auto media failed: " + e.message); }
+        } catch (e) {
+          autoOk = false; needRetry = true;       // NASA failed: keep what we have and try again soon
+          console.warn("[media] " + m.id + " auto media failed: " + e.message);
+        }
         const custom = await resolveCustom(over);
-        mediaCache[m.id] = { images: images, videos: videos, custom: custom, overKey: key, fetchedAt: Date.now() };
+        // fetchedAt = 0 marks a failed fetch as "not fresh", so it is retried instead of waiting 12 hours
+        mediaCache[m.id] = { images: images, videos: videos, custom: custom, overKey: key, fetchedAt: autoOk ? Date.now() : 0 };
         try { fs.writeFileSync(CACHE_FILE, JSON.stringify(mediaCache, null, 2)); }
         catch (e) { console.warn("[media] could not write cache file: " + e.message); }
         console.log("[media] " + m.id + ": " + images.length + " images, " + videos.length + " videos, custom " +
-          custom.gallery.length + " images / " + custom.videos.filter(Boolean).length + " videos");
+          custom.gallery.length + " images / " + custom.videos.filter(Boolean).length + " videos" + (autoOk ? "" : "  (will retry)"));
       } catch (e) {
+        needRetry = true;
         console.warn("[media] " + m.id + " failed: " + e.message);   // keep any older cache
       }
     }
   } finally {
     refreshing = false;      // always reset, even if something unexpected threw
   }
+  if (needRetry) setTimeout(function () { refreshMedia(false); }, RETRY_MS);
 }
 
-// On a cold start (free hosting wipes the disk) there is no cache yet. Give the first refresh a
-// little time so the first visitor gets pictures instead of empty cards.
+// On a cold start (free hosting wipes the disk) there is no cache yet. Wait (up to a limit) until
+// EVERY mission has been fetched, so the first visitor gets pictures instead of empty cards.
 async function waitForFirstMedia() {
-  if (Object.keys(mediaCache).length) return;
+  const total = readJSON(MISSIONS_FILE, []).length;
+  if (Object.keys(mediaCache).length >= total) return;
   await Promise.race([firstRefresh, new Promise(function (r) { setTimeout(r, FIRST_LOAD_WAIT_MS); })]);
 }
 
