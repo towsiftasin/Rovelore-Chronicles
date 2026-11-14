@@ -3,10 +3,10 @@
 <title>Event Horizon — Surveyor 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ac:#ff7a3c;--fg:#e6ecf2;--dim:#8a97a3;--line:rgba(255,122,60,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--ac:#6fc3ff;--fg:#e6ecf2;--dim:#8a97a3;--line:rgba(111,195,255,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:#05030a;color:var(--fg);font-family:Rajdhani,'Segoe UI',system-ui,sans-serif;overflow:hidden}
+html,body{height:100%;margin:0;background:#020308;color:var(--fg);font-family:Rajdhani,'Segoe UI',system-ui,sans-serif;overflow:hidden}
 canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
 .o{font-family:Orbitron,'Segoe UI',sans-serif;letter-spacing:.2em;text-transform:uppercase}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -17,27 +17,27 @@ button{font:inherit;color:inherit;cursor:pointer}
 #id{position:absolute;left:22px;bottom:max(22px,env(safe-area-inset-bottom));pointer-events:none!important;border-left:2px solid var(--ac);padding-left:14px}
 #id small{font-size:11px;color:var(--dim)}#id h1{margin:2px 0;font-size:30px;font-weight:700}#id em{font:normal 600 13px Orbitron;color:var(--ac);letter-spacing:.3em}
 #nav{position:absolute;right:22px;top:90px;display:flex;flex-direction:column;gap:6px;width:210px}
-#nav button,#views button{background:rgba(12,7,12,.6);border:1px solid rgba(255,255,255,.12);padding:8px 12px;text-align:left;font-size:14px;letter-spacing:.06em;backdrop-filter:blur(6px);transition:.2s}
+#nav button,#views button{background:rgba(6,10,16,.6);border:1px solid rgba(255,255,255,.12);padding:8px 12px;text-align:left;font-size:14px;letter-spacing:.06em;backdrop-filter:blur(6px);transition:.2s}
 #nav button b{font:600 10px Orbitron;color:var(--ac);margin-right:8px}
-#nav button:hover,#nav button.act,#views button:hover{border-color:var(--ac);background:rgba(255,122,60,.16)}
+#nav button:hover,#nav button.act,#views button:hover{border-color:var(--ac);background:rgba(111,195,255,.16)}
 #views{position:absolute;left:50%;transform:translateX(-50%);bottom:max(22px,env(safe-area-inset-bottom));display:flex;gap:6px}
 #views button{text-align:center;font:500 10px Orbitron;letter-spacing:.16em;padding:9px 12px}
-#panel{position:absolute;right:22px;bottom:max(22px,env(safe-area-inset-bottom));width:340px;padding:18px 20px;background:rgba(10,6,12,.78);backdrop-filter:blur(12px);border:1px solid var(--line);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);opacity:0;transform:translateY(12px);pointer-events:none!important;transition:.4s}
+#panel{position:absolute;right:22px;bottom:max(22px,env(safe-area-inset-bottom));width:340px;padding:18px 20px;background:rgba(5,8,14,.8);backdrop-filter:blur(12px);border:1px solid var(--line);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);opacity:0;transform:translateY(12px);pointer-events:none!important;transition:.4s}
 #panel.on{opacity:1;transform:none;pointer-events:auto!important}
 #panel .t{font:600 10px Orbitron;color:var(--ac);letter-spacing:.25em}#panel h3{margin:6px 0 4px;font:700 18px Orbitron;letter-spacing:.1em;text-transform:uppercase}
 #panel .sp{font-size:12px;color:var(--dim);letter-spacing:.08em;margin-bottom:10px}
-#panel h4{margin:12px 0 3px;font:500 10px Orbitron;letter-spacing:.22em;color:var(--ac)}#panel p{margin:0;font-size:15px;line-height:1.35;color:#d8cbc2}
+#panel h4{margin:12px 0 3px;font:500 10px Orbitron;letter-spacing:.22em;color:var(--ac)}#panel p{margin:0;font-size:15px;line-height:1.35;color:#ccd5de}
 #x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:20px;color:var(--dim)}
-.hs{position:fixed;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;border:1px solid var(--ac);border-radius:50%;background:rgba(255,122,60,.14);color:#ffb68f;font:600 10px Orbitron;display:grid;place-items:center;transition:opacity .3s,background .2s}
+.hs{position:fixed;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;border:1px solid var(--ac);border-radius:50%;background:rgba(111,195,255,.14);color:#b5e1ff;font:600 10px Orbitron;display:grid;place-items:center;transition:opacity .3s,background .2s}
 .hs::after{content:'';position:absolute;inset:-6px;border:1px solid var(--line);border-radius:50%;animation:p 2.2s infinite}
 @keyframes p{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
-.hs.occ{opacity:.22}.hs.act,.hs:hover{background:var(--ac);color:#150a05}
-#tip{position:fixed;pointer-events:none;padding:4px 10px;font:500 10px Orbitron;letter-spacing:.16em;text-transform:uppercase;background:rgba(10,6,12,.85);border:1px solid var(--ac);opacity:0;transition:opacity .15s;white-space:nowrap}
-#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 24px max(8vh,40px);background:linear-gradient(transparent 40%,rgba(5,3,10,.88));transition:opacity 1.2s;pointer-events:none}
+.hs.occ{opacity:.22}.hs.act,.hs:hover{background:var(--ac);color:#04101a}
+#tip{position:fixed;pointer-events:none;padding:4px 10px;font:500 10px Orbitron;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,8,14,.88);border:1px solid var(--ac);opacity:0;transition:opacity .15s;white-space:nowrap}
+#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 24px max(8vh,40px);background:linear-gradient(transparent 40%,rgba(2,3,8,.9));transition:opacity 1.2s;pointer-events:none}
 #intro.off{opacity:0}#intro>*{pointer-events:auto}
 #intro .s{font-size:11px;color:var(--ac)}#intro h2{margin:10px 0 8px;font-size:clamp(30px,8vw,72px);font-weight:700;letter-spacing:.24em}
-#intro p{max-width:520px;margin:0 0 24px;font-size:17px;color:#cdbfb5;line-height:1.4}
-#go{background:transparent;border:1px solid var(--ac);padding:14px 34px;font:600 12px Orbitron;letter-spacing:.3em;color:var(--ac);transition:.25s}#go:hover{background:var(--ac);color:#150a05}
+#intro p{max-width:520px;margin:0 0 24px;font-size:17px;color:#bcc7d2;line-height:1.4}
+#go{background:transparent;border:1px solid var(--ac);padding:14px 34px;font:600 12px Orbitron;letter-spacing:.3em;color:var(--ac);transition:.25s}#go:hover{background:var(--ac);color:#04101a}
 @media(max-width:720px){
 #nav{top:auto;right:0;left:0;bottom:max(8px,env(safe-area-inset-bottom));width:auto;flex-direction:row;overflow-x:auto;padding:0 10px;gap:6px}
 #nav button{white-space:nowrap;flex:0 0 auto}#views{display:none}
@@ -45,7 +45,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #panel{right:10px;left:10px;width:auto;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 56px)}#panel p{font-size:14px}}
 </style></head><body>
 <canvas id="c"></canvas>
-<div id="hud"><div id="brand" class="o"><b>Event Horizon</b><span>Surveyor Program Archive</span></div>
+<div id="hud"><div id="brand" class="o"><b>Event Horizon</b><span>Lunar Exploration Archive</span></div>
 <div id="id" class="o"><small>Surveyor Program</small><h1>Surveyor 1</h1><em>1966</em></div>
 <nav id="nav"></nav><div id="views"></div>
 <aside id="panel"><button id="x" aria-label="Close">×</button><div class="t" id="pt"></div><h3 id="pn"></h3><div class="sp" id="ps"></div><h4>What it did</h4><p id="pw"></p><h4>Why it mattered</h4><p id="py"></p></aside></div>
@@ -59,22 +59,22 @@ const $=s=>document.querySelector(s),V=(a,b,c)=>new THREE.Vector3(a,b,c);
 const R=new THREE.WebGLRenderer({canvas:$('#c'),antialias:true});
 R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=THREE.sRGBEncoding;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.1;
 R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x05030a);scene.fog=new THREE.FogExp2(0x0b0508,0.013);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x020308);
 const cam=new THREE.PerspectiveCamera(40,1,.1,900);cam.position.set(11,5,13);
 const ctl=new THREE.OrbitControls(cam,R.domElement);
 Object.assign(ctl,{enableDamping:true,dampingFactor:.07,minDistance:2.5,maxDistance:30,maxPolarAngle:Math.PI/2-.03,screenSpacePanning:true,autoRotate:true,autoRotateSpeed:.7});ctl.target.set(0,1.4,0);
 
 // procedural IBL
 (function(){const g=document.createElement('canvas');g.width=4;g.height=256;const x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);
-[['#1a1a36',0],['#8a6a5a',.5],['#6a3018',.55],['#3a1a0e',1]].forEach(s=>gr.addColorStop(s[1],s[0]));x.fillStyle=gr;x.fillRect(0,0,4,256);
+[['#06080f',0],['#2a2a30',.5],['#4a4844',.55],['#1c1b1a',1]].forEach(s=>gr.addColorStop(s[1],s[0]));x.fillStyle=gr;x.fillRect(0,0,4,256);
 const e=new THREE.Scene();e.add(new THREE.Mesh(new THREE.SphereGeometry(50,32,16),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(g),side:THREE.BackSide})));
-const s=new THREE.Mesh(new THREE.SphereGeometry(5,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(7,5,3.5)}));s.position.set(-28,12,18);e.add(s);
+const s=new THREE.Mesh(new THREE.SphereGeometry(5,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(8,7,6)}));s.position.set(-28,12,18);e.add(s);
 scene.environment=new THREE.PMREMGenerator(R).fromScene(e).texture})();
 
 // lighting (hard lunar sun)
-const sun=new THREE.DirectionalLight(0xffd6b0,3.4);sun.position.set(-22,10,14);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+const sun=new THREE.DirectionalLight(0xfff4e6,3.6);sun.position.set(-22,10,14);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:80});sun.shadow.bias=-.0004;sun.shadow.normalBias=.03;scene.add(sun);
-scene.add(new THREE.HemisphereLight(0x6a5070,0x3a1a10,.3));
+scene.add(new THREE.HemisphereLight(0x405070,0x2a2622,.22));
 
 // textures
 function tex(base,dust,n,scr,rep){const c=document.createElement('canvas');c.width=c.height=256;const t=c.getContext('2d');t.fillStyle=base;t.fillRect(0,0,256,256);
@@ -143,17 +143,17 @@ rover.traverse(o=>{if(o.material)o.material=o.material.clone()});
 const hY=(x,z)=>{const r=Math.hypot(x,z),k=Math.min(1,Math.max(0,(r-4)/10));let h=.4*Math.sin(x*.1)*Math.cos(z*.12)+.15*Math.sin(x*.45+z*.3)+.06*Math.sin(z*1.2-x*.8);
  [[22,-15,9],[-30,10,12],[14,28,7],[-12,-25,6]].forEach(c=>{const d=Math.hypot(x-c[0],z-c[1])/c[2];if(d<1.5)h+=d<1?-(1-d*d)*c[2]*.12:Math.pow(1.5-d,1.5)*c[2]*.1});return k*k*(3-2*k)*h};
 const gg=new THREE.PlaneGeometry(260,260,180,180);gg.rotateX(-Math.PI/2);const gp=gg.attributes.position,col=[];
-for(let i=0;i<gp.count;i++){const x=gp.getX(i),z=gp.getZ(i);gp.setY(i,hY(x,z));const v=.78+Math.random()*.3;col.push(v,v*.82,v*.72)}
+for(let i=0;i<gp.count;i++){const x=gp.getX(i),z=gp.getZ(i);gp.setY(i,hY(x,z));const v=.78+Math.random()*.3;col.push(v,v*.97,v*.93)}
 gg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));gg.computeVertexNormals();
-const gm=new THREE.Mesh(gg,new THREE.MeshStandardMaterial({map:tex('#a4522b','rgba(120,50,25,.25)',9000,0,70),vertexColors:true,roughness:1,metalness:0,envMapIntensity:.3}));gm.receiveShadow=true;scene.add(gm);
-const rockM=new THREE.MeshStandardMaterial({map:tex('#6e3d28','rgba(176,96,56,.3)',3000,0,1),roughness:.95,flatShading:true,envMapIntensity:.4});
+const gm=new THREE.Mesh(gg,new THREE.MeshStandardMaterial({map:tex('#807c77','rgba(60,58,56,.25)',9000,0,70),vertexColors:true,roughness:1,metalness:0,envMapIntensity:.3}));gm.receiveShadow=true;scene.add(gm);
+const rockM=new THREE.MeshStandardMaterial({map:tex('#5e5a56','rgba(150,145,140,.3)',3000,0,1),roughness:.95,flatShading:true,envMapIntensity:.4});
 for(let i=0;i<90;i++){const g=new THREE.IcosahedronGeometry(1,1),p=g.attributes.position;for(let j=0;j<p.count;j++){const f=.75+Math.random()*.5;p.setXYZ(j,p.getX(j)*f,p.getY(j)*f,p.getZ(j)*f)}g.computeVertexNormals();
  const r=new THREE.Mesh(g,rockM),a=Math.random()*6.283,n=i<16,d=n?3.5+Math.random()*6:7+Math.pow(Math.random(),.6)*70,s=(n?.07:.2)+Math.pow(Math.random(),3)*(n?.25:2.4);
  r.position.set(Math.cos(a)*d,hY(Math.cos(a)*d,Math.sin(a)*d)+s*.25,Math.sin(a)*d);r.scale.set(s,s*.6,s*.85);r.rotation.y=Math.random()*6;r.castShadow=r.receiveShadow=true;scene.add(r)}
 // stars + Earth
 {const n=2200,p=new Float32Array(n*3);for(let i=0;i<n;i++){const u=Math.random()*6.283,y=.02+Math.random()*.98,r=Math.sqrt(1-y*y)*500;p.set([Math.cos(u)*r,y*500,Math.sin(u)*r],i*3)}
 const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:1.5,sizeAttenuation:false,color:0xdfe6ff,fog:false,transparent:true,opacity:.9})));
-}
+const e=new THREE.Mesh(new THREE.SphereGeometry(14,32,16),new THREE.MeshBasicMaterial({color:0x4a86c8,fog:false}));e.position.set(220,200,-300);scene.add(e)}
 
 // content
 const H=[
@@ -203,7 +203,7 @@ function loop(){requestAnimationFrame(loop);const dt=Math.min(clk.getDelta(),.05
  if(tw){const k=Math.min(1,(performance.now()-tw.s)/tw.d),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;cam.position.lerpVectors(tw.p0,tw.p1,e);ctl.target.lerpVectors(tw.t0,tw.t1,e);if(k>=1)tw=null}
  ctl.target.y=Math.max(.2,ctl.target.y);ctl.update();
  if(moved&&started){moved=false;hov=pick(mx,my);const h=H.find(x=>x.id===hov);cv.style.cursor=h?'pointer':'grab';tip.style.opacity=h?1:0;if(h){tip.textContent=h.n;tip.style.left=mx+14+'px';tip.style.top=my+14+'px'}}
- for(const id in P){const g=P[id],u=g.userData,t=id===sel?1:id===hov?.8:0;u.k+=(t-u.k)*Math.min(1,dt*10);if(Math.abs(t-u.k)>.003||u.k>.003)g.traverse(o=>{if(o.material&&o.material.emissive)o.material.emissive.setRGB(.45*u.k,.14*u.k,.03*u.k)})}
+ for(const id in P){const g=P[id],u=g.userData,t=id===sel?1:id===hov?.8:0;u.k+=(t-u.k)*Math.min(1,dt*10);if(Math.abs(t-u.k)>.003||u.k>.003)g.traverse(o=>{if(o.material&&o.material.emissive)o.material.emissive.setRGB(.1*u.k,.3*u.k,.5*u.k)})}
  if(started)H.forEach(h=>{tv.set(...h.a).project(cam);const vis=tv.z<1&&tv.z>-1;h.el.style.display=vis?'':'none';h.el.style.transform=`translate(${(tv.x+1)/2*innerWidth}px,${(1-tv.y)/2*innerHeight}px)`;
   if(vis&&fr%8===0){const p=V(...h.a),d=p.clone().sub(cam.position),Ln=d.length();rc.set(cam.position,d.normalize());rc.far=Ln-.3;h.el.classList.toggle('occ',rc.intersectObject(rover,true).length>0)}});
  R.render(scene,cam)}loop();

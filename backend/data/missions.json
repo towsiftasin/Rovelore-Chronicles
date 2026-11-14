@@ -677,6 +677,16 @@
     ],
     "missionEnd": "Ranger 7 completed its mission on July 31, 1964, when it deliberately impacted Mare Cognitum on the Moon. Before impact, it successfully transmitted its final photographs, with the last image arriving approximately 2.3 seconds before contact with the lunar surface.",
     "legacy": "Ranger 7 marked a major breakthrough in NASA's lunar exploration program. Its photographs helped scientists understand the Moon's surface and prepare for future Apollo landing missions. Its success also paved the way for subsequent missions, including Ranger 8 and Ranger 9.",
-    "cover": "../images/cardcover/ranger7.jpg"
+    "cover": "../images/cardcover/ranger7.jpg",
+    "viewers": [
+      {
+        "src": "ranger7-3d.html",
+        "title": "Interactive 3D model",
+        "hint": "Press “Explore Spacecraft”, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part.",
+        "link": "ranger7-3d.html",
+        "linkText": "Open full screen",
+        "credit": "Interactive 3D model by Team Event Horizon"
+      }
+    ]
   }
 ]
