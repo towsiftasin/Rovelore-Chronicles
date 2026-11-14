@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Event Horizon — Surveyor 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#ff7a3c;--fg:#e6ecf2;--dim:#8a97a3;--line:rgba(255,122,60,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#05030a;color:var(--fg);font-family:Rajdhani,'Segoe UI',system-ui,sans-serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.o{font-family:Orbitron,'Segoe UI',sans-serif;letter-spacing:.2em;text-transform:uppercase}
+button{font:inherit;color:inherit;cursor:pointer}
+#hud{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 1.2s}
+#hud.on{opacity:1}#hud>*{pointer-events:auto}
+#brand{position:absolute;top:max(18px,env(safe-area-inset-top));left:22px;pointer-events:none!important}
+#brand b{font-size:15px;color:var(--ac)}#brand span{display:block;font-size:12px;color:var(--dim);letter-spacing:.14em;margin-top:4px}
+#id{position:absolute;left:22px;bottom:max(22px,env(safe-area-inset-bottom));pointer-events:none!important;border-left:2px solid var(--ac);padding-left:14px}
+#id small{font-size:11px;color:var(--dim)}#id h1{margin:2px 0;font-size:30px;font-weight:700}#id em{font:normal 600 13px Orbitron;color:var(--ac);letter-spacing:.3em}
+#nav{position:absolute;right:22px;top:90px;display:flex;flex-direction:column;gap:6px;width:210px}
+#nav button,#views button{background:rgba(12,7,12,.6);border:1px solid rgba(255,255,255,.12);padding:8px 12px;text-align:left;font-size:14px;letter-spacing:.06em;backdrop-filter:blur(6px);transition:.2s}
+#nav button b{font:600 10px Orbitron;color:var(--ac);margin-right:8px}
+#nav button:hover,#nav button.act,#views button:hover{border-color:var(--ac);background:rgba(255,122,60,.16)}
+#views{position:absolute;left:50%;transform:translateX(-50%);bottom:max(22px,env(safe-area-inset-bottom));display:flex;gap:6px}
+#views button{text-align:center;font:500 10px Orbitron;letter-spacing:.16em;padding:9px 12px}
+#panel{position:absolute;right:22px;bottom:max(22px,env(safe-area-inset-bottom));width:340px;padding:18px 20px;background:rgba(10,6,12,.78);backdrop-filter:blur(12px);border:1px solid var(--line);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);opacity:0;transform:translateY(12px);pointer-events:none!important;transition:.4s}
+#panel.on{opacity:1;transform:none;pointer-events:auto!important}
+#panel .t{font:600 10px Orbitron;color:var(--ac);letter-spacing:.25em}#panel h3{margin:6px 0 4px;font:700 18px Orbitron;letter-spacing:.1em;text-transform:uppercase}
+#panel .sp{font-size:12px;color:var(--dim);letter-spacing:.08em;margin-bottom:10px}
+#panel h4{margin:12px 0 3px;font:500 10px Orbitron;letter-spacing:.22em;color:var(--ac)}#panel p{margin:0;font-size:15px;line-height:1.35;color:#d8cbc2}
+#x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:20px;color:var(--dim)}
+.hs{position:fixed;left:0;top:0;width:32px;height:32px;margin:-16px 0 0 -16px;border:1px solid var(--ac);border-radius:50%;background:rgba(255,122,60,.14);color:#ffb68f;font:600 10px Orbitron;display:grid;place-items:center;transition:opacity .3s,background .2s}
+.hs::after{content:'';position:absolute;inset:-6px;border:1px solid var(--line);border-radius:50%;animation:p 2.2s infinite}
+@keyframes p{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.hs.occ{opacity:.22}.hs.act,.hs:hover{background:var(--ac);color:#150a05}
+#tip{position:fixed;pointer-events:none;padding:4px 10px;font:500 10px Orbitron;letter-spacing:.16em;text-transform:uppercase;background:rgba(10,6,12,.85);border:1px solid var(--ac);opacity:0;transition:opacity .15s;white-space:nowrap}
+#intro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 24px max(8vh,40px);background:linear-gradient(transparent 40%,rgba(5,3,10,.88));transition:opacity 1.2s;pointer-events:none}
+#intro.off{opacity:0}#intro>*{pointer-events:auto}
+#intro .s{font-size:11px;color:var(--ac)}#intro h2{margin:10px 0 8px;font-size:clamp(30px,8vw,72px);font-weight:700;letter-spacing:.24em}
+#intro p{max-width:520px;margin:0 0 24px;font-size:17px;color:#cdbfb5;line-height:1.4}
+#go{background:transparent;border:1px solid var(--ac);padding:14px 34px;font:600 12px Orbitron;letter-spacing:.3em;color:var(--ac);transition:.25s}#go:hover{background:var(--ac);color:#150a05}
+@media(max-width:720px){
+#nav{top:auto;right:0;left:0;bottom:max(8px,env(safe-area-inset-bottom));width:auto;flex-direction:row;overflow-x:auto;padding:0 10px;gap:6px}
+#nav button{white-space:nowrap;flex:0 0 auto}#views{display:none}
+#id{bottom:auto;top:calc(max(18px,env(safe-area-inset-top)) + 46px);left:22px}#id h1{font-size:22px}
+#panel{right:10px;left:10px;width:auto;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 56px)}#panel p{font-size:14px}}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="hud"><div id="brand" class="o"><b>Event Horizon</b><span>Surveyor Program Archive</span></div>
+<div id="id" class="o"><small>Surveyor Program</small><h1>Surveyor 1</h1><em>1966</em></div>
+<nav id="nav"></nav><div id="views"></div>
+<aside id="panel"><button id="x" aria-label="Close">×</button><div class="t" id="pt"></div><h3 id="pn"></h3><div class="sp" id="ps"></div><h4>What it did</h4><p id="pw"></p><h4>Why it mattered</h4><p id="py"></p></aside></div>
+<div id="tip"></div>
+<div id="intro"><div class="o s">Event Horizon · Interactive Exhibit</div><h2 class="o">Surveyor 1</h2>
+<p>June 2, 1966. America’s first soft landing on the Moon — a spindly three-legged robot that proved the lunar surface could carry a spacecraft, and eventually, astronauts.</p><button id="go">EXPLORE LANDER</button></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $=s=>document.querySelector(s),V=(a,b,c)=>new THREE.Vector3(a,b,c);
+const R=new THREE.WebGLRenderer({canvas:$('#c'),antialias:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=THREE.sRGBEncoding;R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.1;
+R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x05030a);scene.fog=new THREE.FogExp2(0x0b0508,0.013);
+const cam=new THREE.PerspectiveCamera(40,1,.1,900);cam.position.set(11,5,13);
+const ctl=new THREE.OrbitControls(cam,R.domElement);
+Object.assign(ctl,{enableDamping:true,dampingFactor:.07,minDistance:2.5,maxDistance:30,maxPolarAngle:Math.PI/2-.03,screenSpacePanning:true,autoRotate:true,autoRotateSpeed:.7});ctl.target.set(0,1.4,0);
+
+// procedural IBL
+(function(){const g=document.createElement('canvas');g.width=4;g.height=256;const x=g.getContext('2d'),gr=x.createLinearGradient(0,0,0,256);
+[['#1a1a36',0],['#8a6a5a',.5],['#6a3018',.55],['#3a1a0e',1]].forEach(s=>gr.addColorStop(s[1],s[0]));x.fillStyle=gr;x.fillRect(0,0,4,256);
+const e=new THREE.Scene();e.add(new THREE.Mesh(new THREE.SphereGeometry(50,32,16),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(g),side:THREE.BackSide})));
+const s=new THREE.Mesh(new THREE.SphereGeometry(5,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(7,5,3.5)}));s.position.set(-28,12,18);e.add(s);
+scene.environment=new THREE.PMREMGenerator(R).fromScene(e).texture})();
+
+// lighting (hard lunar sun)
+const sun=new THREE.DirectionalLight(0xffd6b0,3.4);sun.position.set(-22,10,14);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:80});sun.shadow.bias=-.0004;sun.shadow.normalBias=.03;scene.add(sun);
+scene.add(new THREE.HemisphereLight(0x6a5070,0x3a1a10,.3));
+
+// textures
+function tex(base,dust,n,scr,rep){const c=document.createElement('canvas');c.width=c.height=256;const t=c.getContext('2d');t.fillStyle=base;t.fillRect(0,0,256,256);
+for(let i=0;i<n;i++){const l=Math.random()>.5;t.fillStyle=`rgba(${l?255:0},${l?250:0},${l?240:0},${Math.random()*.3})`;t.fillRect(Math.random()*256,Math.random()*256,1+Math.random()*5,1+Math.random()*5)}
+for(let i=0;i<scr;i++){t.strokeStyle=`rgba(255,255,255,${Math.random()*.25})`;t.lineWidth=.6;t.beginPath();const a=Math.random()*256,b=Math.random()*256;t.moveTo(a,b);t.lineTo(a+Math.random()*44-22,b+Math.random()*8-4);t.stroke()}
+if(dust)for(let i=0;i<12;i++){const x=Math.random()*256,y=Math.random()*256,g=t.createRadialGradient(x,y,0,x,y,40+Math.random()*50);g.addColorStop(0,dust);g.addColorStop(1,'rgba(0,0,0,0)');t.fillStyle=g;t.fillRect(0,0,256,256)}
+const T=new THREE.CanvasTexture(c);T.wrapS=T.wrapT=THREE.RepeatWrapping;T.encoding=THREE.sRGBEncoding;T.anisotropy=4;if(rep)T.repeat.set(rep,rep);return T}
+const D='rgba(150,140,130,.2)';
+const M={white:new THREE.MeshStandardMaterial({map:tex('#e4e2dc',D,1500,60),metalness:.25,roughness:.55}),
+alu:new THREE.MeshStandardMaterial({map:tex('#b4b5b6',D,2000,160),metalness:.85,roughness:.45}),
+gun:new THREE.MeshStandardMaterial({map:tex('#4c4d52',D,1500,100),metalness:.8,roughness:.55}),
+dark:new THREE.MeshStandardMaterial({color:0x17181b,metalness:.4,roughness:.65}),
+lens:new THREE.MeshStandardMaterial({color:0x0a1226,metalness:.9,roughness:.08}),
+honey:new THREE.MeshStandardMaterial({color:0xc9a35a,metalness:.7,roughness:.5})};
+(function(){const c=document.createElement('canvas');c.width=c.height=256;const t=c.getContext('2d');t.fillStyle='#17274a';t.fillRect(0,0,256,256);
+t.strokeStyle='rgba(150,165,205,.5)';t.lineWidth=1.2;for(let i=0;i<=16;i++){t.beginPath();t.moveTo(i*16,0);t.lineTo(i*16,256);t.moveTo(0,i*16);t.lineTo(256,i*16);t.stroke()}
+const T=new THREE.CanvasTexture(c);T.encoding=THREE.sRGBEncoding;T.anisotropy=4;M.cell=new THREE.MeshStandardMaterial({map:T,metalness:.4,roughness:.3})})();
+
+// lander (units ≈ metres, 1.8 m central frame radius)
+const rover=new THREE.Group();scene.add(rover);const P={};
+const part=id=>{const g=new THREE.Group();g.userData={id,k:0};rover.add(g);return P[id]=g};
+const add=(g,geo,m,x,y,z)=>{const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;g.add(o);return o};
+const cyl=(r,h,s=16,r2=r)=>new THREE.CylinderGeometry(r,r2,h,s),sph=(r,s=16)=>new THREE.SphereGeometry(r,s,Math.ceil(s*.7));
+function tube(g,a,b,r,m){const d=b.clone().sub(a),o=new THREE.Mesh(cyl(r,d.length(),8),m);o.position.copy(a).add(b).multiplyScalar(.5);o.quaternion.setFromUnitVectors(V(0,1,0),d.normalize());o.castShadow=true;g.add(o)}
+const pt=(deg,r,y)=>{const a=deg*Math.PI/180;return V(Math.cos(a)*r,y,Math.sin(a)*r)};
+const AN=[90,210,330],verts=AN.map(d=>pt(d,.95,.95)),feet=AN.map(d=>pt(d,2.2,.1)),hub=V(0,1,0);
+
+// legs
+const L=part('legs');
+verts.forEach((v,i)=>{tube(L,v,verts[(i+1)%3],.025,M.alu);tube(L,v,hub,.02,M.alu);tube(L,v,feet[i],.035,M.white);
+ const mid=v.clone().lerp(feet[i],.62);tube(L,V(0,.45,0),mid,.022,M.alu);
+ tube(L,v.clone().lerp(feet[i],.3),v.clone().lerp(feet[i],.75),.05,M.gun);
+ add(L,cyl(.24,.06,28),M.honey,feet[i].x,.05,feet[i].z);add(L,cyl(.12,.1,16,.2),M.white,feet[i].x,.14,feet[i].z)});
+for(let k=0;k<3;k++)tube(L,pt(AN[k],.95,.95),pt(AN[k]+60,.1,.5),.015,M.alu);
+
+// vernier engines & tanks
+const E=part('verniers');
+AN.forEach((d,i)=>{const v=verts[i],p=pt(d,1.08,.8);add(E,cyl(.06,.28,12,.04),M.dark,p.x,p.y-.15,p.z);add(E,cyl(.1,.2,12,.14),M.gun,p.x,p.y+.02,p.z);add(E,cyl(.045,.16,10,.08),M.alu,p.x,p.y-.34,p.z);tube(E,v,V(p.x,p.y+.1,p.z),.02,M.alu)});
+[60,180,300].forEach(d=>{const p=pt(d,.5,.7);add(E,sph(.17),M.alu,p.x,p.y,p.z);tube(E,p,pt(d+30,.9,.9),.012,M.alu)});
+add(E,sph(.34,24),M.alu,0,.62,0);add(E,cyl(.12,.4,20,.22),M.dark,0,.2,0);
+
+// equipment compartments
+const Q=part('compartments');
+[150,270].forEach(d=>{const p=pt(d,.62,1.12),r=-d*Math.PI/180,b=add(Q,new THREE.BoxGeometry(.75,.42,.62),M.white,p.x,p.y,p.z);b.rotation.y=r;
+ const lid=add(Q,new THREE.BoxGeometry(.8,.04,.66),M.alu,p.x,p.y+.23,p.z);lid.rotation.y=r;
+ for(let i=0;i<3;i++){const s=add(Q,new THREE.BoxGeometry(.7,.012,.1),M.gun,p.x,p.y+.26,p.z);s.rotation.y=r;s.translateZ((i-1)*.18)}});
+add(Q,new THREE.BoxGeometry(.2,.2,.2),M.alu,pt(330,.85,.78).x,.78,pt(330,.85,.78).z);
+
+// solar panel + mast
+const S=part('solar');tube(S,V(0,.9,0),V(0,2.7,0),.05,M.white);add(S,cyl(.07,.12,12),M.alu,0,2.72,0);tube(S,V(0,2.72,0),V(-.4,2.88,.05),.02,M.alu);
+const sol=add(S,new THREE.BoxGeometry(1.1,.03,.85),M.cell,-.62,2.95,.1);sol.rotation.set(0,.25,.38);
+
+// antennas
+const A=part('antenna');
+const ant=add(A,new THREE.BoxGeometry(.8,.03,.55),M.dark,.55,2.8,-.1);ant.rotation.set(.1,-.35,-.55);tube(A,V(0,2.72,0),V(.35,2.75,-.05),.02,M.alu);
+const b1=pt(210,2.3,1.9),b2=pt(330,2.7,1.15);tube(A,verts[1],b1,.02,M.alu);add(A,sph(.045,8),M.alu,b1.x,b1.y,b1.z);tube(A,verts[2],b2,.02,M.alu);add(A,sph(.045,8),M.alu,b2.x,b2.y,b2.z);
+
+// TV camera
+const C=part('camera'),cp=pt(30,.55,1);tube(C,cp,V(cp.x,1.35,cp.z),.03,M.white);
+add(C,new THREE.BoxGeometry(.18,.18,.22),M.white,cp.x,1.28,cp.z+.1);
+add(C,cyl(.1,.34,16),M.white,cp.x,1.5,cp.z).rotation.set(.35,0,.15);
+add(C,sph(.09,12),M.dark,cp.x+.02,1.66,cp.z-.05);add(C,cyl(.045,.04,12),M.lens,cp.x-.03,1.5,cp.z+.15).rotation.x=Math.PI/2;
+rover.traverse(o=>{if(o.material)o.material=o.material.clone()});
+
+// lunar terrain
+const hY=(x,z)=>{const r=Math.hypot(x,z),k=Math.min(1,Math.max(0,(r-4)/10));let h=.4*Math.sin(x*.1)*Math.cos(z*.12)+.15*Math.sin(x*.45+z*.3)+.06*Math.sin(z*1.2-x*.8);
+ [[22,-15,9],[-30,10,12],[14,28,7],[-12,-25,6]].forEach(c=>{const d=Math.hypot(x-c[0],z-c[1])/c[2];if(d<1.5)h+=d<1?-(1-d*d)*c[2]*.12:Math.pow(1.5-d,1.5)*c[2]*.1});return k*k*(3-2*k)*h};
+const gg=new THREE.PlaneGeometry(260,260,180,180);gg.rotateX(-Math.PI/2);const gp=gg.attributes.position,col=[];
+for(let i=0;i<gp.count;i++){const x=gp.getX(i),z=gp.getZ(i);gp.setY(i,hY(x,z));const v=.78+Math.random()*.3;col.push(v,v*.82,v*.72)}
+gg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));gg.computeVertexNormals();
+const gm=new THREE.Mesh(gg,new THREE.MeshStandardMaterial({map:tex('#a4522b','rgba(120,50,25,.25)',9000,0,70),vertexColors:true,roughness:1,metalness:0,envMapIntensity:.3}));gm.receiveShadow=true;scene.add(gm);
+const rockM=new THREE.MeshStandardMaterial({map:tex('#6e3d28','rgba(176,96,56,.3)',3000,0,1),roughness:.95,flatShading:true,envMapIntensity:.4});
+for(let i=0;i<90;i++){const g=new THREE.IcosahedronGeometry(1,1),p=g.attributes.position;for(let j=0;j<p.count;j++){const f=.75+Math.random()*.5;p.setXYZ(j,p.getX(j)*f,p.getY(j)*f,p.getZ(j)*f)}g.computeVertexNormals();
+ const r=new THREE.Mesh(g,rockM),a=Math.random()*6.283,n=i<16,d=n?3.5+Math.random()*6:7+Math.pow(Math.random(),.6)*70,s=(n?.07:.2)+Math.pow(Math.random(),3)*(n?.25:2.4);
+ r.position.set(Math.cos(a)*d,hY(Math.cos(a)*d,Math.sin(a)*d)+s*.25,Math.sin(a)*d);r.scale.set(s,s*.6,s*.85);r.rotation.y=Math.random()*6;r.castShadow=r.receiveShadow=true;scene.add(r)}
+// stars + Earth
+{const n=2200,p=new Float32Array(n*3);for(let i=0;i<n;i++){const u=Math.random()*6.283,y=.02+Math.random()*.98,r=Math.sqrt(1-y*y)*500;p.set([Math.cos(u)*r,y*500,Math.sin(u)*r],i*3)}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(p,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({size:1.5,sizeAttenuation:false,color:0xdfe6ff,fog:false,transparent:true,opacity:.9})));
+}
+
+// content
+const H=[
+{id:'solar',n:'Solar Panel & Mast',a:[-.62,3.2,.1],p:[-3,4.2,4.5],t:[-.3,2.7,0],sp:'≈0.86 m² · silicon cells · up to ~85 W',
+w:'A tilting panel on top of the central mast turned sunlight into electricity, recharging silver-zinc batteries and powering the radio, camera and heaters through the lunar day.',
+y:'It showed that a solar-powered probe could live on the Moon and wake after the 14-Earth-day lunar night, sending images again in July 1966.'},
+{id:'antenna',n:'Antennas',a:[.55,3.05,-.1],p:[3.8,3.8,3.2],t:[.5,2.6,0],sp:'Planar high-gain array · 2 omnidirectional booms',
+w:'The flat high-gain antenna beamed TV pictures to Earth, while the two omni antennas on long booms handled commands and low-rate telemetry from any orientation.',
+y:'This link carried the first close-up pictures taken from the lunar surface to Earth — and allowed controllers to steer a spacecraft sitting 384,000 km away.'},
+{id:'camera',n:'TV Camera',a:[.48,1.85,.28],p:[3,2.4,3.4],t:[.5,1.4,.3],sp:'Vidicon TV · 600-line mode · mirror and filter wheel',
+w:'A single camera looked up into a movable mirror, scanning around and down. Over its mission it returned more than 11,000 images, including a full panorama of the landing site.',
+y:'It proved that the lunar soil could bear weight. The pictures of its footpads sitting firmly on the surface reassured Apollo planners.'},
+{id:'compartments',n:'Equipment Compartments',a:[-.55,1.55,.31],p:[-3.4,2.5,3],t:[-.5,1.1,.3],sp:'Compartments A & B · thermally controlled boxes',
+w:'Two insulated boxes held the electronics, command receivers and batteries. Thermal switches and heaters kept the equipment inside its working range through harsh temperature swings.',
+y:'The thermal design carried Surveyor 1 through the long, bitterly cold lunar night, which was far beyond what the mission had formally been designed for.'},
+{id:'legs',n:'Landing Legs',a:[0,.4,2.2],p:[2.5,1.4,5.2],t:[0,.7,1.8],sp:'3 legs · ~4.3 m span · crushable footpads',
+w:'Three folding legs, each with a shock absorber and a crushable honeycomb footpad, absorbed the final drop onto the surface after the engines shut down just above the ground.',
+y:'It was the first US soft landing on the Moon on June 2, 1966, in Oceanus Procellarum, and it worked on the very first attempt.'},
+{id:'verniers',n:'Retro Motor & Verniers',a:[0,.95,0],p:[3.4,1.4,3.2],t:[0,.7,0],sp:'Solid retro motor · 3 throttleable vernier thrusters',
+w:'A large solid-fuel retro motor did most of the braking and was then dropped. Three vernier engines throttled to steer and slow the lander for the final descent.',
+y:'Radar-guided throttle control let Surveyor settle at a low, controlled speed, laying the foundation for later landers, including the Apollo lunar module.'}];
+
+// interaction
+const hud=$('#hud'),nav=$('#nav'),panel=$('#panel'),tip=$('#tip');let sel=null,hov=null,tw=null,mx=0,my=0,moved=false,fr=0,started=false;
+H.forEach((h,i)=>{h.el=document.createElement('button');h.el.className='hs';h.el.textContent='0'+(i+1);h.el.onclick=()=>select(h.id);hud.appendChild(h.el);
+ const b=document.createElement('button');b.innerHTML=`<b>0${i+1}</b>${h.n}`;b.onclick=()=>select(h.id);h.nb=b;nav.appendChild(b)});
+const VW={FRONT:[[0,2.2,10],[0,1.5,0]],SIDE:[[10,2.2,0],[0,1.5,0]],TOP:[[0,12,.5],[0,1.2,0]],REAR:[[0,2.6,-10],[0,1.5,0]],'3/4':[[6.5,3.6,7.5],[0,1.4,0]]};
+for(const k in VW){const b=document.createElement('button');b.textContent=k;b.onclick=()=>{close();fly(...VW[k])};$('#views').appendChild(b)}
+function fly(p,t){const tt=V(...t),off=V(...p).sub(tt);if(cam.aspect<.9)off.multiplyScalar(1.5);tw={p0:cam.position.clone(),t0:ctl.target.clone(),p1:tt.clone().add(off),t1:tt,s:performance.now(),d:1200};ctl.autoRotate=false}
+function select(id){const h=H.find(x=>x.id===id);sel=id;$('#pt').textContent='COMPONENT 0'+(H.indexOf(h)+1);$('#pn').textContent=h.n;$('#ps').textContent=h.sp;$('#pw').textContent=h.w;$('#py').textContent=h.y;
+ panel.classList.add('on');H.forEach(x=>{x.nb.classList.toggle('act',x===h);x.el.classList.toggle('act',x===h)});fly(h.p,h.t)}
+function close(){sel=null;panel.classList.remove('on');H.forEach(x=>{x.nb.classList.remove('act');x.el.classList.remove('act')})}
+$('#x').onclick=close;addEventListener('keydown',e=>e.key==='Escape'&&close());
+$('#go').onclick=()=>{started=true;$('#intro').classList.add('off');hud.classList.add('on');fly(...VW['3/4'])};
+ctl.addEventListener('start',()=>{tw=null;ctl.autoRotate=false});
+const rc=new THREE.Raycaster(),nd=new THREE.Vector2();
+function pick(x,y){nd.set(x/innerWidth*2-1,-(y/innerHeight)*2+1);rc.setFromCamera(nd,cam);rc.far=Infinity;const h=rc.intersectObject(rover,true)[0];if(!h)return null;let o=h.object;while(o&&!o.userData.id)o=o.parent;return o?o.userData.id:null}
+let dx=0,dy=0;const cv=R.domElement;
+cv.addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;moved=true});
+cv.addEventListener('pointerdown',e=>{dx=e.clientX;dy=e.clientY});
+cv.addEventListener('pointerup',e=>{if(started&&Math.hypot(e.clientX-dx,e.clientY-dy)<6){const id=pick(e.clientX,e.clientY);if(id)select(id)}});
+function resize(){R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}addEventListener('resize',resize);resize();
+
+// loop
+const clk=new THREE.Clock(),tv=new THREE.Vector3();
+function loop(){requestAnimationFrame(loop);const dt=Math.min(clk.getDelta(),.05);fr++;
+ if(tw){const k=Math.min(1,(performance.now()-tw.s)/tw.d),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;cam.position.lerpVectors(tw.p0,tw.p1,e);ctl.target.lerpVectors(tw.t0,tw.t1,e);if(k>=1)tw=null}
+ ctl.target.y=Math.max(.2,ctl.target.y);ctl.update();
+ if(moved&&started){moved=false;hov=pick(mx,my);const h=H.find(x=>x.id===hov);cv.style.cursor=h?'pointer':'grab';tip.style.opacity=h?1:0;if(h){tip.textContent=h.n;tip.style.left=mx+14+'px';tip.style.top=my+14+'px'}}
+ for(const id in P){const g=P[id],u=g.userData,t=id===sel?1:id===hov?.8:0;u.k+=(t-u.k)*Math.min(1,dt*10);if(Math.abs(t-u.k)>.003||u.k>.003)g.traverse(o=>{if(o.material&&o.material.emissive)o.material.emissive.setRGB(.45*u.k,.14*u.k,.03*u.k)})}
+ if(started)H.forEach(h=>{tv.set(...h.a).project(cam);const vis=tv.z<1&&tv.z>-1;h.el.style.display=vis?'':'none';h.el.style.transform=`translate(${(tv.x+1)/2*innerWidth}px,${(1-tv.y)/2*innerHeight}px)`;
+  if(vis&&fr%8===0){const p=V(...h.a),d=p.clone().sub(cam.position),Ln=d.length();rc.set(cam.position,d.normalize());rc.far=Ln-.3;h.el.classList.toggle('occ',rc.intersectObject(rover,true).length>0)}});
+ R.render(scene,cam)}loop();
+</script></body></html>

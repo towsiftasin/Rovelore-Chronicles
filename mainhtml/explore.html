@@ -286,11 +286,15 @@ function buildCards(){
     el.className='card';
     el.setAttribute('role','button'); el.tabIndex=0; el.setAttribute('aria-label',m.name);
     el.innerHTML='<div class="shot">'+
-        (m.image?'<img src="'+esc(m.image)+'" alt="'+esc(m.name)+'" loading="lazy">':'<span class="noimg">Image not available yet</span>')+
+        ((m.cover||m.image)?'<img src="'+esc(m.cover||m.image)+'" alt="'+esc(m.name)+'" loading="lazy">':'<span class="noimg">Image not available yet</span>')+
         '<span class="tagdest '+esc(m.destination)+'">'+esc(m.destination)+'</span></div>'+
       '<div class="info"><h3>'+esc(m.name)+'</h3><p>'+esc(m.tagline||m.description)+'</p></div>';
     const im=el.querySelector('img');
-    if(im) im.addEventListener('error',()=>{ im.remove(); });   // broken link: fall back to the empty card
+    // your own cover picture (images/cardcover) is used first; if the file is missing, use the NASA picture; if that fails too, show the empty card
+    if(im) im.addEventListener('error',()=>{
+      if(m.cover&&m.image&&!im.dataset.fb){ im.dataset.fb='1'; im.src=m.image; }
+      else im.remove();
+    });
     const open=()=>{ location.hash='mission='+m.id; };
     el.addEventListener('click',e=>{
       if(i!==sel()){ e.preventDefault(); goTo(i); }   // side card: rotate it to the front
@@ -423,11 +427,10 @@ function renderDetail(m){
       '<p class="model-hint">Drag to rotate • scroll or pinch to zoom'+(m.modelCredit?' • '+esc(m.modelCredit):'')+'</p></div>'
     : '';
 
-  // interactive 3D page: "viewer" is a file next to explore.html (e.g. "sojourner-3d.html") or a full link
-  const viewerPanel=m.viewer
-    ? '<div class="panel"><h2>Interactive 3D model</h2><div class="viewer-box"><iframe src="'+esc(m.viewer)+'" title="Interactive 3D model of '+esc(m.name)+'" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>'+
-      '<div class="viewer-links"><p class="model-hint" style="margin:0">'+(m.viewerHint?esc(m.viewerHint):'Press &ldquo;Explore Rover&rdquo;, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part')+(m.viewerCredit?' &bull; '+esc(m.viewerCredit):'')+'</p><a href="'+esc(m.viewerLink||m.viewer)+'" target="_blank" rel="noopener">'+esc(m.viewerLinkText||'Open full screen')+'</a></div></div>'
-    : '';
+  // interactive 3D pages: "viewers" is a list; each has src (your own page or a Sketchfab embed link), title, hint, link, linkText, credit
+  const viewerPanel=(m.viewers||[]).map(v=>
+    '<div class="panel"><h2>'+esc(v.title||'Interactive 3D model')+'</h2><div class="viewer-box"><iframe src="'+esc(v.src)+'" title="Interactive 3D model of '+esc(m.name)+'" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>'+
+    '<div class="viewer-links"><p class="model-hint" style="margin:0">'+esc(v.hint||'Drag to rotate and scroll to zoom.')+(v.credit?' &bull; '+esc(v.credit):'')+'</p><a href="'+esc(v.link||v.src)+'" target="_blank" rel="noopener">'+esc(v.linkText||'Open full screen')+'</a></div></div>').join('');
 
   detailEl.innerHTML=
     '<div class="detail '+esc(m.destination)+'">'+

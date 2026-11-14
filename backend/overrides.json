@@ -1,9 +1,107 @@
 {
-  "_example": {
-    "image": "https://example.com/card-image.jpg",
-    "gallery": ["https://example.com/1.jpg", "https://example.com/2.jpg"],
-    "videos": [{ "url": "https://example.com/video.mp4", "title": "Landing", "poster": "" }],
-    "sourceUrl": "https://official-mission-page",
-    "discoveries": ["Add a verified discovery here"]
+  "opportunity": {
+    "galleryIds": [
+      "PIA06739",
+      "PIA07224",
+      "PIA20285",
+      "PIA05309"
+    ],
+    "videoMode": "slots",
+    "videoSlots": [
+      2
+    ],
+    "videoSpecs": [
+      "KSC-04-S-00127"
+    ],
+    "videoRemove": [
+      3
+    ]
+  },
+  "spirit": {
+    "galleryIds": [
+      "PIA09090",
+      "PIA11990",
+      "PIA05040",
+      "PIA03230",
+      "PIA12337"
+    ],
+    "videoMode": "slots",
+    "videoSlots": [
+      2,
+      3
+    ],
+    "videoSpecs": [
+      "KSC-04-S-00163",
+      "KSC-04-S-00127"
+    ]
+  },
+  "insight": {
+    "model": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/insight-cruise-lander/InSight%20Cruise%20Lander%20(arm%20deployed).glb",
+    "modelCredit": "3D model by NASA/Brian E. Kumanchik",
+    "videoMode": "slots",
+    "videoSlots": [
+      1
+    ],
+    "videoSpecs": [
+      {
+        "search": "NASA Mars Report Dec. 20, 2018",
+        "match": [
+          "mars report",
+          "dec. 20, 2018"
+        ]
+      }
+    ]
+  },
+  "sws": {
+    "galleryMode": "add",
+    "galleryIds": [
+      "KSC-05pd2302",
+      "KSC-05pd2309",
+      "KSC-05pd2310"
+    ],
+    "videoRemove": [
+      1
+    ]
+  },
+  "surveyor1": {
+    "image": "../images/surveyor1/surveyor1-lander.jpg",
+    "galleryIds": [
+      "KSC-99pc04",
+      "LRC-1967-B701_P-04028",
+      "jsc2024e067093",
+      "PIA02976"
+    ],
+    "galleryUrls": [
+      "../images/surveyor1/surveyor1-lander.jpg"
+    ],
+    "videoRemove": [
+      1,
+      2,
+      3
+    ]
+  },
+  "ranger7": {
+    "galleryIds": [
+      "PIA02974",
+      "62PC-80",
+      "PIA23520"
+    ],
+    "videoMode": "add",
+    "videoSpecs": [
+      {
+        "search": "Ranger 7 launches",
+        "match": [
+          "ranger 7",
+          "launch"
+        ]
+      },
+      {
+        "search": "Ranger 7 impacts Moon",
+        "match": [
+          "ranger 7",
+          "impact"
+        ]
+      }
+    ]
   }
 }

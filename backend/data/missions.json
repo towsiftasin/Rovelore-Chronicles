@@ -71,8 +71,25 @@
     ],
     "missionEnd": "Communication was lost on September 27, 1997. NASA officially terminated the mission on March 10, 1998, after unsuccessful recovery attempts.",
     "legacy": "Sojourner demonstrated the potential of robotic exploration on Mars and helped establish the foundation for future rovers, including Spirit, Opportunity, Curiosity and Perseverance.",
-    "viewer": "sojourner-3d.html",
-    "viewerCredit": "Interactive 3D model by Team Event Horizon"
+    "viewers": [
+      {
+        "src": "sojourner-3d.html",
+        "title": "Interactive 3D model",
+        "hint": "Press “Explore Rover”, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part.",
+        "link": "sojourner-3d.html",
+        "linkText": "Open full screen",
+        "credit": "Interactive 3D model by Team Event Horizon"
+      },
+      {
+        "src": "https://sketchfab.com/models/7f135874ddd34f8f98904b53a2c178e1/embed?autostart=1&autospin=0.15&ui_theme=dark",
+        "title": "Another 3D model of Sojourner",
+        "hint": "Drag to rotate the rover and scroll or pinch to zoom.",
+        "link": "https://sketchfab.com/3d-models/sojourner-mars-rover-7f135874ddd34f8f98904b53a2c178e1",
+        "linkText": "View on Sketchfab",
+        "credit": "3D model by Jan Walter Sluka (@janwaltersluka) on Sketchfab"
+      }
+    ],
+    "cover": "../images/cardcover/sojourner.jpg"
   },
   {
     "id": "opportunity",
@@ -163,7 +180,18 @@
       "Harsh Martian environmental conditions and extreme temperature variations"
     ],
     "missionEnd": "Opportunity's final communication with Earth was received on June 10, 2018, after a massive planet-wide dust storm covered its location and blocked sunlight from reaching its solar panels. NASA made more than 1,000 attempts to restore communication with the rover. After unsuccessful recovery efforts, NASA officially declared the mission over on February 13, 2019.",
-    "legacy": "Opportunity provided strong evidence of ancient water activity on Mars, transforming our understanding of its geological history. Its nearly 15-year mission demonstrated the potential of long-term robotic exploration and helped guide future Mars missions."
+    "legacy": "Opportunity provided strong evidence of ancient water activity on Mars, transforming our understanding of its geological history. Its nearly 15-year mission demonstrated the potential of long-term robotic exploration and helped guide future Mars missions.",
+    "viewers": [
+      {
+        "src": "https://sketchfab.com/models/0484a80677f6411db67541d4e21e59ea/embed?autostart=1&autospin=0.15&ui_theme=dark",
+        "title": "Interactive 3D model",
+        "hint": "Drag to rotate the rover and scroll or pinch to zoom.",
+        "link": "https://sketchfab.com/3d-models/mars-rover-opportunity-0484a80677f6411db67541d4e21e59ea",
+        "linkText": "View on Sketchfab",
+        "credit": "3D model by Serhii_Sarkisian on Sketchfab"
+      }
+    ],
+    "cover": "../images/cardcover/opportunity.jpg"
   },
   {
     "id": "spirit",
@@ -242,7 +270,18 @@
       "Eventually lost communication with Earth"
     ],
     "missionEnd": "Spirit sent its final communication to Earth on March 22, 2010, after becoming trapped in soft soil and experiencing power-related difficulties. NASA made more than 1,400 attempts to re-establish contact but received no response. On May 25, 2011, NASA officially declared the mission complete.",
-    "legacy": "Spirit demonstrated the long-term potential of robotic exploration on Mars and showed how detailed surface investigations could reveal the planet's geological evolution. Its discoveries helped scientists better understand Mars and contributed valuable knowledge to the development of future Mars exploration missions."
+    "legacy": "Spirit demonstrated the long-term potential of robotic exploration on Mars and showed how detailed surface investigations could reveal the planet's geological evolution. Its discoveries helped scientists better understand Mars and contributed valuable knowledge to the development of future Mars exploration missions.",
+    "viewers": [
+      {
+        "src": "https://sketchfab.com/models/0484a80677f6411db67541d4e21e59ea/embed?autostart=1&autospin=0.15&ui_theme=dark",
+        "title": "Interactive 3D model",
+        "hint": "Spirit and Opportunity were identical twin rovers, so this model shows what Spirit looked like. Drag to rotate and scroll or pinch to zoom.",
+        "link": "https://sketchfab.com/3d-models/mars-rover-opportunity-0484a80677f6411db67541d4e21e59ea",
+        "linkText": "View on Sketchfab",
+        "credit": "Model of Opportunity by Serhii_Sarkisian on Sketchfab"
+      }
+    ],
+    "cover": "../images/cardcover/spirit.jpg"
   },
   {
     "id": "insight",
@@ -318,7 +357,18 @@
       "Reduced power during Martian winter"
     ],
     "missionEnd": "InSight's mission gradually came to an end as dust accumulation reduced the power generated by its solar panels. NASA received its final communication on December 15, 2022. After two unsuccessful attempts to re-establish contact, NASA officially declared the mission over on December 21, 2022.",
-    "legacy": "InSight transformed our understanding of Mars by providing the first detailed insights into its internal structure and seismic activity. Its findings helped scientists understand the formation and evolution of rocky planets and provided valuable knowledge about the geological history of Mars."
+    "legacy": "InSight transformed our understanding of Mars by providing the first detailed insights into its internal structure and seismic activity. Its findings helped scientists understand the formation and evolution of rocky planets and provided valuable knowledge about the geological history of Mars.",
+    "viewers": [
+      {
+        "src": "https://sketchfab.com/models/61343184899f4f04b4ef9e2b7b5f5c58/embed?autostart=1&autospin=0.15&ui_theme=dark",
+        "title": "Interactive 3D model",
+        "hint": "Drag to rotate the lander and scroll or pinch to zoom.",
+        "link": "https://sketchfab.com/3d-models/insight-lander-61343184899f4f04b4ef9e2b7b5f5c58",
+        "linkText": "View on Sketchfab",
+        "credit": "3D model by Cybertron B-127 (@robo-reboot) on Sketchfab"
+      }
+    ],
+    "cover": "../images/cardcover/insight.jpg"
   },
   {
     "id": "lrv",
@@ -402,11 +452,17 @@
     ],
     "missionEndAfter": "All three vehicles remain on the lunar surface, serving as historical evidence of humanity's first successful lunar transportation system.",
     "legacy": "The Lunar Roving Vehicle transformed lunar exploration by allowing astronauts to travel greater distances and conduct more extensive scientific research. Its successful operation demonstrated the importance of mobile transportation in space exploration and helped establish the foundation for future lunar and planetary exploration vehicles.",
-    "viewer": "https://sketchfab.com/models/bef2062726c8448f8ebe935c690f633a/embed?autostart=1&autospin=0.15&ui_theme=dark",
-    "viewerHint": "Drag to rotate the rover and scroll or pinch to zoom.",
-    "viewerLink": "https://sketchfab.com/3d-models/apollo-lunar-rover-moon-car-bef2062726c8448f8ebe935c690f633a",
-    "viewerLinkText": "View on Sketchfab",
-    "viewerCredit": "3D model on Sketchfab"
+    "viewers": [
+      {
+        "src": "https://sketchfab.com/models/bef2062726c8448f8ebe935c690f633a/embed?autostart=1&autospin=0.15&ui_theme=dark",
+        "title": "Interactive 3D model",
+        "hint": "Drag to rotate the rover and scroll or pinch to zoom.",
+        "link": "https://sketchfab.com/3d-models/apollo-lunar-rover-moon-car-bef2062726c8448f8ebe935c690f633a",
+        "linkText": "View on Sketchfab",
+        "credit": "3D model on Sketchfab"
+      }
+    ],
+    "cover": "../images/cardcover/lrv.jpg"
   },
   {
     "id": "sws",
@@ -471,7 +527,8 @@
       "Gradual instrument degradation affected its ability to collect complete measurements"
     ],
     "missionEnd": "The Solar Wind Spectrometer continued collecting useful scientific data for several years after its deployment. Its archived high-resolution observations extend through March 25, 1976. The Apollo Lunar Surface Experiments Package (ALSEP) was officially shut down on September 30, 1977, ending the experiment's operational mission.",
-    "legacy": "The Solar Wind Spectrometer provided important insights into the behavior of charged particles near the Moon. Its observations helped scientists better understand solar wind, lunar plasma interactions and Earth's magnetic tail, contributing to future space plasma research."
+    "legacy": "The Solar Wind Spectrometer provided important insights into the behavior of charged particles near the Moon. Its observations helped scientists better understand solar wind, lunar plasma interactions and Earth's magnetic tail, contributing to future space plasma research.",
+    "cover": "../images/cardcover/sws.jpg"
   },
   {
     "id": "surveyor1",
@@ -540,7 +597,18 @@
       "Surviving the harsh and unfamiliar lunar environment"
     ],
     "missionEnd": "Surveyor 1 completed its primary mission in July 1966 after successfully transmitting thousands of images and scientific data. NASA continued communicating with the spacecraft until January 7, 1967, when contact was permanently lost.",
-    "legacy": "Surveyor 1 proved that controlled soft landings on the Moon were achievable. Its photographs and surface measurements helped NASA evaluate potential lunar landing sites and provided valuable engineering knowledge for the Apollo program, which eventually carried astronauts to the Moon."
+    "legacy": "Surveyor 1 proved that controlled soft landings on the Moon were achievable. Its photographs and surface measurements helped NASA evaluate potential lunar landing sites and provided valuable engineering knowledge for the Apollo program, which eventually carried astronauts to the Moon.",
+    "cover": "../images/cardcover/suveyor1.jpg",
+    "viewers": [
+      {
+        "src": "surveyor1-3d.html",
+        "title": "Interactive 3D model",
+        "hint": "Press “Explore Lander”, then drag to rotate, scroll to zoom and tap the numbered dots to learn about each part.",
+        "link": "surveyor1-3d.html",
+        "linkText": "Open full screen",
+        "credit": "Interactive 3D model by Team Event Horizon"
+      }
+    ]
   },
   {
     "id": "ranger7",
@@ -608,6 +676,7 @@
       "Transmitting images to Earth before lunar impact"
     ],
     "missionEnd": "Ranger 7 completed its mission on July 31, 1964, when it deliberately impacted Mare Cognitum on the Moon. Before impact, it successfully transmitted its final photographs, with the last image arriving approximately 2.3 seconds before contact with the lunar surface.",
-    "legacy": "Ranger 7 marked a major breakthrough in NASA's lunar exploration program. Its photographs helped scientists understand the Moon's surface and prepare for future Apollo landing missions. Its success also paved the way for subsequent missions, including Ranger 8 and Ranger 9."
+    "legacy": "Ranger 7 marked a major breakthrough in NASA's lunar exploration program. Its photographs helped scientists understand the Moon's surface and prepare for future Apollo landing missions. Its success also paved the way for subsequent missions, including Ranger 8 and Ranger 9.",
+    "cover": "../images/cardcover/ranger7.jpg"
   }
 ]
